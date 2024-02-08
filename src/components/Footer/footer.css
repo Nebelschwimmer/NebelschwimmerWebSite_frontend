@@ -1,0 +1,17 @@
+.footer_container {
+width: 100vw; 
+color: white;
+background-color: rgb(16, 0, 17);
+margin-top: 30px;
+padding-top: 16px;
+padding-bottom: 16px;
+font-size: 18px;
+display: flex;
+justify-content: space-around;
+}
+.footer_socials {
+display: flex;
+justify-content: space-between;
+gap: 40px;
+align-items: center;
+}

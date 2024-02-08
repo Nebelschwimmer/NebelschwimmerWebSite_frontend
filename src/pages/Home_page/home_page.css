@@ -1,0 +1,61 @@
+.home_page_title{
+text-align: center;
+color:rgb(255, 122, 28);
+}
+.home_page_descrpition_container {
+  font-size: 17px;
+  padding-top: 3rem;
+  display: flex;
+  justify-content: space-around;
+  gap: 40px
+  
+}
+
+.home_page_descrpition_greetings {
+  font-size: 16px;
+  padding-right: 7rem;
+  width: 50%;
+}
+.home_page_descrpition_links_block{
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  border-top: 1px solid rgb(0, 0, 0);
+  padding-top: 2em;
+  padding-bottom: 2rem;
+  margin-top: 2em;
+  border-bottom: 1px solid rgb(0, 0, 0);
+}
+.home_page_descrpition_motto {
+  text-align: center;
+}
+.home_page_descrpition_links__btn {
+font-size: 19px;
+width: 130px;
+height: 4.5rem;
+padding: 8px;
+border-radius: 9px;
+background-color:rgb(26, 0, 37);
+cursor: pointer;
+color: white;
+border: none;
+transition: ease-in-out 0.2s;
+box-shadow: black  4px 3px 7px 0px;
+}
+.home_page_descrpition_links__btn:hover {
+  color:rgb(255, 122, 28);
+  background-color: rgb(23, 13, 32);
+} 
+.home_page_descrpition_image{
+  width: 359px;
+  height: 552px;
+  padding-right: 1rem;
+}
+.home_page_biography_block {
+  line-height: 25px;
+}
+.home_page_hobbies_list {
+  line-height: 25px;
+  text-indent: 15px;
+}

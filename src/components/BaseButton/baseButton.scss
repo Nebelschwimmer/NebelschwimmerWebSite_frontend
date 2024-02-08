@@ -1,0 +1,22 @@
+.base_btn {
+  width: 50%;
+  padding: 5px 10px 5px 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 15px;
+  cursor: pointer;
+  gap: 10px;
+  background-color: rgb(37, 9, 65);
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.2s ease-in-out;
+  box-shadow: black 1px 1px 1px 1px;
+  border: none;     
+  &:hover {
+    color: darkorange;
+  }
+
+}

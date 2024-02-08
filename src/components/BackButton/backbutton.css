@@ -1,0 +1,14 @@
+.backbutton {
+border-radius: 5px;
+background-color: transparent;
+color: white;
+border: none;
+cursor: pointer;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 30px;
+}
+.backbutton:hover {
+  box-shadow: black 1px 1px 1px 1px;
+  }

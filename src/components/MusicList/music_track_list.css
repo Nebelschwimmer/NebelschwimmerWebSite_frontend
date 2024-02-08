@@ -1,0 +1,7 @@
+.track_list_cards{
+  display: grid;
+  grid-template-columns: repeat(3, 30.22%);
+  padding-left: 5rem;
+  grid-gap: 3rem
+
+}
