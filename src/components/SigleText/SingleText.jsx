@@ -11,7 +11,10 @@ import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { updateTextById } from '../../utils/api_texts';
 import { useForm } from "react-hook-form";
 import CloseIcon from '@mui/icons-material/Close';
-
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import CommentIcon from '@mui/icons-material/Comment';
+import { Backbutton } from '../BackButton/BackButton';
+import { CommentsForm } from './CommentsForm/CommentsForm';
 
 export const SingleText = ({singleText, _id, langEn, setSingleText, showModal, setLangEn, setShowModal, currentUser}) => {
 
@@ -140,14 +143,31 @@ setTimeout(()=>{
   return (
     <>
     <div className='single__text__top'>
-      <h1 className='single__text__name'>{singleText.name}</h1>
+      <div className='single__text__top__wrapper'>
+        <div onClick={()=>{navigate(-1)}}>
+          <Backbutton/>
+        </div>
+        <h1 className='single__text__top__name'>{singleText.name}</h1>
+      </div>
       <div className='single__text__top__lower' >
-        <span><em>{langEn ? "Date of publication" : "Дата публикации"} : {createdAtDate}</em></span>
-        { showUpdDate && <span><em>{langEn ? "Updated" : "Изменено"} : {updatedAtDate}</em></span> }
+        <div className='single__text__top__lower__timestamps'>
+          <span><em>{langEn ? "Published" : "Опубликовано"} : {createdAtDate}</em></span>
+          { showUpdDate && <span><em>{langEn ? "Updated" : "Изменено"} : {updatedAtDate}</em></span> }
+        </div>
+        <div> 
+          <div>
+            <FavoriteIcon fontSize='small'/>
+            <span>Likes: {singleText.likes.length}</span>
+          </div>
+          <div>
+            <CommentIcon fontSize='small'/>
+            <span>Comments: {singleText.comments.length}</span>
+          </div>
+        </div>
         {currentUser !== '' &&
           <div>
-            <button  onClick={()=>{setShowModal(true)}}>{langEn ? "Delete" : "Удалить"} <DeleteForeverIcon fontSize='small' /> </button>
-            <button  onClick={()=>{setEditMode(true)}}>{langEn ? "Edit" : "Редактировать"} <EditIcon fontSize='small' /> </button>
+            <button title={langEn ? "Delete" : "Удалить"}  onClick={()=>{setShowModal(true)}}> <DeleteForeverIcon fontSize='small' /> </button>
+            <button title={langEn ? "Edit" : "Редактировать"}  onClick={()=>{setEditMode(true)}}><EditIcon fontSize='small' /> </button>
           </div>
           
         }
@@ -207,6 +227,9 @@ setTimeout(()=>{
           </div>
         </form>
     }
+    <section className='single__text__comments__section'>
+      <CommentsForm/>
+    </section>
     </>
   )
 }
