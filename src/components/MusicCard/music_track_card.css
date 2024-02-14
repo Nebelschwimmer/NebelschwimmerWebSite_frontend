@@ -1,7 +1,8 @@
 .music_page_audio_player_container{
   padding-bottom: 20px;
-  width: 360px;
-  height: 590px;
+  max-width: 360px;
+  max-height: 590px;
+  height:100%;
   box-shadow: 3px 3px 6px 3px black;
   border-radius: 10px;
 
@@ -15,8 +16,10 @@
 }
 
 .music_page_audio_image {
-height: 260px;
-width:300px;
+max-height: 260px;
+max-width:300px;
+height: 230px;
+width: 100%;
 margin-bottom: 1rem;
 border-radius: 10px;
 }
@@ -37,8 +40,9 @@ top: 2px
   padding-right: 7px;
 }
 .music_page_track_description{
-  margin-bottom: 2rem;
-  height: 58px;
+  padding-bottom: 2rem;
+  max-height: 58px;
+  height: fit-content;
   font-size: 14px;
   white-space:pre-wrap;
   

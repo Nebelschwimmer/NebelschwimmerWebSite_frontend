@@ -1,29 +1,44 @@
 
+import { addLikeById, deleteMusicLikeById } from '../../utils/api_music';
 import {MusicCard} from '../MusicCard/MusicCard'
+import { Spinner } from '../Spinner/Spinner';
+
 import './music_track_list.css'
 
 
 
-export const MusicList = ({handleMusicLike, setTrackList, currentUser, trackList, langEn}) => {
+export const MusicList = ({user_id, setTrackList, currentUser, trackList, langEn}) => {
+
+
+
+
+
+
+
 
 
   return (
 <div className='track_list_cards'>
 
-{trackList?.map((el) => {
+      {trackList !== undefined ? 
+        trackList?.map((el) => {
         return (
           <MusicCard
             {...el}
             track={el}
-            key={el.track_id}
-            handleMusicLike={handleMusicLike}
+            key={el._id}
+          
             langEn={langEn}
             currentUser={currentUser}
             trackList={trackList}
             setTrackList={setTrackList}
+            user_id={user_id}
           />
         );
-      })}
+      })
+    :
+    <Spinner></Spinner>
+    }
   
 </div>
   )

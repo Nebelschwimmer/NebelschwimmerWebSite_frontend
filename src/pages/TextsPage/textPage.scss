@@ -1,3 +1,4 @@
+
 .add__text__sumbit_btn{
   width: 7%;
     height: 3rem;
@@ -19,7 +20,7 @@
       }    
   }
   
-.texts__page_upper_wrapper h1{
+.texts__page__upper_wrapper h1{
   display: flex;
   justify-content: center;
 }
@@ -46,4 +47,9 @@
     }
   }
   
+}
+
+.single__text__page__spinner__container{
+  width: 100%;
+  text-align: center;
 }

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { getTextsList } from '../../utils/api_texts'
 
+
 export const TextsPage = ({langEn, texts, setTexts, currentUser, showModal, setShowModal}) => {
  
 const navigate = useNavigate()
@@ -21,9 +22,9 @@ const navigate = useNavigate()
 
   
   return (
-    <div>
+    <div className='texts__page'>
       
-      <div className='texts__page_upper_wrapper'>
+      <div className='texts__page__upper_wrapper'>
         <h1 style={{color:'darkorange'}}>My texts</h1>
         <button className='add__text__sumbit_btn' onClick={()=>{navigate('/texts/add-text')}}>{langEn ? 'Publish New Text' : 'Опубликовать текст'}</button>
       </div>

@@ -13,11 +13,9 @@ import { auth } from "../../firebase.js";
 import { SignIn } from '../Auth/SignIn.jsx';
 import { UserSettings } from '../Auth/UserSettings.jsx';
 import { ResetPassword } from '../Auth/ResetPassword.jsx';
-import { addLikeById } from '../../utils/api_music.js';
-import { getMusicList } from '../../utils/api_music.js';
-import { deleteMusicLikeById } from '../../utils/api_music.js'; 
+
 import { AddTextPage } from '../AddTextPage/AddTextPage.jsx';
-import { SingleTextPage } from '../SingleTextPage/SingleTextPage.jsx';
+import { SingleTextPage } from '../../pages/TextsPage/SingleTextPage/SingleTextPage.jsx';
 
 function App() {
   // Стейты:
@@ -27,8 +25,6 @@ function App() {
   const [currentUser, setCurrentUser] = useState('')
   // Для отображения модального окна
   const [showModal, setShowModal] = useState(false);
-  // Для музыки
-  const [trackList, setTrackList] = useState([]);
 
   const [texts, setTexts] = useState([]);
 
@@ -75,32 +71,7 @@ function App() {
   
   // --------------------------------------
   
-  //---- Логика для страницы с музыкой------
 
-  // Получаем карточки с музыкой
-  useEffect(()=>{
-    getMusicList().then((result)=>{
-      setTrackList(result.data)
-    })
-  }, [])
-
-
-// Функция для отправки или удаления лайка музыки по клику.
-// Если лайк поставлен, происходил удаление лайка
-  const handleMusicLike = (track) =>{
-    const trackIsLiked = track?.track_likes?.some((s) => s === currentUser.uid);
-    
-    if (trackIsLiked) {
-        deleteMusicLikeById({user_id: currentUser.uid, track_id: track.track_id}).then((newTrackList)=>{
-        setTrackList(newTrackList)
-        })
-      }
-    else {
-      addLikeById({user_id: currentUser.uid, track_id: track.track_id}).then((newTrackList)=>{
-        setTrackList(newTrackList)
-      })
-    }
-  }
 // --------------------------------------
 return (
   <>
@@ -110,7 +81,7 @@ return (
       <Routes>
         <Route path='/' element={<HomePage langEn={langEn} setLangEn={setLangEn} />}></Route> 
         <Route path='/texts/:textID' element={<SingleTextPage currentUser={currentUser} setLangEn={setLangEn} showModal={showModal} setShowModal={setShowModal} texts={texts} setTexts={setTexts} langEn={langEn} />}> </Route> 
-        <Route path='/music' element={<MusicPage showModal={showModal} setShowModal={setShowModal} trackList={trackList} handleMusicLike={handleMusicLike} setTrackList={setTrackList} langEn={langEn} currentUser={currentUser}/>}></Route>
+        <Route path='/music' element={<MusicPage showModal={showModal} setShowModal={setShowModal}  langEn={langEn} currentUser={currentUser}/>}></Route>
         <Route path='/texts' element={<TextsPage  currentUser={currentUser} showModal={showModal} 
         setShowModal={setShowModal} langEn={langEn} texts={texts} setTexts={setTexts}/>}></Route>
         <Route path='/texts/add-text' element={<AddTextPage texts={texts} setTexts={setTexts} langEn={langEn} showModal={showModal} setShowModal={setShowModal}/>}></Route> 

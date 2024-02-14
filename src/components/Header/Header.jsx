@@ -15,7 +15,7 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import LogoutIcon from '@mui/icons-material/Logout';
 import uk_flag from '../../pictures/uk-flag.webp'
 import rus_flag from '../../pictures/rus_flag.png'
-
+import logo from '../../pictures/Logo_surLand.svg'
 
 export const Header = ({langEn, setLangEn, currentUser, onSignOut, user}) => {
 
@@ -85,14 +85,16 @@ const navigate = useNavigate()
   return (
   <div className='header'>
     <div className='header_container'>
-      <MenuIcon fontSize='large'/>
+      <div className='header_icon_container'>
+        <MenuIcon fontSize='large'/>
+      </div>
       <div className='header_name_wrapper'>
-        <div className='header_name_wrapper_label'>NEBELSCHWIMMER</div>
-        {langEn ? 
+        <img src={logo} className='header_name_wrapper_logo'></img>
+        {/* {langEn ? 
         <div className='header_name_wrapper_sub_label'>Andrew Dyakov: Frontend-developer, musician, linguist</div> 
         :
         <div className='header_name_wrapper_sub_label'>Андрей Дьяков: Фронтенд-разработчик, музыкант, лингвист</div>
-        }
+        } */}
       </div>
 
       
@@ -103,7 +105,7 @@ const navigate = useNavigate()
           {currentUser  ? (
           <div className='header_aut_nav_wrapper'>
             <div onClick={()=>{navigate('/user-settings')}} className='header_aut_name_img_wrapper'>
-              <span className='header_aut_nav_name_span'>{name}</span>
+              {/* <span className='header_aut_nav_name_span'>{name}</span> */}
               <img className='header_aut_nav_img' src={avatarURL}/>
             </div>
         

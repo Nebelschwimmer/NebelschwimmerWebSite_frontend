@@ -13,11 +13,11 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { deleteTrackByID } from "../../utils/api_music";
 import { MusicEditForm } from "./MusicEditForm/MusicEditForm";
 import { MusicDeleteModal } from "./MusicDeleteModal/MusicDeleteModal";
+import { deleteMusicLikeById } from "../../utils/api_music";
+import { addLikeById } from "../../utils/api_music";
 
-
-
-export const MusicCard = ({track_name, track, langEn, trackList, setTrackList, track_description_en, handleMusicLike, track_id, 
-  currentUser, track_description_ru, track_image, track_source, track_likes }) => {
+export const MusicCard = ({track_name, track, langEn, trackList, setTrackList, track_description_en,
+  currentUser, track_description_ru, track_image, track_source, user_id }) => {
   // Стейт для лайков
   const [musicIsLiked, setMusicIsLiked] = useState(false)
   // Стейт для попапа о том, что нужно авторизоваться
@@ -31,6 +31,33 @@ export const MusicCard = ({track_name, track, langEn, trackList, setTrackList, t
   const [showModalEdit, setShowModalEdit] = useState(false)
 
 
+const track_id = track._id
+const track_likes = track.track_likes
+
+
+const handleMusicLike = async (track_id, user_id) =>{
+  const trackIsLiked = track_likes.some((s) => s === user_id);
+  console.log(trackIsLiked)
+  try {
+  if (trackIsLiked) {
+      await  deleteMusicLikeById(track_id, user_id )
+      .then((newTrackList)=>
+      setTrackList(newTrackList));
+      }
+    else {
+      await addLikeById(track_id, user_id)
+      .then((newTrackList)=>
+      setTrackList(newTrackList));
+      }
+    }
+    catch(err) {
+      console.log(err)
+    }
+  }
+
+
+
+
   // Чтобы отлайканные актуальный юзером карточки меняли цвет лайка на оранжевый, а при снятии лайка - обратно становились белыми  
   useEffect(()=> {
     if (track_likes?.some((s) => s === currentUser.uid))
@@ -42,7 +69,7 @@ export const MusicCard = ({track_name, track, langEn, trackList, setTrackList, t
 // Кнопка при нажатии на лайк
 const handleLikeClick = () => {
   if (currentUser !== '') {
-    handleMusicLike(track);
+    handleMusicLike(track_id, user_id);
     setShowPopoverNotAuth(false)
     }
   else setShowPopoverNotAuth(true)
@@ -146,9 +173,10 @@ useEffect(()=>{
 
 // Для удаления карточки
 const deleteMusicCard = async (track_id) => {
-  await deleteTrackByID(track_id)
-  const newTrackList = trackList.filter(f => f.track_id !== track_id)
-  setTrackList(newTrackList)
+  await deleteTrackByID(track_id).then((newTrackList)=>{
+    setTrackList(newTrackList) 
+  })
+  
 }
 
 

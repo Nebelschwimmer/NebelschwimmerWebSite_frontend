@@ -6,13 +6,13 @@ const onResponse = (res) => {
 };
 
 
-export const addLikeById = (body) => {
-  return fetch('http://localhost:3020/music/likes/', {
+export const addLikeById = (track_id, user_id) => {
+  return fetch('http://localhost:3020/music/likes/add', {
     headers: {
       "Content-Type": "application/json"
     },
     method: "PATCH",
-    body: JSON.stringify(body)
+    body: JSON.stringify({_id: track_id, user_id: user_id})
   }).then((res) => onResponse(res));
 }
 
@@ -24,13 +24,13 @@ export const getMusicList = () => {
   }).then((res) => onResponse(res));
 }
 
-export const deleteMusicLikeById = (body) => {
-  return fetch('http://localhost:3020/music/likes/', {
+export const deleteMusicLikeById = (track_id, user_id) => {
+  return fetch('http://localhost:3020/music/likes/delete', {
     headers: {
       "Content-Type": "application/json"
     },
     method: "DELETE",
-    body: JSON.stringify(body)
+    body: JSON.stringify({_id: track_id, user_id: user_id})
   }).then((res) => onResponse(res));
 }
 
@@ -64,7 +64,7 @@ export const deleteTrackByID = (track_id) => {
       "Content-Type": "application/json"
     },
     method: "DELETE",
-    body: JSON.stringify({track_id: track_id})
+    body: JSON.stringify({_id: track_id})
     
   }).then((res) => onResponse(res));
 }

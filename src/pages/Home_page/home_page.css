@@ -13,7 +13,7 @@ color:rgb(255, 122, 28);
 
 .home_page_descrpition_greetings {
   font-size: 16px;
-  padding-right: 7rem;
+  padding-right: 3rem;
   width: 50%;
 }
 .home_page_descrpition_links_block{
@@ -48,8 +48,8 @@ box-shadow: black  4px 3px 7px 0px;
   background-color: rgb(23, 13, 32);
 } 
 .home_page_descrpition_image{
-  width: 359px;
-  height: 552px;
+  max-width: 359px;
+  max-height: 552px;
   padding-right: 1rem;
 }
 .home_page_biography_block {

@@ -4,7 +4,7 @@ import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { addNewText } from '../../utils/api_texts';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { TextAreaAuto } from '../TextAreaAuto/TextAreaAuto';
+
 
 export const AddTextPage = ({langEn, texts, setTexts}) => {
 const navigate = useNavigate()

@@ -3,24 +3,39 @@ import {MusicList} from '../../components/MusicList/MusicList'
 import './musicPage.css'
 import AddIcon from '@mui/icons-material/Add';
 import { AddMusicForm } from './AddMusicForm/AddMusicForm';
-import useSound from "use-sound";
-import Denis from './Denis1.mp3'
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { addLikeById, deleteMusicLikeById, getMusicList } from '../../utils/api_music';
 
-export const MusicPage = ({langEn, showModal, setShowModal, trackList, setMusicLiked, handleMusicLike, setTrackList, currentUser}) => {
 
- const [play, { pause, duration, sound }] = useSound(Denis);
+export const MusicPage = ({langEn, showModal, setShowModal, currentUser}) => {
+
+  //---- Логика для страницы с музыкой------
+  // Для музыки
+  const [trackList, setTrackList] = useState([]);
+  // Получаем карточки с музыкой
+  useEffect(()=>{
+    getMusicList().then((result)=>{
+      setTrackList(result)
+    })
+  }, [])
+
+  const user_id = currentUser.uid
+
+
+// Функция для отправки или удаления лайка музыки по клику.
+// Если лайк поставлен, происходил удаление лайка
+
 
 
   return (
     <div className='music_page_container'>
-      <button onClick={()=>{play()}}>Помощь</button>
+
       <div  className='music_page_container_title_btn_wrapper'>
         {langEn ? <h1 className='music_page_title'>My Music</h1> : <h1 className='music_page_title'>Моя музыка</h1>}
         <button onClick={()=>{setShowModal(true)}} className='add_music_create_btn'>{langEn ? 'Add New Track ' : "Добавить музыку "}<AddIcon/> </button>
       {/* <button className='music_page_add_btn' onClick={()=>{play()}}>Развел гоев на доллары!</button> */}
       </div>
-      < MusicList  showModal={showModal} setShowModal={setShowModal} trackList={trackList} handleMusicLike={handleMusicLike} setTrackList={setTrackList} langEn={langEn} setMusicLiked={setMusicLiked} currentUser={currentUser}/>
+      < MusicList user_id={user_id}  showModal={showModal} setShowModal={setShowModal} trackList={trackList} setTrackList={setTrackList} langEn={langEn}  currentUser={currentUser}/>
         {!!showModal &&
         <ModalWindow setShowModal={setShowModal}  showModal={showModal}>
           <AddMusicForm trackList={trackList} setShowModal={setShowModal} setTrackList={setTrackList} langEn={langEn}/>
