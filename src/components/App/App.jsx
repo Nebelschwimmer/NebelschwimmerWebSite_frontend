@@ -84,7 +84,7 @@ return (
         <Route path='/music' element={<MusicPage showModal={showModal} setShowModal={setShowModal}  langEn={langEn} currentUser={currentUser}/>}></Route>
         <Route path='/texts' element={<TextsPage  currentUser={currentUser} showModal={showModal} 
         setShowModal={setShowModal} langEn={langEn} texts={texts} setTexts={setTexts}/>}></Route>
-        <Route path='/texts/add-text' element={<AddTextPage texts={texts} setTexts={setTexts} langEn={langEn} showModal={showModal} setShowModal={setShowModal}/>}></Route> 
+        <Route path='/texts/add-text' element={<AddTextPage currentUser={currentUser} texts={texts} setTexts={setTexts} langEn={langEn} showModal={showModal} setShowModal={setShowModal}/>}></Route> 
         <Route path='/register' element={<Register langEn={langEn} currentUser={currentUser} setCurrentUser={setCurrentUser} signInWithGoogle={signInWithGoogle}/>}></Route>
         <Route path='/user-settings' element={<UserSettings showModal={showModal} setShowModal={setShowModal} onSignOut={onSignOut}  currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
         <Route path='/sign-in' element={<SignIn langEn={langEn} signInWithGoogle={signInWithGoogle}/>}></Route>

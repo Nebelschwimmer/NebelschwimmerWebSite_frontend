@@ -1,30 +1,9 @@
 
-.add__text__sumbit_btn{
-  width: 7%;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    cursor: pointer;
-    background-color:rgb(45, 19, 56);
-    color: white;
-    border-radius: 10px;
-    font-weight: 600;
-    transition: 0.2s ease-in-out;
-    box-shadow: black 1px 1px 1px 1px;
-    border: none;
-      &:hover {
-        color: darkorange;
-        background-color: rgb(50, 28, 73); 
-      }    
-  }
-  
 .texts__page__upper_wrapper h1{
   display: flex;
   justify-content: center;
 }
-.text__page {
+.texts__page {
   
   &__contents__container{
     display: flex;
@@ -32,7 +11,11 @@
     gap:10px;
     align-items: flex-start;
     justify-content: center;
+    margin-top: 2rem;
+    width: 100%;
+    margin: 2rem auto;
   }
+
   &__link {
     text-decoration: none;
     color: white;
@@ -46,10 +29,108 @@
       color: darkorange;
     }
   }
-  
+  &__input__container {
+    position: relative;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    gap:1rem
+    }
+  &__input{
+      border-radius: 10px;
+      height: 33px;
+      font-size: 16px;
+      border: 1px solid rgb(65, 47, 61);
+      color: white;
+      padding: 4px; 
+      width: 100%;
+      // width: 100%;
+      background-color: transparent;
+      &:focus {
+        outline: 1px solid rgb(65, 47, 61); 
+      }
+      &__search__icon {
+        position: absolute;
+        right:0;
+        top:10px;
+        object-fit: fill;
+        cursor: pointer;
+      }
+    } 
+
+  &__search__wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  &__search__options__container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-light);
+    padding: 10px;
+    border-radius: 10px;
+    
+    :first-child {
+      border-bottom: 1px solid gray;
+
+    }
+    & span {
+      cursor: pointer;
+      transition: 0.1s ease-in;
+      &:hover {
+        text-decoration: underline;
+        color: darkorange;
+      }
+    }
+  }
 }
+
 
 .single__text__page__spinner__container{
   width: 100%;
   text-align: center;
+}
+
+table {
+  width: 100%;
+ 
+  border-collapse: collapse;
+  margin-top: 100px;
+
+  th {
+    color: darkorange;
+    border-bottom: 2px solid gray;
+    padding-bottom: 1rem;
+   
+
+  }
+  th:first-child {
+    text-align: left;
+  }
+  th:nth-child(4) {
+    cursor: pointer;
+
+ 
+    
+  }
+  th:nth-child(5) {
+    cursor: pointer;
+  }
+  tr {
+    text-align: center;
+  }
+  td {
+    padding-top: 1rem;
+    font-size: 14px;
+    border-bottom: 1px dashed gray;
+    padding-bottom: 1rem;
+  }
+
+& td:first-child {
+  text-align: left;
+  font-size: 16px;
+  font-weight: 700;
+ 
+}
 }

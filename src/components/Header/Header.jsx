@@ -13,9 +13,12 @@ import { useEffect, useState } from 'react';
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import LogoutIcon from '@mui/icons-material/Logout';
-import uk_flag from '../../pictures/uk-flag.webp'
-import rus_flag from '../../pictures/rus_flag.png'
-import logo from '../../pictures/Logo_surLand.svg'
+import uk_flag from '../../pictures/uk-flag.webp';
+import rus_flag from '../../pictures/rus_flag.png';
+import logo from '../../pictures/Logo_surLand2.svg';
+
+
+
 
 export const Header = ({langEn, setLangEn, currentUser, onSignOut, user}) => {
 
@@ -90,11 +93,6 @@ const navigate = useNavigate()
       </div>
       <div className='header_name_wrapper'>
         <img src={logo} className='header_name_wrapper_logo'></img>
-        {/* {langEn ? 
-        <div className='header_name_wrapper_sub_label'>Andrew Dyakov: Frontend-developer, musician, linguist</div> 
-        :
-        <div className='header_name_wrapper_sub_label'>Андрей Дьяков: Фронтенд-разработчик, музыкант, лингвист</div>
-        } */}
       </div>
 
       
@@ -104,12 +102,11 @@ const navigate = useNavigate()
           
           {currentUser  ? (
           <div className='header_aut_nav_wrapper'>
-            <div onClick={()=>{navigate('/user-settings')}} className='header_aut_name_img_wrapper'>
-              {/* <span className='header_aut_nav_name_span'>{name}</span> */}
+            <div title={langEn ? 'View Profile' : 'Личный кабинет'} onClick={()=>{navigate('/user-settings')}} className='header_aut_name_img_wrapper'>
+            
               <img className='header_aut_nav_img' src={avatarURL}/>
             </div>
         
-
             <button className='header_controls_block_single_btn_signin' title='Sign out' onClick={()=>{setShowPopover(true)}}><LogoutIcon /></button>
             {!!showPopOver &&
           <div className='header_popover'>
@@ -130,6 +127,9 @@ const navigate = useNavigate()
             <HowToRegIcon/>Sign up</button>
           </div>)}
           </div>
+          
+          
+          
         
           <div className='header_controls_block_nav_btns_wrapper'>
             <Link className='header_controls_block_single_btn_link' to="/">

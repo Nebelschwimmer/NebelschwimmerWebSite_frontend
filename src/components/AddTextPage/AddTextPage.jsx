@@ -4,21 +4,24 @@ import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { addNewText } from '../../utils/api_texts';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Backbutton } from '../BackButton/BackButton';
 
-
-export const AddTextPage = ({langEn, texts, setTexts}) => {
+export const AddTextPage = ({langEn, currentUser, texts, setTexts}) => {
 const navigate = useNavigate()
 const [printAdded, setPrintAdded] = useState(false)
+
+
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
+const user_displayName = currentUser.displayName
 
   const SendNewText = async (data) => {
     try {
-      await  addNewText(data)
+      await  addNewText(data, user_displayName)
         .then(res => {
           setTexts([...texts, res]);
           setPrintAdded(true)
@@ -51,6 +54,7 @@ const [printAdded, setPrintAdded] = useState(false)
 
   return (
     <div className='add__text'>
+          <Backbutton/>
         <form className='add__text__container' onSubmit={handleSubmit(SendNewText)}>
           <h2 style={{color:'darkorange'}}>{langEn ? 'Add Text' : 'Добавить текст'}</h2>
           
@@ -66,18 +70,19 @@ const [printAdded, setPrintAdded] = useState(false)
           </label>
           
           { langEn ?
-            <div className='add__text__textarea__wrapper'> Place your text in the area below (EN)
+            <div className='add__text__textarea__wrapper'> 
               {/* Сделать обычный текстареа! */}
               <TextareaAutosize 
-              
+              placeholder='Place your text here'
               className='add__text__textarea'
               {...register("content_en")}
               >
               </TextareaAutosize>
             </div>
           :
-            <div className='add__text__textarea__wrapper'> Разместите текст в области ниже (Русс.)
+            <div className='add__text__textarea__wrapper'>
               <TextareaAutosize 
+              placeholder='Разместите текст здесь'
               className='add__text__textarea'
               {...register("content_ru")}
               >
@@ -86,13 +91,18 @@ const [printAdded, setPrintAdded] = useState(false)
           }
           
           <div className='add__text__sumbit_btn_wrapper'>
-            <button type='submit' className='add__text__sumbit_btn'>{langEn ? 'Publish' : 'Опубликовать'}</button>
+            <div>
+              <button type='submit' className='add__text__sumbit_btn'>{langEn ? 'Publish' : 'Опубликовать'}</button>
+              {printAdded &&
+                <div className='print__added__wrapper'>
+                  <span>{langEn ? 'Your text was successfully published' : "Текст успешно добавлен"}</span>
+                </div>
+              }
+            </div>
+          
+            <button onClick={()=>{navigate('/texts')}} className='add__text__sumbit_btn'>{langEn ? 'Go to Texts List' : 'Перейти к списку текстов'}</button>
           </div>
-        {printAdded && 
-          <div className='print__added__wrapper'>
-            <span>{langEn ? 'Your text was successfully published' : "Текст успешно добавлен"}</span>
-          </div>
-        }
+        
         </form>
     </div>
   )

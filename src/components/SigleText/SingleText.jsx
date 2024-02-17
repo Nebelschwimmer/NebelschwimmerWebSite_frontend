@@ -126,7 +126,7 @@ useEffect (()=>{
 }, 
 [singleText])
 
-
+console.log(singleText)
 
 
 const sendUpdatedEnText = async (data) => {
@@ -184,7 +184,10 @@ const onTextLike = () => {
         <div onClick={()=>{navigate(-1)}}>
           <Backbutton/>
         </div>
-        <h1 className='single__text__top__name'>{singleText.name}</h1>
+        <div className='single__text__top__titile__container'>
+          <h1 className='single__text__top__name'>{singleText.name}</h1>
+          <em className='single__text__top__name'>{singleText.author}</em>
+        </div>
       </div>
       <div className='single__text__top__lower' >
         <div className='single__text__top__lower__timestamps'>

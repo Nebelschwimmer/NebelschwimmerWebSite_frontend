@@ -13,16 +13,21 @@
     margin-bottom: 2rem;
     &__wrapper {
       display: flex;
-      
       padding-bottom: 2rem;
-      align-items: center;
+      align-items: flex-start;
       gap:2rem;
+    }
+    &__titile__container {
+      display: flex;
+      flex-direction: column;
+      & em {
+        color: white;
+      }
     }
     &__name {
       color: darkorange;
       margin: 0;
       width: 100%;
-      
     }
   
     
