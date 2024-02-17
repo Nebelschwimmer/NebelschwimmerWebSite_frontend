@@ -13,13 +13,19 @@
     margin-bottom: 2rem;
     &__wrapper {
       display: flex;
+      width: 100%;
       padding-bottom: 2rem;
       align-items: flex-start;
       gap:2rem;
     }
     &__titile__container {
       display: flex;
+      width: 100%;
+      justify-content: space-between;
+      & div {
+      display: flex;
       flex-direction: column;
+      }
       & em {
         color: white;
       }

@@ -15,7 +15,31 @@
     width: 100%;
     margin: 2rem auto;
   }
-
+  &__not__found{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding-top: 2rem;
+  }
+    &__sort__controls {
+    
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--bg-light);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 2rem auto;
+    & span { 
+    
+      transition: 0.2s ease-in-out;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+        color: darkorange;
+      }
+    }
+  }
   &__link {
     text-decoration: none;
     color: white;
@@ -84,6 +108,7 @@
       }
     }
   }
+
 }
 
 
@@ -96,7 +121,7 @@ table {
   width: 100%;
  
   border-collapse: collapse;
-  margin-top: 100px;
+  margin-top: 2rem;
 
   th {
     color: darkorange;

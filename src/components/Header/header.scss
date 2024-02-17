@@ -1,8 +1,6 @@
 
 .header{
   position: sticky;
-  width: 100vw;
-  background-color: #000;
   background-image: url('../../pictures/bg_purple_space.png');
   
 }
@@ -10,11 +8,6 @@
 height: 70px;
 margin: 0 auto;
 max-width: 65%;
-
-
-// background: linear-gradient(rgb(0, 0, 0), rgb(25, 0, 27));
-
-color: ghostwhite;
 display: flex;
 justify-content: space-evenly;
 align-items: center;
@@ -30,11 +23,6 @@ font-family: "Saira", sans-serif;
 .header_name_wrapper_logo{
   width: 250px;
   height: 70px
- 
-}
-.header_name_wrapper_sub_label{
-  font-size: 14px;
-  line-height: 22px;
 }
 .header_controls_block {
 display: flex;
@@ -73,7 +61,7 @@ color: darkorange;
   height: fit-content;
   border: 1px solid rgb(20, 20, 20);
   border-radius: 5px;
-  padding: 10px;
+  padding: 5px;
   position: relative;
   cursor: pointer;
 }
@@ -138,6 +126,7 @@ color: darkorange;
   height: 30px;
   width: 30px;
   object-fit: cover;
+  cursor: pointer;
 }
 .header_aut_nav_wrapper{
   display: flex;
@@ -229,8 +218,28 @@ color: darkorange;
 
 
 @media screen and (max-width: 1200px) {
+  .header_container {
+    width: 100vw;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    justify-content: space-evenly;
+  }
   .header_icon_container{
     display: contents;
     margin-right: 2rem;
+    
+  }
+
+  .header_name_wrapper_logo{
+    width: 70px;
+    height: 70px
+  }
+  .header_controls_block{
+    width: fit-content;
+    height: fit-content;
+  }
+  .header_controls_block_nav_btns_wrapper{
+    display: none;
   }
 }

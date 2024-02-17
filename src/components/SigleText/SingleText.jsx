@@ -31,8 +31,7 @@ const [editMode, setEditMode] = useState(false);
 const [updateSuccess, setUpdateSuccess] = useState(false);
 const [favText, setFavText] = useState(false);
 const [showComments, setShowComments] = useState(false)
-
-
+const [showDeleteIcon, setShowDeleteIcon] = useState(false)
 
 const user_id = currentUser.uid
 const {
@@ -41,6 +40,10 @@ const {
   formState: { errors },
 } = useForm();
 
+useEffect(()=>{
+if (currentUser !== '' && currentUser.uid === singleText.author_id)
+setShowDeleteIcon(true)
+}, [currentUser])
 
 const options = { 
   day: "numeric",
@@ -52,8 +55,6 @@ const options = {
   }
 
 const createdAtDate = new Date (singleText.createdAt).toLocaleString("ru-RU", options);
-
-
 
 const textID = singleText._id;
 
@@ -75,24 +76,17 @@ const onTextDelete = async (textID) => {
   }
 }
 
-
-
 useEffect(()=>{
   if (!langEn && contentRu === '')
   setNoContent(true);
   else setNoContent(false);
   if (langEn && contentRu !== '')
-  setNoContent(true)
-  else setNoContent(false);
+  setNoContent(true);
   if (contentEn !== '' && contentRu !== '')
   setNoContent(false);
   if (updateSuccess)
   setNoContent(false)
 }, [langEn, contentRu, noContent, updateSuccess])
-
-
-
-
 
 useEffect (()=>{
   if (singleText.content_en !== '') {
@@ -109,8 +103,6 @@ useEffect (()=>{
   else setContentEn('')
 }, 
 [singleText])
-
-
 
 useEffect (()=>{
   if (singleText.content_ru !== '') {
@@ -135,7 +127,6 @@ const sendUpdatedEnText = async (data) => {
         .then(res => setSingleText(()=>({...res})));
         setUpdateSuccess(true);
         setEditMode(false);
-        
       }
       catch(err) {
       console.log(err)
@@ -155,27 +146,17 @@ const sendUpdatedRuText = async (data) => {
     }
 }
 
-
-
 useEffect(()=>{
 if (updateSuccess)
-setTimeout(()=>{
-  
+  setTimeout(()=>{
   setUpdateSuccess(false)
 }, 5000)
 }, [updateSuccess])
 
 
-
-
 const onTextLike = () => {
-  handleTextLike(textID, user_id)
+  handleTextLike(textID, user_id);
 }
-
-
-
-
-
 
   return (
     <div className='single__text__main__container'>
@@ -185,8 +166,11 @@ const onTextLike = () => {
           <Backbutton/>
         </div>
         <div className='single__text__top__titile__container'>
-          <h1 className='single__text__top__name'>{singleText.name}</h1>
-          <em className='single__text__top__name'>{singleText.author}</em>
+          <div>
+            {langEn ? <h1 className='single__text__top__name'>{singleText.name_en}</h1> : <h1 className='single__text__top__name'>{singleText.name_ru}</h1> }
+            <em className='single__text__top__name'>{singleText.author}</em>
+          </div>
+          <button onClick={()=>{navigate('/texts/add-text')}} className='add__text__sumbit_btn' type='submit'>{langEn? "Publish new Text" : "Опубликовать новый текст"}</button>
         </div>
       </div>
       <div className='single__text__top__lower' >
@@ -206,7 +190,7 @@ const onTextLike = () => {
             <span title={langEn ? 'Comments' : 'Комментарии'}>{singleText.comments.length}</span>
           </div>
         </div>
-        {currentUser !== '' &&
+        {showDeleteIcon &&
           <div className='single__text__top__lower__ctrl__btn__container'>
             <button className='single__text__top__lower__ctrl__btn' title={langEn ? "Delete" : "Удалить"}  
             onClick={()=>{setShowModal(true)}}> <DeleteForeverIcon fontSize='small' /> </button>
@@ -266,9 +250,7 @@ const onTextLike = () => {
                 <textarea className='textarea_auto' defaultValue={singleText.content_ru} {...register("content_ru")}></textarea>
                 <button className='add__text__sumbit_btn' type='submit'>{langEn? "Send" : "Отправить"}</button>
               </form>
-            }
-            
-            
+            }    
           </div>
     }
     <section className='single__text__comments__section'>

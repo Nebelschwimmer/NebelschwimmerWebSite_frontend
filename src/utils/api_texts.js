@@ -13,8 +13,8 @@ export const getTextsList = async () => {
   ).then((res) => onResponse(res));
 }
 
-export const searchTextByAuthor = async (authorQuery) => {
-  return fetch(`http://localhost:3020/texts?author=${authorQuery}`, {
+export const searchText = async (searchQuery) => {
+  return fetch(`http://localhost:3020/texts?search=${searchQuery}`, {
     headers: {
     "Content-Type": "application/json"
     }
@@ -34,13 +34,14 @@ export const getTextByID = async (textID) => {
   ).then((res) => onResponse(res));
 }
 
-export const addNewText = async (body, user_displayName) => {
+export const addNewText = async (body, user_displayName, author_id) => {
+  console.log(author_id)
   return fetch('http://localhost:3020/texts/add', {
     headers: {
     "Content-Type": "application/json"
     },
     method: 'POST',
-    body: JSON.stringify({...body, user_displayName})
+    body: JSON.stringify({...body, user_displayName, author_id})
   }
   ).then((res) => onResponse(res));
 }

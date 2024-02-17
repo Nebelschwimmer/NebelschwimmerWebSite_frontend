@@ -110,10 +110,10 @@ const navigate = useNavigate()
             <button className='header_controls_block_single_btn_signin' title='Sign out' onClick={()=>{setShowPopover(true)}}><LogoutIcon /></button>
             {!!showPopOver &&
           <div className='header_popover'>
-            <span>Are you sure?</span>
+            <span>{langEn ? 'Are you sure?' : "Вы уверены?"}</span>
             <div className='header_popover_btns_wrapper'>
-              <button className='header_popover_btn' onClick={()=>{onSignOut()}}>Sign Out</button>
-              <button className='header_popover_btn' onClick={()=>{setShowPopover(false)}}>Cancel</button>
+              <button className='header_popover_btn' onClick={()=>{onSignOut()}}>{langEn ? 'Sign out' : "Выйти"}</button>
+              <button className='header_popover_btn' onClick={()=>{setShowPopover(false)}}>{langEn ? 'Cancel' : "Выйти"}</button>
             </div>
           </div>
             }
@@ -139,9 +139,7 @@ const navigate = useNavigate()
             <Link className='header_controls_block_single_btn_link' to="/texts">
               <button className='header_controls_block_single_btn'><LibraryBooksIcon/>Texts</button></Link>
             <Link className='header_controls_block_single_btn_link' to="/projects">
-              <button className='header_controls_block_single_btn'><GitHubIcon/>Projects</button></Link>
-            <Link className='header_controls_block_single_btn_link' to="/contacts">
-              <button className='header_controls_block_single_btn'><ContactPageIcon/>Contacts</button></Link>
+              <button className='header_controls_block_single_btn'><GitHubIcon/>About</button></Link>
           </div>
         </nav>
         :
@@ -149,8 +147,7 @@ const navigate = useNavigate()
           <div className='header_aut_nav'>
           {currentUser ? (
           <div className='header_aut_nav_wrapper'>
-            <span style={{cursor: 'default'}}>{name}</span>
-            <img className='header_aut_nav_img' src={avatarURL}/>
+            <img onClick={()=>{navigate('/user-settings')}} className='header_aut_nav_img' src={avatarURL}/>
             <button className='header_controls_block_single_btn_signin' title='Выйти' onClick={()=>{onSignOut()}}> <LogoutIcon/></button>
           
           </div>
@@ -173,9 +170,8 @@ const navigate = useNavigate()
             <Link className='header_controls_block_single_btn_link' to="/texts">
               <button className='header_controls_block_single_btn'><LibraryBooksIcon/>Тексты</button></Link>
             <Link className='header_controls_block_single_btn_link' to="/projects">
-              <button className='header_controls_block_single_btn'><GitHubIcon/>Проекты</button></Link>
-            <Link className='header_controls_block_single_btn_link' to="/contacts">
-              <button className='header_controls_block_single_btn'><ContactPageIcon/>Контакты</button></Link>
+              <button className='header_controls_block_single_btn'><GitHubIcon/>О Проекте</button></Link>
+            
           </div>
         </nav>
       }

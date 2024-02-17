@@ -22,9 +22,7 @@ $bg-light:  rgb(65, 47, 61)  ;
 
 
 body {
-  @import url('https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Fredericka+the+Great&display=swap');
   margin: 0 auto;
- 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: url('./pictures/background_psycho_2.jpg');
@@ -32,7 +30,6 @@ body {
   background-attachment: fixed;
   background-size: cover;
   width: 100vw;
-  min-width: 480px;
   overflow-x: hidden;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
  
@@ -56,7 +53,6 @@ margin-top: 2rem;
 box-shadow: 3px 3px 6px 3px black;
 padding-top: 2rem;  
 background-color: $main-bg-color;
-opacity: 0.98;
 
 }
 input[type="range"] {

@@ -12,9 +12,13 @@
     
     align-items: center;
   }
+  &__inputs {
+    display: flex;
+    gap: 1rem
+  }
   &__input {
     height: 2rem;
-    width: 40%;
+    min-width: 50%;
     font-size: 18px;  
     border-radius: 10px;
     outline-color: rgb(42, 3, 78);
@@ -41,6 +45,15 @@
     color: white;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     resize: none;
+  }
+  &__not__auth{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin-top: 5rem;
+    color: darkorange;
+    cursor: pointer;
+    font-size: 22px;
   }
   &__sumbit_btn_wrapper {
     display: flex;
