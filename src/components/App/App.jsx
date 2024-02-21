@@ -1,4 +1,3 @@
-import './App.css';
 import { Header } from '../Header/Header'
 import { useState, useEffect } from 'react'
 import {HomePage} from '../../pages/Home_page/HomePage'
@@ -16,6 +15,8 @@ import { ResetPassword } from '../Auth/ResetPassword.jsx';
 
 import { AddTextPage } from '../AddTextPage/AddTextPage.jsx';
 import { SingleTextPage } from '../../pages/TextsPage/SingleTextPage/SingleTextPage.jsx';
+import { AboutPage } from '../../pages/AboutPage/AboutPage.jsx';
+
 
 function App() {
   // Стейты:
@@ -28,7 +29,7 @@ function App() {
 
   const [texts, setTexts] = useState([]);
 
-
+  const [trackList, setTrackList] = useState([]);
   // Функция для навигации
   const navigate = useNavigate()
 
@@ -79,9 +80,10 @@ return (
       <main className='main_content_container'>
 
       <Routes>
-        <Route path='/' element={<HomePage langEn={langEn} setLangEn={setLangEn} />}></Route> 
+        <Route path='/' element={<HomePage langEn={langEn} currentUser={currentUser} setLangEn={setLangEn} />}></Route> 
         <Route path='/texts/:textID' element={<SingleTextPage currentUser={currentUser} setLangEn={setLangEn} showModal={showModal} setShowModal={setShowModal} texts={texts} setTexts={setTexts} langEn={langEn} />}> </Route> 
-        <Route path='/music' element={<MusicPage showModal={showModal} setShowModal={setShowModal}  langEn={langEn} currentUser={currentUser}/>}></Route>
+        <Route path='/music' element={<MusicPage showModal={showModal} setShowModal={setShowModal} trackList={trackList} setTrackList={setTrackList}  
+        langEn={langEn} currentUser={currentUser}/>}></Route>
         <Route path='/texts' element={<TextsPage  currentUser={currentUser} showModal={showModal} 
         setShowModal={setShowModal} langEn={langEn} texts={texts} setTexts={setTexts}/>}></Route>
         <Route path='/texts/add-text' element={<AddTextPage currentUser={currentUser} texts={texts} setTexts={setTexts} langEn={langEn} showModal={showModal} setShowModal={setShowModal}/>}></Route> 
@@ -89,6 +91,7 @@ return (
         <Route path='/user-settings' element={<UserSettings showModal={showModal} setShowModal={setShowModal} onSignOut={onSignOut}  currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
         <Route path='/sign-in' element={<SignIn langEn={langEn} signInWithGoogle={signInWithGoogle}/>}></Route>
         <Route path='/password-reset' element={<ResetPassword langEn={langEn}/>}></Route>       
+        <Route path='/about' element={<AboutPage langEn={langEn}/>}></Route>
       
       </Routes>
     </main>

@@ -1,22 +1,15 @@
-$main-bg-color: rgb(34, 18, 37) ;
-$bg-light:  rgb(65, 47, 61)  ;
-
-
-
 :root {
-  $main-bg-color: rgb(34, 18, 37) ;
-  --bg-light:  rgb(65, 47, 61);
-  --main-bg-color: rgb(34, 18, 37);
- 
-}
+  --bg-light:  rgb(58, 39, 54, 0.9);
+  --main-bg-color: rgb(20, 4, 22);
+  --main-bg-color-op-main: rgba(52, 30, 56, 0.6);
+  --btn-color: rgba(68, 25, 65, 0.8);
+  --lilac-color: #ffdaeb;
+  --violet-text-shadow:  0 2px 5px rgb(156, 50, 121);
+  --orange-outline: 1px solid rgb(243, 131, 39);
+  --box-shadow-gl: 0 0 12px 10px rgba(14, 0, 14, 0.3);
 
-.climate-crisis-1979 {
-  font-family: "Climate Crisis", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings:
-    "YEAR" 1979;
+
+  
 }
 
 
@@ -25,36 +18,78 @@ body {
   margin: 0 auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('./pictures/background_psycho_2.jpg');
+  background-image: url('./pictures/bg_space_main_3.png');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
   width: 100vw;
   overflow-x: hidden;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
- 
-  counter-reset: contents_counter;
+  font-family: "Titillium Web", sans-serif;
+  counter-reset: contents_counter;  
+  color: white;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
 .main_content_container {
 max-width: 60%;
 padding-right: 4rem;
 color: white;
-font-size: 16px;
+font-size: clamp(12px, 1.5vw, 18px);
 padding-left: 4rem;
 padding-bottom: 8rem;
 margin: 0 auto;
 min-height: 68vh;
 margin-top: 2rem;
-box-shadow: 3px 3px 6px 3px black;
+// box-shadow: 3px 3px 6px 3px black;
 padding-top: 2rem;  
-background-color: $main-bg-color;
-
+background-color: var(--main-bg-color-op-main);
+border-radius: 30px;
 }
+
+h1 {
+  color: darkorange;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(207, 117, 0, 0.7);
+}
+
+
+// button {
+//   background-color: var(--btn-color);
+//   padding: 5px;
+//   border-radius: 5px;
+//   font-size: clamp(0.75rem, 0.688rem + 0.26vw, 1rem);
+//   text-align: center;
+//   width: clamp(2.5rem, 6.883rem + 2.597vw, 10rem);
+//   border: none;
+//   color: white;
+//   cursor: pointer;
+//     &:hover {
+//       color:darkorange;
+//       box-shadow: var(--box-shadow-gl);
+//   }
+// }
+
+
+input[type=checkbox] {
+  cursor: pointer;
+  accent-color:  var(--bg-light);
+}
+
+// input[type=text] {
+//   height: 2rem;
+//     width: clamp(120px, 10vw, 300px);
+//     font-size: 14px;  
+//     border-radius: 5px;
+//     border: 1px white solid;
+//     background-color: transparent;
+//     color: white;
+//     &:focus {
+//       outline: var(--orange-outline);
+//     }
+// }
+
+
+
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -74,16 +109,16 @@ input[type="range"]::-moz-range-track {
   border-radius: 5px;
 }
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
+  -webkit-appearance: none; 
   appearance: none;
-  margin-top: -5px; /* Centers thumb on the track */
+  margin-top: -5px;
   background-color: rgb(255, 255, 255);
   height: 20px;
   width: 12px;
   border-radius: 20%;  
 }
 input[type="range"]::-moz-range-thumb {
-  border: none; /*Removes extra border that FF applies*/
+  border: none;
   border-radius: 20%;
   background-color: rgb(255, 255, 255);
   height: 20px;
@@ -93,4 +128,12 @@ input[type="range"]::-moz-range-progress {
   background-color: rgb(85, 3, 60); 
   height: 0.5rem;
   border-radius: 5px;
+}
+
+@media screen and (max-width: 480px) {
+  .main_content_container {
+    max-width: 100%;
+    border-radius: 0;
+    padding: 10px;
+  }
 }

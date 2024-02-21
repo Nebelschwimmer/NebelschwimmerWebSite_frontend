@@ -20,7 +20,7 @@ export const MusicList = ({user_id, setTrackList, currentUser, trackList, langEn
   return (
 <div className='track_list_cards'>
 
-      {trackList !== undefined ? 
+      {trackList !== undefined || [] ? 
         trackList?.map((el) => {
         return (
           <MusicCard
@@ -37,7 +37,7 @@ export const MusicList = ({user_id, setTrackList, currentUser, trackList, langEn
         );
       })
     :
-    <Spinner></Spinner>
+    <Spinner/>
     }
   
 </div>

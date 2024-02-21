@@ -78,6 +78,28 @@ export const updateRuTextById = async (textID, content) => {
     ).then((res) => onResponse(res));
 }
 
+export const updateTextNameEn = async (textID, name) => {
+  return fetch(`http://localhost:3020/texts/update/name_en/${textID}`, {
+    headers: {
+    "Content-Type": "application/json"
+    },
+    method: 'PUT',
+    body: JSON.stringify(name)
+  }
+  ).then((res) => onResponse(res));
+}
+
+export const updateTextNameRu = async (textID, name) => {
+  return fetch(`http://localhost:3020/texts/update/name_ru/${textID}`, {
+    headers: {
+    "Content-Type": "application/json"
+    },
+    method: 'PUT',
+    body: JSON.stringify(name)
+  }
+  ).then((res) => onResponse(res));
+}
+
 export const addTextToFavourites =  (textID, user_id) => {
  
   return fetch(`http://localhost:3020/texts/likes/add/${textID}`, {

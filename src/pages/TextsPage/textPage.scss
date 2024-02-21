@@ -22,23 +22,23 @@
     padding-top: 2rem;
   }
     &__sort__controls {
-    
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    background-color: var(--bg-light);
-    border-radius: 10px;
-    padding: 10px;
-    margin: 2rem auto;
-    & span { 
-    
-      transition: 0.2s ease-in-out;
-      cursor: pointer;
-      &:hover {
-        text-decoration: underline;
-        color: darkorange;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background-color: var(--bg-light);
+      border-radius: 10px;
+      padding: 5px;
+      margin: 2rem auto;
+      & span { 
+        font-size: 14px;
+        transition: 0.2s ease-in-out;
+        color: var(--lilac-color);
+        cursor: pointer;
+          &:hover {
+            text-decoration: underline;
+            color: darkorange;
+          }
       }
-    }
   }
   &__link {
     text-decoration: none;
@@ -59,29 +59,31 @@
     display: flex;
     flex-direction: column;
     width: 30%;
-    gap:1rem
+    gap:1rem;
+    width: clamp(7.5rem, 4.81rem + 12.658vw, 20rem);
+
     }
   &__input{
       border-radius: 10px;
       height: 33px;
       font-size: 16px;
-      border: 1px solid rgb(65, 47, 61);
+      border: 1px solid var(--bg-light);
       color: white;
       padding: 4px; 
       width: 100%;
       // width: 100%;
       background-color: transparent;
       &:focus {
-        outline: 1px solid rgb(65, 47, 61); 
+        outline: 1px solid rgb(180, 101, 163); 
       }
       &__search__icon {
         position: absolute;
         right:0;
-        top:10px;
+        top:11px;
         object-fit: fill;
         cursor: pointer;
       }
-    } 
+    }
 
   &__search__wrapper {
     display: flex;
@@ -108,9 +110,7 @@
       }
     }
   }
-
 }
-
 
 .single__text__page__spinner__container{
   width: 100%;
@@ -119,7 +119,6 @@
 
 table {
   width: 100%;
- 
   border-collapse: collapse;
   margin-top: 2rem;
 
@@ -127,17 +126,12 @@ table {
     color: darkorange;
     border-bottom: 2px solid gray;
     padding-bottom: 1rem;
-   
-
   }
   th:first-child {
     text-align: left;
   }
   th:nth-child(4) {
-    cursor: pointer;
-
- 
-    
+    cursor: pointer;  
   }
   th:nth-child(5) {
     cursor: pointer;
@@ -151,11 +145,70 @@ table {
     border-bottom: 1px dashed gray;
     padding-bottom: 1rem;
   }
-
 & td:first-child {
   text-align: left;
   font-size: 16px;
   font-weight: 700;
- 
 }
+}
+
+@media only screen and (max-width: 480px) {
+
+  .texts__page__upper_wrapper h1 {
+    text-align: center;
+  }
+
+  .texts__page {
+
+    &__contents__container {
+      width: 90%; // Adjust the width as needed
+      margin: 2rem auto;
+    }
+
+    &__not__found {
+      padding-top: 1rem;
+    }
+
+    &__sort__controls {
+      flex-direction: column;
+      align-items: center;
+      padding: 5px;
+      margin: 1rem auto;
+
+      & span {
+        margin-bottom: 5px;
+      }
+    }
+
+    &__input__container {
+      width: 90%; // Adjust the width as needed
+    }
+
+    &__input {
+      height: 40px; // Adjust the height as needed
+      font-size: 14px; // Adjust the font size as needed
+    }
+
+    &__search__options__container {
+      padding: 5px;
+      & span {
+        margin-bottom: 5px;
+      }
+    }
+
+    .single__text__page__spinner__container {
+      width: 90%; // Adjust the width as needed
+      margin: 0 auto;
+    }
+
+    table {
+      th {
+        font-size: 14px; // Adjust the font size as needed
+      }
+
+      td {
+        font-size: 12px; // Adjust the font size as needed
+      }
+    }
+  }
 }

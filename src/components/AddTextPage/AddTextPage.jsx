@@ -9,7 +9,7 @@ import { Backbutton } from '../BackButton/BackButton';
 export const AddTextPage = ({langEn, currentUser, texts, setTexts}) => {
 const navigate = useNavigate()
 const [printAdded, setPrintAdded] = useState(false)
-const [checked, setChecked] = useState(true);
+const [checked, setChecked] = useState(false);
 const [showSecondTextarea, setShowSecondTextarea] = useState(true);
 
 const {
@@ -77,7 +77,7 @@ const author_id = currentUser.uid
         </span>
         {currentUser!== '' ?
         <form className='add__text__container' onSubmit={handleSubmit(SendNewText)}>
-          <h2 style={{color:'darkorange'}}>{langEn ? 'Add Text' : 'Добавить текст'}</h2>
+          <h1>{langEn ? 'Add Text' : 'Добавить текст'}</h1>
           <label className='add__text__label'>{langEn ? '2 languages' : '2 языка'}
               <input type='checkbox' checked={checked} onChange={handleCheckChange}></input>
             </label>

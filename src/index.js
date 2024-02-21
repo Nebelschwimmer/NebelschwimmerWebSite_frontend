@@ -4,12 +4,16 @@ import './index.scss';
 import App from './components/App/App'
 import { BrowserRouter } from 'react-router-dom';
 import './firebase.js'
+// import store from "./storageToolKit/store";
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-<BrowserRouter> 
-  <App />
-</BrowserRouter>
+
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+
 
 );
 

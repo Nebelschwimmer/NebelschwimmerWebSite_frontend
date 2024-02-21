@@ -1,7 +1,7 @@
 
 import { SingleComment } from "./SingleComment";
 
-export const Comments = ({singleText, user_id, options, setSingleText, textID}) => {
+export const Comments = ({singleText, currentUser, user_id, options, setSingleText, textID}) => {
 
 return (
       <>
@@ -12,9 +12,11 @@ return (
             {...e}
             textID={textID}
             comment={e}
+            key={e._id}
             options={options}
             user_id={user_id}
             setSingleText={setSingleText}
+            currentUser={currentUser}
           />
           )
           })

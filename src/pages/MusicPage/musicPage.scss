@@ -1,0 +1,37 @@
+.music_page_title{
+  color: darkorange;
+  padding-left: 5rem;
+}
+.music_page_container_title_btn_wrapper{
+display: flex;
+  
+  padding-right: 5rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.music_page_add_btn{
+  background-color: var(--btn-color);
+  padding: 10px;
+  border-radius: 5px;
+  font-size: clamp(0.75rem, 0.688rem + 0.26vw, 1rem);
+  text-align: center;
+  width: clamp(2.5rem, 6.883rem + 2.597vw, 10rem);
+  border: none;
+  color: white;
+  cursor: pointer;
+    &:hover {
+      color:darkorange;
+      box-shadow: var(--box-shadow-gl);
+  }
+}
+.music__page__empty{
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+  font-size: 22px;
+}
+
+.music_page_add_btn:hover{
+  color: darkorange;
+}

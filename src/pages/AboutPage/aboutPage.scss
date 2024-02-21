@@ -1,0 +1,17 @@
+.about__page{
+  font-size: 20px;
+}
+ul li {
+  text-indent: 1rem;
+}
+h2 {
+  text-align: center;
+}
+
+
+@media screen and (max-width: 480px) {
+  .about__page{
+    font-size: 14px;
+    padding: 5px;
+  }
+}

@@ -3,23 +3,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 40px;
-  background-color: rgb(21, 12, 28);
-  padding-bottom: 40px;
-  width: 40%;
+  padding:clamp(12px, 1vw, 42px);
+  width: clamp(346px, 36vw, 900px);
   min-width: 40%;
   margin-top: 20px;
-  box-shadow: black 1px 1px 1px 1px;
   border-radius: 15px;
-  padding-left: 50px;
-  padding-right: 50px;
+
+  box-shadow: 0 0 12px 10px rgba(14, 0, 14, 0.3);
 }
 .auth_backbtn {
-width:100%;
-display: flex;
-align-items: center;
-gap: 186px;
-padding-left: 50px;
+  width:100%;
+  display: flex;
+  align-items: center;
+  gap:1rem;
+  padding-left: 50px;
 }
 
 .auth_form{
@@ -27,26 +24,22 @@ padding-left: 50px;
   flex-direction: column;
   gap: 10px;
   padding-top: 20px;
-  align-items: space-between;
-  border-bottom: 1px solid gray;
+  align-items: center;
   padding-bottom: 20px;
   justify-content: space-between;
-  min-width: 20%;
-  width: 500px;
-  
-  
+  box-shadow: 0 0 12px 10px rgba(14, 0, 14, 0.3);
+  border-radius: 10px;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 2rem;
 }
-.auth_label_input {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  font-size: 18px;
-}
+
+
+
 .auth_input {
   height: 2rem;
-  width: 320px;
-  font-size: 18px;  
+  width: 50%;
+  font-size: 14px;  
   border-radius: 10px;
   outline-color: rgb(42, 3, 78);
   padding-left: 20px;
@@ -56,7 +49,7 @@ padding-left: 50px;
   color: white;
 }
 .auth_sign_btn{
-  width: 360px;
+  width: 50%;
   margin-top: 20px;
   height: 3rem;
   display: flex;
@@ -70,22 +63,23 @@ padding-left: 50px;
   transition: 0.2s ease-in-out;
   box-shadow: black 1px 1px 1px 1px;
   border: none;
-  background-color: rgb(66, 39, 90);
+  background-color: var(--btn-color);
   color: white
 }
 .auth_sign_btn:hover{
 color: darkorange;
-background-color:rgb(19, 0, 37);
+
 }
 .auth_top{
   display: flex;
   flex-direction: column;
   color: white;
+  width: 100%;
+  align-items: center;
 }
 .auth_main {
   display: flex;
   justify-content: center;
-  z-index: 4;
 }
 .auth_req {
   color: violet;
@@ -96,60 +90,70 @@ background-color:rgb(19, 0, 37);
   display: flex;
   justify-content: center;
   align-items: center;
+  gap:2rem;
+  height: fit-content;
 }
 
-.auth_sign_btn_finish:hover{
-  color: darkorange;
-  background-color: rgb(70, 35, 104);
+.auth_sign_btn_wrapper {
+  height: 35%;
+  vertical-align: baseline;
+  position: relative;
 }
+
+
 .auth_user_info{
   display: flex;
   gap: 1rem;
-  border: 1px solid gray;
-  padding:42px;
-  border-radius: 10px;
+  padding:clamp(12px, 1.5vw, 42px);
   margin-bottom: 20px;
   justify-content: space-around;
+  box-shadow: 0 0 12px 10px rgba(14, 0, 14, 0.3);
+  border-radius: 10px;
+  width: 80%;
 
 }
 .auth_user_avatar{
-  width: 167px;
-  height: 167px;
+  width: clamp(70px, 10vw, 197px);
+  /* height: 100%; */
+  min-height: 20px;
+  float: left;
   border-radius: 10px;
   object-fit: cover;
-  
 }
 
 .auth_user_info_name{
-  font-size: 28px;
+  font-size: clamp(16px, 1.5vw, 27px);
   font-weight: 600;
 }
 .auth_user_info_name_wrapper{
   display: flex;
   flex-direction: column;
-  gap:40px
+  gap:40px;
+  width: 100%;
 }
 .auth_user_info_name_top{
   display: flex;
   flex-direction: column;
   gap:6px;
+  align-items: center;
 }
 .auth_user_info_edt_btns_wrapper{
   display: flex;
   justify-content: space-around;
 }
 .auth_user_info_edt_btn{
-  width: fit-content;
-  padding: 1rem;
+  max-width: 150px;
+  width: clamp(12px, 45%, 8rem);
+  padding: 10px;
   margin-top: 20px;
   height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: clamp(10px, 1.2vw, 14px);
   cursor: pointer;
-  gap: 20px;
-  background-color: rgb(37, 9, 65);
+  gap: 10px;
+  background-color: var(--btn-color);
   color: white;
   border-radius: 10px;
   font-weight: 600;
@@ -164,13 +168,12 @@ background-color:rgb(19, 0, 37);
   color: darkorange;
 }
 .auth_clear_btn{
-  
   background-color: transparent;
   cursor: pointer;
   width: 18px;
   height: 18px;
   border: none;
-  color: rgb(255, 255, 255);
+  color: white;
   opacity: 0.1;
   font-weight: 600;
   transition: 0.2s ease-in-out;
@@ -205,8 +208,8 @@ background-color:rgb(19, 0, 37);
 }
 
 .auth_clear_btn_Active:hover{
-  background-color: rgb(208, 178, 237);
-  color: rgb(63, 63, 63);
+  background-color: var(--bg-light);
+  color: white;
   opacity: 0.6;
 }
 
@@ -214,18 +217,18 @@ background-color:rgb(19, 0, 37);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: center;
   gap: 1rem;
-
   height: 78px;
-  
+  width: 40%;
 }
 .auth_form_inputs{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: space-between;;
-  gap: 1rem
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
 }
 .auth_form_clear_btns_wrapper{
   display: flex;
@@ -236,9 +239,10 @@ background-color:rgb(19, 0, 37);
 }
 .auth_form_user{
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   gap: 1rem;
+  width: 100%;
   margin-bottom: 1rem;
 }
 
@@ -249,14 +253,69 @@ background-color:rgb(19, 0, 37);
   opacity: 0;
   transition: 0.2s ease-in-out;
   font-size: 14px;
+  
 }
 .auth_updated_Active{
-  opacity: 0.4;
+  opacity: 1;
 }
 .auth_edit_top_wrapper{
+  text-align: center;
+  width: 100%;
+  color: darkorange;
+}
+
+.spinner_container{
+  position: absolute;
+  right:100px;
+  bottom:0;
+}
+
+.inputs__container{
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+  margin: 0 auto;
+  width: clamp(40px, 70%, 720px);
+  margin-top: 20px;
+}
+label{
+  width: clamp(40px, 30%, 160px);
+  font-size: clamp(12px, 1vw, 16px);
+  
+}
+
+.single__input__wrapper {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding-left: 23px;
-  gap: 1rem
+  width: clamp(240px, 35vw, 470px);
+  gap:10px
+}
+
+.input{
+  height: 2rem;
+  max-width: 450px;
+  width: clamp(120px, 20vw, 400px);
+  font-size: 14px;  
+  border-radius: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 1px white solid;
+  background-color: transparent;
+  color: white;
+}
+
+.input:focus {
+  outline: 1px solid rgb(180, 101, 163); 
+}
+.show__error__container{
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.errors__container{
+  height:40px;
+  display: flex;
+  flex-direction: column;
+  gap:10px
 }

@@ -37,12 +37,12 @@ export const deleteMusicLikeById = (track_id, user_id) => {
 
 
 export const addNewTrack = (formData) => {
-  return fetch('http://localhost:3020/music/upload', {
+  return fetch('http://localhost:3020/music/add', {
     // headers: {
     //   "Content-Type": "multipart/form-data"
     // },
     method: "POST",
-    body: formData,
+    body: formData
     
   }).then((res) => onResponse(res));
 }

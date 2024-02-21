@@ -4,10 +4,11 @@ import { Backbutton } from '../BackButton/BackButton';
 import { useEffect, useState} from 'react';
 import { useForm, } from "react-hook-form";
 import {getAuth, signOut, deleteUser, updateProfile} from 'firebase/auth'
-import './spinner.css'
 import { ModalWindow } from '../ModalWindow/ModalWindow';
 import CloseIcon from '@mui/icons-material/Close';
 import cn from "classnames";
+import { Spinner } from '../Spinner/Spinner';
+
 
 export const UserSettings = ({currentUser, setCurrentUser, showModal, onSignOut, setShowModal}) => {
   
@@ -145,7 +146,7 @@ export const UserSettings = ({currentUser, setCurrentUser, showModal, onSignOut,
       <div className='auth_main'>
         <div className="auth_container">
           <div onClick={()=>navigate(-1)} className="auth_backbtn"><Backbutton/>
-          <h1 style={{color:'darkorange'}}>Profile</h1>
+          <h1>PROFILE</h1>
           </div>
           
             <div className='auth_top'>
@@ -205,48 +206,48 @@ export const UserSettings = ({currentUser, setCurrentUser, showModal, onSignOut,
             </div>  
              {/* Форма */}
             <form onSubmit={handleSubmit(sendUpdateData)}>
-              <div className='auth_form_user'>
-              {/* Инпут длля имени */}
-                <div className='auth_form_labels'>
-                <label >Display Name  :</label>
-                <label>Avatar URL :</label>   
-                </div>
                 {/* Блок с инпутами. При фокусировке отображаются кнопки очистки ввода. При расфокусировке они исчезают */}
-                <div className='auth_form_inputs'>
-                  <div className='auth_label_input'
-                  onFocus={()=>{setShowClearBtn1(true)}}
-                  onBlur={()=>{setShowClearBtn1(false)}}
-                  >
-                        <input
-                          className='auth_input' 
-                          defaultValue={currentUser.displayName}
-                          type='text'
-                          {...userNameRegister}  
+                <div className='inputs__container'>
+                        <div className='single__input__wrapper'
+                          onFocus={()=>{setShowClearBtn1(true)}}
+                          onBlur={()=>{setShowClearBtn1(false)}}
                         >
-                        </input>
-                      {/* Кнопка очистики инпута 1 */}
-                        <button type='button' className={cn("auth_clear_btn", { ["auth_clear_btn_Active"]: showClearBtn1 })} onClick={()=>{reset({userName: ''})}}> <CloseIcon fontSize='small'/> </button>
-                    </div>
-                  {/* Инпут длля аватара */}
-                    <div className='auth_label_input'
-                    onFocus={()=>{setShowClearBtn2(true)}}
-                    onBlur={()=>{setShowClearBtn2(false)}}
-                    >
-                        <input
-                          style={{fontSize:'12px'}}
-                          className='auth_input' 
-                          defaultValue={currentUser.photoURL}
-                          type='url'
-                          {...register("avatarURL", { required: false })}  
+                          <label >Display Name  : </label>
+                            <input
+                              className='input'
+                              defaultValue={currentUser.displayName}
+                              type='text'
+                              {...userNameRegister}
+                            >
+                            </input>
+                          
+                            <button type='button' className={cn("auth_clear_btn", { ["auth_clear_btn_Active"]: showClearBtn1 })}
+                            onClick={()=>{reset({userName: ''})}}> <CloseIcon fontSize='small'/> </button>
+                        </div>
+                      
+
+                        <div className='single__input__wrapper'
+                          onFocus={()=>{setShowClearBtn2(true)}}
+                          onBlur={()=>{setShowClearBtn2(false)}}
                         >
-                        </input>
-                      {/* Кнопка очистики инпута 2 */}
-                        <button type='button' onClick={()=>{reset({avatarURL: ''})}} className={cn("auth_clear_btn", { ["auth_clear_btn_Active"]: showClearBtn2 })}><CloseIcon fontSize='small'/></button>
-                    </div>
+                          <label>Avatar URL :</label>
+                            <input
+                            
+                              style={{fontSize:'12px'}}
+                              className='input'
+                              defaultValue={currentUser.photoURL}
+                              type='url'
+                              {...register("avatarURL")}
+                            >
+                            </input>
+                          <button type='button' onClick={()=>{reset({avatarURL: ''})}}
+                          className={cn("auth_clear_btn", { ["auth_clear_btn_Active"]: showClearBtn2 })}><CloseIcon fontSize='small'/></button>
+                        </div>
+
                   </div>
-                </div>
+
                 {/* Надпись об ошибке при вводе слишком длинного URL + Ошибка при вводе имени */}
-                <div>
+                <div className='show__error__container'>
                   {showError && <small style={{color: 'darkorange'}}>This URL is too long, try another picture  </small>}
                   { errors?.userName  &&
                   <small className='auth_small'>{errors.userName?.message}</small>}
@@ -258,7 +259,7 @@ export const UserSettings = ({currentUser, setCurrentUser, showModal, onSignOut,
                   <button type="submit" className='auth_sign_btn'>Send</button>
                   {/* Спиннер */}
                   {showSpinner &&
-                    <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+                    <span className='spinner_container'><Spinner/></span>
                   }
                 </div> 
             </form> 

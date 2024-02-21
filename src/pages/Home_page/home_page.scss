@@ -1,0 +1,67 @@
+.home__page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 5rem;
+  gap:1rem;
+  &__greeting {
+    
+    color: rgb(167, 98, 8);
+    text-shadow: 1px 1px 10px rgb(126, 7, 80);
+    letter-spacing: clamp(10px, 0.5vw, 30px);
+    font-size: clamp(8px, 5vw, 18px);  
+  }
+  &__title {
+    font-family: "Notable", sans-serif; 
+    letter-spacing: clamp(10px, 1.5vw, 120px);
+    font-size: clamp(30px, 6vw, 70px);
+    background: linear-gradient(90deg, rgba(138, 65, 138, 0.3) 0%, rgba(130, 17, 206, 0.4) 25%, rgba(228, 12, 210, 0.5) 65%, rgba(228, 19, 169, 0.3) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow:  0 0 21px rgb(112, 11, 78);
+    -webkit-animation: glowing 10s  forwards ;
+    -moz-animation: glowing 10s  forwards ;
+    animation: glowing 10s  forwards, blinking 8s ease-in-out infinite alternate  ;
+    background-size: 200%;
+  }
+  &__about {
+    text-align: center;
+    letter-spacing: 2px;
+    color: #ffdaeb;
+    text-shadow:  0 2px 5px rgb(156, 50, 121);
+    line-height: 20px;
+    &__link {
+      text-decoration: none;
+      color: darkorange;
+      font-weight: 600;
+      text-shadow:  0 2px 5px rgb(187, 126, 13, 0.5);
+    }
+  }
+}
+
+@keyframes glowing {
+ 0% { 
+  text-shadow:  0 0 21px rgb(112, 11, 78, 0.2);
+  }
+
+50% {
+  text-shadow:  0 0 21px rgba(202, 103, 11, 0.3);
+  }
+100% {
+  text-shadow:  0 0 21px rgb(112, 11, 78, 0.4);
+}
+}
+
+@keyframes blinking {
+  0% { 
+  background-position: 0%;
+    }
+  50% {
+  background-position: 100%;
+    }
+  100% {
+  background-position: 0%;
+  }
+  }

@@ -22,18 +22,49 @@
       display: flex;
       width: 100%;
       justify-content: space-between;
-      & div {
-      display: flex;
-      flex-direction: column;
-      }
+      
       & em {
         color: white;
       }
     }
     &__name {
       color: darkorange;
-      margin: 0;
       width: 100%;
+      display: flex;
+      align-items: first baseline;
+      gap:2rem;
+      
+      & span {
+        color: white;
+        opacity: 0.6;
+        cursor: pointer;
+        transition: 0.2s ease-in;
+        :hover {
+          color: darkorange;
+        }
+      }
+      &__form {
+        width: clamp(100px, 70%, 500px);
+      }
+      &__input {
+        background-color: transparent;
+        border: none;
+        color: darkorange;
+        font-weight: 700;
+        width: clamp(100px, 100%, 500px);
+        font-size: clamp(16px, 1.5vw, 32px);
+      
+        outline: none;
+        cursor: default;
+        padding: 5px;
+        &__Active {
+          border: 1px dashed gray;
+          border-radius: 5px;
+          cursor: pointer;
+          padding: 10px;
+        
+        }
+      }
     }
   
     

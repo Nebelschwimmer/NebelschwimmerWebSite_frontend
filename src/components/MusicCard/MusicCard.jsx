@@ -32,7 +32,7 @@ export const MusicCard = ({track_name, track, langEn, trackList, setTrackList, t
 
 
 const track_id = track._id
-const track_likes = track.track_likes
+const track_likes = track?.track_likes
 
 
 const handleMusicLike = async (track_id, user_id) =>{
@@ -174,7 +174,8 @@ useEffect(()=>{
 // Для удаления карточки
 const deleteMusicCard = async (track_id) => {
   await deleteTrackByID(track_id).then((newTrackList)=>{
-    setTrackList(newTrackList) 
+    setTrackList(newTrackList);
+    isPlaying(false) 
   })
   
 }

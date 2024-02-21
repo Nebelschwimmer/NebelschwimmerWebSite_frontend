@@ -5,7 +5,7 @@ import { Backbutton } from '../BackButton/BackButton';
 import { useEffect, useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useForm, } from "react-hook-form";
-import './spinner.css'
+import { Spinner } from '../Spinner/Spinner';
 
 
 export const Register = ({currentUser, setCurrentUser, signInWithGoogle}) => {
@@ -118,56 +118,64 @@ const sendSignUpData = async (data) => {
           <form onSubmit={handleSubmit(sendSignUpData)}>
             <div className='auth_form'>
               {/* Инпут для email */}
-              <div className='auth_label_input'>
-                <label className='auth_label'>Email:<span className='auth_req'>*</span></label> 
-                  <input 
-                  className='auth_input' 
-                  type='email'
-                  {...emailRegister}
-                  >
-                  </input>
-              </div>
-              {/* Текст при ошибках email*/}
-              { errors?.email  &&
-                <small className='auth_small'>{errors.email?.message}</small>
-              }
+              <div className='inputs__container'>
+                        <div className='single__input__wrapper'>
+                          <label >Email :</label>
+                            <input
+                              className='input'
+                              type='text'
+                              {...emailRegister}
+                            >
+                            </input>
+                        </div>
+                      
+                        <div className='single__input__wrapper'>
+                          <label>Password :</label>
+                            <input
+                              className='input'
+                              type='password'
+                              {...passwordRegister}
+                              minLength={6}
+                            >
+                            </input>
+                        </div>
 
-              {/* Показываем надпись, что email существует, если приходит ошибка */}
-              { emailExists !== '' && <small className='auth_small'>{emailExists}</small>
-              }
+                        <div className='single__input__wrapper'>
+                          <label>Confirm Password :</label>
+                            <input
+                              className='input'
+                              type='password'
+                              {...passwordConfirm}
+                            >
+                            </input>
+                        </div>
+                    </div>
               
-              {/* Инпут для пароля */}
-              <div className='auth_label_input'>
-                <label className='auth_label'>Password: <span className='auth_req'>*</span></label> 
-                  <input 
-                  className='auth_input' 
-                  type='password'
-                  {...passwordRegister}
-                  minLength={6}
-                  >
-                  </input>
+              
+              
+              
+              
+              
+              {/* ---------------------------------------------------------------------------------------- */}
+            
+            
+              <div className='errors__container'>
+                { errors?.email  &&
+                  <small className='auth_small'>{errors.email?.message}</small>}
+                { emailExists !== '' && <small className='auth_small'>{emailExists}</small>}
+                  {errors?.password && (
+                    <small className='auth_small'>{errors.password?.message}</small>)}
+                  {errors?.passwordConfirm && (
+                    <small className='auth_small'>{errors.passwordConfirm?.message}</small>)}
               </div>
-                {/* Текст при ошибках пароля*/}
-                {errors?.password && (
-                  <small className='auth_small'>{errors.password?.message}</small>)
-                }
-                 {/* Подтверждение пароля */}
-                <div className='auth_label_input'> 
-                  <label className='auth_label'>Confirm Password: <span className='auth_req'>*</span></label>
-                    <input className='auth_input' type='password'
-                    {...passwordConfirm}
-                    ></input>
-                </div>
-                {/* Текст при несовпадения пароля*/}
-                {errors?.passwordConfirm && (
-                  <small className='auth_small'>{errors.passwordConfirm?.message}</small>)}
               </div>
+              
               <div className='auth_sign_btn_wrapper'>
                 {/* Кнопка для отправки данных */}
                 
                   <button type="submit" className='auth_sign_btn'>Create My Account</button>
                   {showSpinner &&
-                    <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+                    <span className='spinner_container'><Spinner/></span>
                   }
               </div>
           </form> 

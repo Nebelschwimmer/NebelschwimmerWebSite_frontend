@@ -7,11 +7,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
 import { searchText } from '../../utils/api_texts';
-
+import {getAuth} from 'firebase/auth'
 
 export const TextsPage = ({langEn, texts, setTexts}) => {
  
 const [searchQuery, setSearchQuery] = useState(undefined);
+
+const auth = getAuth();
+const user = auth.currentUser;
+
+
 
 
 const navigate = useNavigate();
@@ -44,16 +49,24 @@ const handleSearchInputChange = (event) => {
 }
 
 const onSearchClick = async () => {
+  if (searchQuery !== '')
   await searchText(searchQuery).then((res)=>{
     setTexts(res)
-    })
+    });
+  else  {
+    document.getElementById('search_input').focus()
+  }
 }
 
-const texts_sorted_en = [{ id: 'New' },  { id: 'Old' }, { id: 'Popular' }, { id: 'Most discussed' }]
-const texts_sorted_ru = [{ id: 'Новые' },  { id: 'Старые' }, { id: 'Популярные' }, { id: 'Обсуждаемые' }]
+const texts_sorted_en = [{id: 'Author'}, { id: 'New' },  { id: 'Old' }, { id: 'Popular' }, { id: 'Most discussed' }]
+const texts_sorted_ru = [{id: 'Автор'}, { id: 'Новые' },  { id: 'Старые' }, { id: 'Популярные' }, { id: 'Обсуждаемые' }]
 
 const sortTextsEn = (sortWay) => {
   switch(sortWay){
+    case 'Author':
+      const sorTextsByAuthor = texts.sort((a, b) => (b.author.localeCompare(a.author)))
+      setTexts([...sorTextsByAuthor]);
+    break;
     case 'New':
       const sortNewTexts = texts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       setTexts([...sortNewTexts]);
@@ -63,11 +76,11 @@ const sortTextsEn = (sortWay) => {
     setTexts([...sortOldTexts]);
       break;
   case 'Popular':
-    const sortPopularTexts = texts.sort((a, b) => new Date(b.likes.length) - new Date(a.likes.length));
+    const sortPopularTexts = texts.sort((a, b) => (b.likes.length) - (a.likes.length));
     setTexts([...sortPopularTexts]);
   break;
   case 'Most discussed':
-    const sortDiscussedTexts = texts.sort((a, b) => new Date(b.comments.length) - new Date(a.comments.length));
+    const sortDiscussedTexts = texts.sort((a, b) =>(b.comments.length) - (a.comments.length));
     setTexts([...sortDiscussedTexts]);
   break;
       default: 
@@ -76,6 +89,10 @@ const sortTextsEn = (sortWay) => {
 
 const sortTextsRu = (sortWay) => {
   switch(sortWay){
+    case 'Автор':
+      const sorTextsByAuthor = texts.sort((a, b) => (b.author.localeCompare(a.author)))
+      setTexts([...sorTextsByAuthor]);
+    break;
     case 'Новые':
       const sortNewTexts = texts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       setTexts([...sortNewTexts]);
@@ -85,11 +102,11 @@ const sortTextsRu = (sortWay) => {
     setTexts([...sortOldTexts]);
       break;
   case 'Популярные':
-    const sortPopularTexts = texts.sort((a, b) => new Date(b.likes.length) - new Date(a.likes.length));
+    const sortPopularTexts = texts.sort((a, b) => (b.likes.length) - (a.likes.length));
     setTexts([...sortPopularTexts]);
   break;
   case 'Обсуждаемые':
-    const sortDiscussedTexts = texts.sort((a, b) => new Date(b.comments.length) - new Date(a.comments.length));
+    const sortDiscussedTexts = texts.sort((a, b) => (b.comments.length) - (a.comments.length));
     setTexts([...sortDiscussedTexts]);
   break;
       default: 
@@ -102,10 +119,11 @@ const sortTextsRu = (sortWay) => {
     <div className='texts__page'>
       
       <div className='texts__page__upper_wrapper'>
-          <h1 style={{color:'darkorange'}}>{langEn ? 'Texts' : 'Тексты'}</h1>
+          <h1 style={{color:'darkorange'}}>{langEn ? 'TEXTS' : 'ТЕКСТЫ'}</h1>
         <div className='texts__page__search__wrapper'>
           <div className='texts__page__input__container'>
               <input 
+              id='search_input'
               className='texts__page__input' 
               placeholder={langEn ? 'Search texts' : 'Искать тексты'}
               value={searchQuery ?? ''}
@@ -146,8 +164,8 @@ const sortTextsRu = (sortWay) => {
               <th>{langEn ? 'Author' : 'Автор'}</th>
               <th>{langEn ? 'Published' : 'Опубликовано'}</th>
               {/* <th>{langEn ? 'Language(s)' : 'Язык(и)'}</th> */}
-              <th title={langEn ? 'Liked' : "Понравилось"}><FavoriteIcon /></th>
-              <th title={langEn ? 'Comments' : "Комментарии"}><CommentIcon /></th>
+              <th title={langEn ? 'Liked' : "Понравилось"}><FavoriteIcon fontSize='small' /></th>
+              <th title={langEn ? 'Comments' : "Комментарии"}><CommentIcon fontSize='small' /></th>
             </tr>
             </thead>
           {texts?.map((el)=>{

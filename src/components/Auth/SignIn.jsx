@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
 import { useForm } from "react-hook-form";
 import {signInWithEmailAndPassword } from 'firebase/auth'
-import './spinner.css'
+import { Spinner } from '../Spinner/Spinner';
 
 
 
@@ -101,43 +101,45 @@ const sendSignInData = async (data) => {
           {/* Форма */}
             <form onSubmit={handleSubmit(sendSignInData)}>
               <div className='auth_form'>
-                {/* Инпут для email */}
-                <div className='auth_label_input'>
-                  <label >Email:<span className='auth_req'>*</span></label> 
-                    <input 
-                      className='auth_input' 
-                      type='email'
-                    {...emailRegister}
-                    >
-                    </input>
-                </div>
-                {/* Обработка ошибок с почтой */}
-                { errors?.email  &&
-                <small className='auth_small'>{errors.email?.message}</small>
-              }
-                {/* Инпут для пароля */}
-                <div className='auth_label_input'>
-                  <label >Password: <span className='auth_req'>*</span></label> 
-                    <input 
-                      className='auth_input' 
-                      type='password'
-                      {...passwordRegister}
+                    <div className='inputs__container'>
+                        <div className='single__input__wrapper'>
+                          <label >Email :</label>
+                            <input
+                              className='input'
+                              type='text'
+                              {...emailRegister}
+                            >
+                            </input>
+                        </div>
                       
-                    >
-                    </input>
+                        <div className='single__input__wrapper'>
+                          <label>Password :</label>
+                            <input
+                              className='input'
+                              type='password'
+                              {...passwordRegister}
+                            >
+                            </input>
+                        </div>
+                    </div>
+
+                <div className='errors__container'> 
+                { errors?.email  &&
+                  <small className='auth_small'>{errors.email?.message}</small>
+                  }
+                  { errors?.password  &&
+                  <small className='auth_small'>{errors.password?.message}</small>
+                  }
+                  {loginErr && <small style={{color: 'darkorange'}}>Login error! Check if your email address and your password are correct.</small>}
+                  </div>
                 </div>
-                {/* Обработка ошибок с паролем */}
-                { errors?.password  &&
-                <small className='auth_small'>{errors.password?.message}</small>
-                }
-                 {/* Ошибка в логине или пароле */}
-                {loginErr && <small style={{color: 'darkorange'}}>Login error! Check if your email address and your password are correct.</small>}
-                </div>
+
+
               {/* Кнопка отправки */}
               <div className='auth_sign_btn_wrapper'>
                 <button type="submit" className='auth_sign_btn'>Sign In</button>
                 {showSpinner &&
-                    <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+                  <span className='spinner_container'><Spinner/></span>
                   }
               </div>
             </form> 

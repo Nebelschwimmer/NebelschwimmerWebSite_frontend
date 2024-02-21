@@ -1,18 +1,18 @@
 import { ModalWindow } from '../../components/ModalWindow/ModalWindow';
 import {MusicList} from '../../components/MusicList/MusicList'
-import './musicPage.css'
-import AddIcon from '@mui/icons-material/Add';
+import './musicPage.scss'
 import { AddMusicForm } from './AddMusicForm/AddMusicForm';
 import { useState, useEffect } from 'react';
-import { addLikeById, deleteMusicLikeById, getMusicList } from '../../utils/api_music';
+import { getMusicList } from '../../utils/api_music';
+import SearchIcon from '@mui/icons-material/Search';
+import { useNavigate } from 'react-router-dom';
 
+export const MusicPage = ({langEn, trackList, setTrackList, showModal, setShowModal, currentUser}) => {
 
-export const MusicPage = ({langEn, showModal, setShowModal, currentUser}) => {
+  const [searchMusicQuery, setSearchMusicQuery] = useState('')
+  
+  const navigate = useNavigate()
 
-  //---- Логика для страницы с музыкой------
-  // Для музыки
-  const [trackList, setTrackList] = useState([]);
-  // Получаем карточки с музыкой
   useEffect(()=>{
     getMusicList().then((result)=>{
       setTrackList(result)
@@ -21,9 +21,12 @@ export const MusicPage = ({langEn, showModal, setShowModal, currentUser}) => {
 
   const user_id = currentUser.uid
 
+const handleSearchMusicInputChange = () => {
 
-// Функция для отправки или удаления лайка музыки по клику.
-// Если лайк поставлен, происходил удаление лайка
+}
+const handleSearchMusicInputKeyDown = () => {
+  
+}
 
 
 
@@ -31,16 +34,33 @@ export const MusicPage = ({langEn, showModal, setShowModal, currentUser}) => {
     <div className='music_page_container'>
 
       <div  className='music_page_container_title_btn_wrapper'>
-        {langEn ? <h1 className='music_page_title'>My Music</h1> : <h1 className='music_page_title'>Моя музыка</h1>}
-        <button onClick={()=>{setShowModal(true)}} className='add_music_create_btn'>{langEn ? 'Add New Track ' : "Добавить музыку "}<AddIcon/> </button>
-      {/* <button className='music_page_add_btn' onClick={()=>{play()}}>Развел гоев на доллары!</button> */}
+        {langEn ? <h1 className='music_page_title'>MUSIC</h1> : <h1 className='music_page_title'>МУЗЫКА</h1>}
+        <button onClick={()=>{setShowModal(true)}} className='music_page_add_btn'>{langEn ? 'Add New Track ' : "Добавить музыку "} </button>
       </div>
-      < MusicList user_id={user_id}  showModal={showModal} setShowModal={setShowModal} trackList={trackList} setTrackList={setTrackList} langEn={langEn}  currentUser={currentUser}/>
-        {!!showModal &&
-        <ModalWindow setShowModal={setShowModal}  showModal={showModal}>
-          <AddMusicForm trackList={trackList} setShowModal={setShowModal} setTrackList={setTrackList} langEn={langEn}/>
-        </ModalWindow>
-        }
+      
+      <div className='texts__page__input__container'>
+              <input 
+              id='search_input'
+              className='texts__page__input' 
+              placeholder={langEn ? 'Search tracks' : 'Искать треки'}
+              value={searchMusicQuery ?? ''}
+              onChange={handleSearchMusicInputChange}
+              onKeyDown={handleSearchMusicInputKeyDown}
+              >  
+              </input>
+              <span onClick={()=>{}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon/></span>
+            </div>
+      
+
+      {trackList.length !== 0 ? 
+      < MusicList user_id={user_id}  showModal={showModal} setShowModal={setShowModal} trackList={trackList} 
+        setTrackList={setTrackList} langEn={langEn}  currentUser={currentUser}/>
+      :
+      <span className='music__page__empty'>{langEn ? 'Tracklist is empty' : 'Список треков пустой'}</span>
+      }
+      <ModalWindow showModal={showModal} setShowModal={setShowModal}>
+        <AddMusicForm langEn={langEn} setShowModal={setShowModal} currentUser={currentUser} trackList={trackList} setTrackList={setTrackList}/>
+      </ModalWindow>
     </div>
   )
 }

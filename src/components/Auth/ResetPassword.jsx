@@ -52,32 +52,25 @@ export const ResetPassword = () => {
             </div>
 
             <form onSubmit={handleSubmit(sendResetPasswordData)}>
-              <div className='auth_form'>
-                <div className='auth_label_input'>
-                  <label >Email Address:<span className='auth_req'>*</span></label> 
-                    <input 
-                      className='auth_input' 
-                      type='email'
-                      {...emailRegister} 
-                    >
-                    </input>
+                <div className='inputs__container'>
+                        <div className='single__input__wrapper'>
+                          <label >Email :</label>
+                            <input
+                              className='input'
+                              type='text'
+                              {...emailRegister}
+                            >
+                            </input>
+                        </div>
                     {/* Текст при ошибках email*/}
                     { errors?.email  &&
                       <small className='auth_small'>{errors.email?.message}</small>
                     }
+                <div style={{textAlign: 'center'}}>
+                  <span>A reset link will be sent to your e-mail box. </span>
+                  <span>Check it, then sign in with the new password</span>
                 </div>
-                <span>A reset link will be sent to your e-mail box.</span>
-                <span>Check it, then sign in with the new password</span>
                 
-                {/* <div className='auth_label_input'>
-                  <label >Password: <span className='auth_req'>*</span></label> 
-                    <input 
-                      className='auth_input' 
-                      type='password'
-                      {...register("password", { required: true })}  
-                    >
-                    </input>
-                </div> */}
                 </div>
               
               <div className='auth_sign_btn_wrapper'>

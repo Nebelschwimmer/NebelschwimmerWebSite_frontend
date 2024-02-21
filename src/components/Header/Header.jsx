@@ -89,10 +89,11 @@ const navigate = useNavigate()
   <div className='header'>
     <div className='header_container'>
       <div className='header_icon_container'>
-        <MenuIcon fontSize='large'/>
-      </div>
-      <div className='header_name_wrapper'>
-        <img src={logo} className='header_name_wrapper_logo'></img>
+        <span className='header_icon'>
+          <MenuIcon fontSize='large'/>
+        </span>
+        <span onClick={()=>{navigate('/')}} className='header_name_wrapper_logo'>SurLand</span>
+
       </div>
 
       
@@ -103,7 +104,7 @@ const navigate = useNavigate()
           {currentUser  ? (
           <div className='header_aut_nav_wrapper'>
             <div title={langEn ? 'View Profile' : 'Личный кабинет'} onClick={()=>{navigate('/user-settings')}} className='header_aut_name_img_wrapper'>
-            
+              <span>{userName}</span>
               <img className='header_aut_nav_img' src={avatarURL}/>
             </div>
         
@@ -133,53 +134,61 @@ const navigate = useNavigate()
         
           <div className='header_controls_block_nav_btns_wrapper'>
             <Link className='header_controls_block_single_btn_link' to="/">
-              <button className='header_controls_block_single_btn' ><HomeIcon/>Ноme</button></Link>
+              <button className='header_controls_block_single_btn' ><HomeIcon fontSize='small'/>Ноme</button></Link>
             <Link className='header_controls_block_single_btn_link' to="/music">
-              <button className='header_controls_block_single_btn'><LibraryMusicIcon/>Music</button></Link>
+              <button className='header_controls_block_single_btn'><LibraryMusicIcon fontSize='small'/>Music</button></Link>
             <Link className='header_controls_block_single_btn_link' to="/texts">
-              <button className='header_controls_block_single_btn'><LibraryBooksIcon/>Texts</button></Link>
-            <Link className='header_controls_block_single_btn_link' to="/projects">
-              <button className='header_controls_block_single_btn'><GitHubIcon/>About</button></Link>
+              <button className='header_controls_block_single_btn'><LibraryBooksIcon fontSize='small'/>Texts</button></Link>
+            <Link className='header_controls_block_single_btn_link' to="/about">
+              <button className='header_controls_block_single_btn'><GitHubIcon fontSize='small'/>About</button></Link>
           </div>
         </nav>
         :
         <nav className='header_controls_block'>
           <div className='header_aut_nav'>
           {currentUser ? (
-          <div className='header_aut_nav_wrapper'>
-            <img onClick={()=>{navigate('/user-settings')}} className='header_aut_nav_img' src={avatarURL}/>
-            <button className='header_controls_block_single_btn_signin' title='Выйти' onClick={()=>{onSignOut()}}> <LogoutIcon/></button>
-          
+          <div onClick={()=>{navigate('/user-settings')}} className='header_aut_nav_wrapper'>
+            <img  className='header_aut_nav_img' src={avatarURL}/>
+            <span>{userName}</span>
+            <button className='header_controls_block_single_btn_signin' title='Выйти' onClick={()=>{setShowPopover(true)}}> <LogoutIcon/></button>
+            {!!showPopOver &&
+          <div className='header_popover'>
+            <span>{langEn ? 'Are you sure?' : "Вы уверены?"}</span>
+            <div className='header_popover_btns_wrapper'>
+              <button className='header_popover_btn' onClick={()=>{onSignOut()}}>{langEn ? 'Sign out' : "Выйти"}</button>
+              <button className='header_popover_btn' onClick={()=>{setShowPopover(false)}}>{langEn ? 'Cancel' : "Отмена"}</button>
+            </div>
+          </div>
+            }
           </div>
           )
           :
           (<div className='header_aut_nav_wrapper'>
-          <button title='Sign in' className='header_controls_block_single_btn_signin' >
-          <Link className='header_controls_block_single_btn_link_login' to="/sign-in">
-          </Link><LoginIcon/>Войти</button>
-          <button title='Sign up' className='header_controls_block_single_btn_signin' >
-          <Link className='header_controls_block_single_btn_link_login' to="/register">
-          </Link> <HowToRegIcon/>Регистрация</button>
-        </div>)}
+            <button onClick={()=>navigate('/sign-in')} className='header_controls_block_single_btn_signin' >
+            <LoginIcon/>Войти</button>
+            <button  onClick={()=>navigate('/register')}  className='header_controls_block_single_btn_signin' >
+            <HowToRegIcon/>Регистрация</button>
+        </div>
+        )}
           </div>
           <div className='header_controls_block_nav_btns_wrapper'>
             <Link className='header_controls_block_single_btn_link' to="/">
-              <button className='header_controls_block_single_btn'><HomeIcon/>Главная</button></Link>
+              <button className='header_controls_block_single_btn'><HomeIcon fontSize='small'/>Главная</button></Link>
             <Link className='header_controls_block_single_btn_link' to="/music">
-              <button className='header_controls_block_single_btn'><LibraryMusicIcon/>Музыка</button></Link>
+              <button className='header_controls_block_single_btn'><LibraryMusicIcon fontSize='small'/>Музыка</button></Link>
             <Link className='header_controls_block_single_btn_link' to="/texts">
-              <button className='header_controls_block_single_btn'><LibraryBooksIcon/>Тексты</button></Link>
-            <Link className='header_controls_block_single_btn_link' to="/projects">
-              <button className='header_controls_block_single_btn'><GitHubIcon/>О Проекте</button></Link>
+              <button className='header_controls_block_single_btn'><LibraryBooksIcon fontSize='small'/>Тексты</button></Link>
+            <Link className='header_controls_block_single_btn_link' to="/about">
+              <button className='header_controls_block_single_btn'><GitHubIcon fontSize='small'/>О Проекте</button></Link>
             
           </div>
         </nav>
       }
         <div className='header_controls_block_languages' >
           
-          <div className='header_controls_languages_select' title={langEn? "Switch languages" : "Переключить язык"}>
-              <img className='header_lang_img' src={langEn? uk_flag : rus_flag} 
-              onClick={()=>{setShowLangPopOver(true)}} alt='flag'/>
+          <div className='header_controls_languages_wrapper' onClick={()=>{setShowLangPopOver(true)}} title={langEn? "Switch languages" : "Переключить язык"}>
+          {langEn? "Language" : "Язык"}
+              <img className='header_lang_img' src={langEn? uk_flag : rus_flag} alt='flag'/>
           </div>
           {showLangPopOver &&
             <div className='header_controls_languages_popover' onMouseLeave={()=>{setShowLangPopOver(false)}}>
