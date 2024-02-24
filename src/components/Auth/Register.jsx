@@ -150,15 +150,6 @@ const sendSignUpData = async (data) => {
                             </input>
                         </div>
                     </div>
-              
-              
-              
-              
-              
-              
-              {/* ---------------------------------------------------------------------------------------- */}
-            
-            
               <div className='errors__container'>
                 { errors?.email  &&
                   <small className='auth_small'>{errors.email?.message}</small>}

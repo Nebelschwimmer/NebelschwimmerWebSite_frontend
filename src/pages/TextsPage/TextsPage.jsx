@@ -64,7 +64,7 @@ const texts_sorted_ru = [{id: 'Автор'}, { id: 'Новые' },  { id: 'Ст�
 const sortTextsEn = (sortWay) => {
   switch(sortWay){
     case 'Author':
-      const sorTextsByAuthor = texts.sort((a, b) => (b.author.localeCompare(a.author)))
+      const sorTextsByAuthor = texts.sort((a, b) => (b.author_en.localeCompare(a.author)))
       setTexts([...sorTextsByAuthor]);
     break;
     case 'New':
@@ -90,7 +90,7 @@ const sortTextsEn = (sortWay) => {
 const sortTextsRu = (sortWay) => {
   switch(sortWay){
     case 'Автор':
-      const sorTextsByAuthor = texts.sort((a, b) => (b.author.localeCompare(a.author)))
+      const sorTextsByAuthor = texts.sort((a, b) => (b.author_ru.localeCompare(a.author)))
       setTexts([...sorTextsByAuthor]);
     break;
     case 'Новые':
@@ -176,7 +176,7 @@ const sortTextsRu = (sortWay) => {
                     <td>
                       <Link className='texts__page__link'  to={`/texts/${el._id}`}>{langEn ? el.name_en : el.name_ru}</Link>
                     </td>
-                    <td>{el.author}</td>
+                    <td>{langEn ? el.author_en : el.author_ru}</td>
                     <td>{new Date (el.createdAt).toLocaleString("ru-RU", options)}</td>
                     {/* <td>{text.content_en !== ''}</td> */}
                     <td>{el.likes.length}</td>
@@ -186,10 +186,15 @@ const sortTextsRu = (sortWay) => {
               )
             })}
         </table>
+        
       </div>
       :
       <span className='texts__page__not__found'>{langEn ? "Sorry, no texts found" : "К сожалению, ничего не найдено"}</span>
-    } 
+    }
+    <div className='texts__page__pagination__container'>
+      <></>
+    
+    </div> 
     </div>
   )
 }

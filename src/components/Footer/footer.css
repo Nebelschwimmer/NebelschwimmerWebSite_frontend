@@ -1,6 +1,7 @@
 .footer_container {
 width: 100vw; 
 color: white;
+
 background-color: var(--main-bg-color-op-main);
 margin-top: 30px;
 padding-top: 16px;

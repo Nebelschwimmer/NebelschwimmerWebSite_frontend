@@ -4,7 +4,9 @@
   justify-content: center;
 }
 .texts__page {
-  
+  background-color: var(--main-bg-color-op-main);
+  border-radius:10px;
+  padding: 3rem;
   &__contents__container{
     display: flex;
     flex-direction: column;
@@ -14,6 +16,8 @@
     margin-top: 2rem;
     width: 100%;
     margin: 2rem auto;
+    
+    
   }
   &__not__found{
     display: inline-block;

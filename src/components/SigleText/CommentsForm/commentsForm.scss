@@ -2,15 +2,16 @@ form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 100%;
+   width: 100%;
+  
 }
 textarea {
-
+  
   white-space: break-spaces;
   background-color: transparent;
   border: 1px dashed white;
-  background-color: rgb(65, 47, 61);
- padding: 10px;
+  background-color: var(--bg-light);
+  padding: 10px;
   resize: none;
   color: white;
   font-size: 14px;

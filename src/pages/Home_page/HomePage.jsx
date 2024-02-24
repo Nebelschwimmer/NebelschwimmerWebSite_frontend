@@ -8,7 +8,7 @@ import { Spinner } from '../../components/Spinner/Spinner';
 export const HomePage = ({langEn, currentUser}) => {
   return (
   <div className='home__page'>
-    <span className='home__page__greeting' >{langEn ? 'Welcome to' : 'Приветствуем вас на сайте'}</span>
+   
     <span className='home__page__title'>Surland</span>
     <section className='home__page__about'>
       {langEn ?
@@ -30,7 +30,7 @@ export const HomePage = ({langEn, currentUser}) => {
         <p>Сайт посвящен обмену творчеством, связанным с сюрреализмом.</p>
 
         <div>
-          <p>Чтобы публиковать свое творчество и оставлять комментарии и лайки, пожалуйста,</p>
+          <p>Чтобы публиковать свое творчество, оставлять комментарии и ставить лайки, пожалуйста,</p>
             <p>
               <Link className='home__page__about__link' to="/register"> зарегистируйтесь </Link>
               или

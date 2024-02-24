@@ -21,7 +21,7 @@ import { AboutPage } from '../../pages/AboutPage/AboutPage.jsx';
 function App() {
   // Стейты:
   // Для изменения языка
-  const [langEn, setLangEn] = useState(true);
+  const [langEn, setLangEn] = useState(false);
   // Для актуального пользователя
   const [currentUser, setCurrentUser] = useState('')
   // Для отображения модального окна
@@ -70,10 +70,7 @@ function App() {
 
   }, [user])
   
-  // --------------------------------------
-  
 
-// --------------------------------------
 return (
   <>
     <Header langEn={langEn} setLangEn={setLangEn} currentUser={currentUser} user={user} onSignOut={onSignOut} />

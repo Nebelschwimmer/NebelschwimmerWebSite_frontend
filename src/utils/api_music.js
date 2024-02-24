@@ -38,21 +38,15 @@ export const deleteMusicLikeById = (track_id, user_id) => {
 
 export const addNewTrack = (formData) => {
   return fetch('http://localhost:3020/music/add', {
-    // headers: {
-    //   "Content-Type": "multipart/form-data"
-    // },
     method: "POST",
     body: formData
     
   }).then((res) => onResponse(res));
 }
-export const updateTrack = (track_id, body) => {
+export const updateTrack = (track_id, formData) => {
   return fetch('http://localhost:3020/music/update', {
-    headers: {
-      "Content-Type": "application/json"
-    },
     method: "PUT",
-    body: JSON.stringify({track_id, ...body})
+    body: formData
     
   }).then((res) => onResponse(res));
 }

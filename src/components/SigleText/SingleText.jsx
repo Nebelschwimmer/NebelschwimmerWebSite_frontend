@@ -246,56 +246,65 @@ console.log(enName, singleText.name_en)
   return (
     <div className='single__text__main__container'>
     <div className='single__text__top'>
-      
-      <div className='single__text__top__wrapper'>
         <div onClick={()=>{navigate(-1)}}>
           <Backbutton/>
         </div>
-        
+      <div className='single__text__top__wrapper'>
         <div className='single__text__top__titile__container'>
-          <div>
             <div className='single__text__top__name'>
             
               {!!langEn ?
-              <form className='single__text__top__name__form' onSubmit={handleSubmit(sendUpdatedNameEn)}>
-                <input
-                  type='text'
-                  value={enName}
-                  readOnly={!editName}
-                  onInput={handleChangeEn}
-                  id='name_input'
-                  {...nameEnRegister}
-                  className={cn('single__text__top__name__input', { ['single__text__top__name__input__Active']: editName })}
-                >
-                </input>
-              </form>
+              <div>
+                {!editName ? <h1>{singleText.name_en}</h1> :
+                <form className='single__text__top__name__form' onSubmit={handleSubmit(sendUpdatedNameEn)}>
+                  <input
+                    type='text'
+                    value={enName}
+                    readOnly={!editName}
+                    onInput={handleChangeEn}
+                    id='name_input'
+                    {...nameEnRegister}
+                    className={cn('single__text__top__name__input', { ['single__text__top__name__input__Active']: editName })}
+                  >
+                  </input>
+                </form>
+                }
+              </div>
               :
-              <form className='single__text__top__name__form' onSubmit={handleSubmit(sendUpdatedNameRu)}>
-                <input
-                  id='name_input'
-                  type='text'
-                  value={ruName}
-                  {...nameRuRegister}
-                  readOnly={!editName}
-                  className={cn('single__text__top__name__input', { ['single__text__top__name__input__Active']: editName })}
-                  onInput={handleChangeRu}
-                >
-                </input>
-              </form>
+              <div>
+                  {!editName ? <h1>{singleText.name_ru}</h1> :
+                <form className='single__text__top__name__form' onSubmit={handleSubmit(sendUpdatedNameRu)}>
+                  <input
+                    id='name_input'
+                    type='text'
+                    value={ruName}
+                    {...nameRuRegister}
+                    readOnly={!editName}
+                    className={cn('single__text__top__name__input', { ['single__text__top__name__input__Active']: editName })}
+                    onInput={handleChangeRu}
+                  >
+                  </input>
+                </form>
+                }
+              </div>
               }
               
               
               {showDeleteIcon && 
-              <span title={langEn ? "Edit Name" : "Редактировать название"}  
-                onClick={()=>{handleNameEditClick()}}><EditIcon fontSize='small' /> 
-              </span>
+              <div className='single__text__top__icons__wrapper'> {editName && <small onClick={()=>{setEditName(false)}}><CloseIcon/></small>}
+                {!editName &&
+                <span title={langEn ? "Edit Name" : "Редактировать название"}
+                  onClick={()=>{handleNameEditClick()}}><EditIcon fontSize='small' />
+                </span>
+                }
+              </div>
               }
             </div>
-            <em >{singleText.author}</em>
-          </div>
+        
           <button onClick={()=>{navigate('/texts/add-text')}} className='add__text__sumbit_btn' type='submit'>{langEn? "Publish new Text" : "Опубликовать новый текст"}</button>
         </div>
       </div>
+            <em >{langEn ? singleText.author_en : singleText.author_ru }</em>
       
       <div className='single__text__top__lower' >
         <div className='single__text__top__lower__timestamps'>
@@ -397,7 +406,8 @@ console.log(enName, singleText.name_en)
       {showComments &&
         <div className='single__text__comments__section__upper'>
           <small onClick={()=>{setShowComments(false)}}><CloseIcon/></small>
-          <CommentsForm setShowComments={setShowComments} setSingleText={setSingleText} textID={textID} user_id={user_id} currentUser={currentUser} langEn={langEn}/>
+          <CommentsForm setShowComments={setShowComments} setSingleText={setSingleText} 
+          textID={textID} user_id={user_id} currentUser={currentUser} langEn={langEn}/>
         </div>
       }
       {

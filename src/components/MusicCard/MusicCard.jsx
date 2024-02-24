@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react"; 
 import useSound from "use-sound";
-import PlayCircleIcon from '@mui/icons-material/PlayCircle';
-import PauseCircleIcon from '@mui/icons-material/PauseCircle';
-import './music_track_card.css';
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
+import './music_card.scss';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import DownloadIcon from '@mui/icons-material/Download';
 import cn from 'classnames'
 import EditIcon from '@mui/icons-material/Edit';
@@ -16,8 +15,8 @@ import { MusicDeleteModal } from "./MusicDeleteModal/MusicDeleteModal";
 import { deleteMusicLikeById } from "../../utils/api_music";
 import { addLikeById } from "../../utils/api_music";
 
-export const MusicCard = ({track_name, track, langEn, trackList, setTrackList, track_description_en,
-  currentUser, track_description_ru, track_image, track_source, user_id }) => {
+export const MusicCard = ({track_name, track, langEn, setTrackList, 
+  currentUser, track_image, track_source, user_id}) => {
   // Стейт для лайков
   const [musicIsLiked, setMusicIsLiked] = useState(false)
   // Стейт для попапа о том, что нужно авторизоваться
@@ -26,13 +25,23 @@ export const MusicCard = ({track_name, track, langEn, trackList, setTrackList, t
   const [copied, setCopied] = useState(false)
   // Cтейт для модального окна при удалении
     const [showModalDelete, setShowModalDelete] = useState(false)
-
   // Cтейт для модального окна при редактировании
   const [showModalEdit, setShowModalEdit] = useState(false)
 
 
+
+
 const track_id = track._id
 const track_likes = track?.track_likes
+
+const [isPlaying, setIsPlaying] = useState(false)  
+const [play, { pause, duration, sound}] = useSound(track_source, {interrupt: false});
+const [currentTime, setCurrentTime] = useState({
+  min: "",
+  sec: "",
+});
+const [seconds, setSeconds] = useState(0);
+
 
 
 const handleMusicLike = async (track_id, user_id) =>{
@@ -84,14 +93,7 @@ useEffect(()=>{
 
 
 
-  // Логика для плеера
-  const [isPlaying, setIsPlaying] = useState(false)  
-  const [play, { pause, duration, sound }] = useSound(track_source);
-  const [currentTime, setCurrentTime] = useState({
-    min: "",
-    sec: "",
-  });
-  const [seconds, setSeconds] = useState(0);
+
 
   const playingButton = () => {
     if (isPlaying) {
@@ -103,6 +105,11 @@ useEffect(()=>{
       setIsPlaying(true);
     }
   };
+
+// useEffect(()=>{
+//   if (!isPlaying) setIsPlaying(false)
+// }, [isPlaying])
+
 // Время 
     let sec = duration / 1000;
     
@@ -131,14 +138,7 @@ useEffect(()=>{
   }, [sound]);
 
 
-  // Функция для копирования
-  
-  const copyOnClick = () => {
-    navigator.clipboard.writeText(track_source);
-    setCopied(true);
-    setTimeout(()=> {setCopied(false);}, 3000)
-    
-  }
+
 // Функция для скачивания
 
   const downloadTrack = (blob, fileName = track_name) => {
@@ -175,7 +175,7 @@ useEffect(()=>{
 const deleteMusicCard = async (track_id) => {
   await deleteTrackByID(track_id).then((newTrackList)=>{
     setTrackList(newTrackList);
-    isPlaying(false) 
+    setIsPlaying(false) 
   })
   
 }
@@ -184,122 +184,90 @@ const deleteMusicCard = async (track_id) => {
 
 
 
-
   return (
-  <div className="music_page_audio_player_container" >
-    <div>
-      <div className="music_page_audio_player_wrapper">
-        <div className="music_page_audio_player_edit_wrpapper" >
-        <span onClick={()=>{setShowModalDelete(true)}} title="Delete" className="music_page_audio_player_delete_icon"><DeleteOutlineIcon/></span>
+  <div className="music__card" >
+    <div className="music__card__container">
+        <div className="music__card__img__wrapper">
+          <img src={track_image}/>
         </div>
-          {/* Модальное окно с подтверждением выхода из аккаунта */}
-          {showModalDelete &&
-            <MusicDeleteModal showModalDelete={showModalDelete} track_id={track_id} deleteMusicCard={deleteMusicCard} setShowModalDelete={setShowModalDelete}/>
-          }
-        <div>
-          <h3 className="music_page_track_title">{track_name}</h3>
-          {langEn ?  <p className="music_page_track_description">{track_description_en}</p> 
-          :
-          <p className="music_page_track_description">{track_description_ru}</p>}
-        </div>
-        <img
-          className="music_page_audio_image"
-          src={track_image}
-        />
-        <div className="player_bottom_container">
-          <div>
-              <div className="music_page_player_time_sign">
-                {/* Current Time */}
-                {currentTime.sec !== 0 &&
-                <span>
-                  {currentTime.min}{':'}{currentTime.sec}
-                </span>
-                }
-                <div>
-            {/* Duration */}
+
+        <div className="music__card__left__container">
+          <div className="music__card__left__top__container">
+            <h3>{track_name}</h3>
+              <div className="music__card__left__top__controls" >
+                <button 
+                  className="music__card__left__top__controls__edit__btn"
+                  onClick={()=>{downloadOnClick(track_source)}} title={langEn ? 'Download' : 'Скачать'} >
+                  <DownloadIcon fontSize="small"/>
+                </button>
+                <button onClick={()=>{setShowModalEdit(true)}} className="music__card__left__top__controls__edit__btn"
+                  title={langEn ? 'Edit' : 'Редактировать'}><EditIcon fontSize="small"/>
+                </button>
+                {showModalEdit && (
+                  <div className={cn("modal", { ["active"]: showModalEdit })} onClick={()=>{setShowModalEdit(false)}}>
+                    <div className={cn("modal_content", { ["active"]: showModalEdit })}  onClick={(e) => e.stopPropagation()}>
+                      <MusicEditForm track={track} track_id={track_id} setTrackList={setTrackList} langEn={langEn} setShowModalEdit={setShowModalEdit}/>
+                    </div>
+                  </div> 
+                )}
+                  <span className="music__card__left__top__controls__delete__icon" 
+                    onClick={()=>{setShowModalDelete(true)}} title="Delete"><DeleteOutlineIcon fontSize="small"/>
+                  </span>
+                  {showModalDelete &&
+                    <MusicDeleteModal showModalDelete={showModalDelete} track_id={track_id} deleteMusicCard={deleteMusicCard} setShowModalDelete={setShowModalDelete}/>
+                  }
+                  
+              </div>
             </div>
-                <span className="duration">
-                  {time.min}:{time.sec}
-                </span>
-                
-            </div>
-          </div>
-          <div className="music_page_player_range">
-            {/* Control btns */}
+
+              <div className="music__card__left__bottom__container">
+                <small>{langEn ? 'Published by' : 'Опубликовал'} <span>{track.track_author}</span></small>
+                <div className="music__card__left__bottom___like__btn__wrapper">
+                  <button onClick={()=>{handleLikeClick()}}  
+                    className={cn("music__card__left__bottom__like__btn", { ["music__card__left__bottom__like__btn__Active"]: musicIsLiked })} 
+                    title={langEn ? 'Like' : 'Нравится'}>
+                    <FavoriteIcon fontSize="small"/>
+                    <span >{track_likes.length}</span>
+                  </button>                  
+                </div>
+              </div>
+
+          <div className="music__card__left__player">
             {!isPlaying ? (
-              <button className="music_page_player_btn" onClick={()=>{playingButton()}}>
-                  <PlayCircleIcon />
+              <button className="music__card__left__player__btn" onClick={()=>{playingButton()}}>
+                  <PlayArrowIcon fontSize=""/>
               </button>
             ) : (
-              <button className="music_page_player_btn" onClick={()=>{playingButton()}}>
-                  <PauseCircleIcon />
+              <button className="music__card__left__player__btn" onClick={()=>{playingButton()}}>
+                  <PauseIcon fontSize=""/>
               </button>
-            )}
-            <input
-              type="range"
-              min="0"
-              max={duration / 1000}
-              default="0"
-              value={seconds}
-              className="music_page_player_range_timeline"
-              onChange={(e) => {
-                sound.seek([e.target.value]);
-              }}
-            />
-          </div>
+            )}           
+            <div className="music__card__left__player__running__wrapper">
+              <div className="music__card__left__player__running__time">
+                  {isPlaying &&
+                  <span>
+                    {currentTime.min}{':'}{currentTime.sec}
+                  </span>
+                  }
+                  <div>
+              </div>
+                  <span className="duration">
+                    {time.min}:{time.sec}
+                  </span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max={duration / 1000}
+                default="0"
+                value={seconds}
+                className="music_page_player_range_timeline"
+                onChange={(e) => {
+                  sound.seek([e.target.value]);
+                }}
+              />
+            </div>
         </div>
-          <div className="music_page_player_controls">
-          {/* Попап с требованием авторизоваться, чтобы ставить лайки */}
-            <div className="music_page_player_controls_like_wrapper">
-              {/* Кнопка с лайком */}
-              <button onClick={()=>{handleLikeClick()}}  className={cn("music_page_player_controls_like_btn", { ["music_page_player_controls_like_btn_Active"]: musicIsLiked })} title={langEn ? 'Like' : 'Нравится'}><ThumbUpOutlinedIcon fontSize="14px"/>
-                <span >{track_likes.length}</span>
-              </button>
-            
-              {/* Количество лайков */}
-              
-            </div>
-
-            <div className="music_page_player_controls_btn_copy_wrapper">
-              <span className={cn("music_player_copied_temp_span", {["music_player_copied_temp_span_Active"]: copied})} > {langEn? 'Copied!' : "Скопировано!"}</span>
-              
-              {/* Кнопка для редактирования */}
-              <button onClick={()=>{setShowModalEdit(true)}} className="music_page_audio_player_edit_btn"
-                title={langEn ? 'Edit' : 'Редактировать'}><EditIcon fontSize="14px"/>
-              </button>
-              
-              {/* Модальное окно с редактированием */}
-
-              {showModalEdit && (
-                <div className={cn("modal", { ["active"]: showModalEdit })} onClick={()=>{setShowModalEdit(false)}}>
-                  <div className={cn("modal_content", { ["active"]: showModalEdit })}  onClick={(e) => e.stopPropagation()}>
-                    <MusicEditForm track={track} track_id={track_id} setTrackList={setTrackList} langEn={langEn} setShowModalEdit={setShowModalEdit}/>
-                  </div>
-                </div> 
-              )}
-
-              {/* Кнопка для копирования ссылки на аудио файл */}
-              <button className="music_page_audio_player_edit_btn"
-              onClick={()=>{copyOnClick()}}
-              title={langEn ? 'Copy link' : 'Копировать ссылку'} ><ContentCopyIcon fontSize="14px"/></button>
-              
-              {/* Кнопка для скачивания */}
-              <button 
-              className="music_page_audio_player_edit_btn"
-              onClick={()=>{downloadOnClick(track_source)}} title={langEn ? 'Download' : 'Скачать'} >
-                <DownloadIcon fontSize="14px"/>
-              </button>
-            </div>
-          </div>
-             {/* Попап при копировании, исчезает */}
-            {showPopoverNotAuth && 
-            <div className="music_page_player_warn_wrapper">
-              <Link style={{textDecoration: 'none'}} to='/sign-in'>
-              <small className="music_page_player_warn">{
-                langEn ? 'Please, sign in to be able to give likes' : 'Пожалуйста, войдите, чтобы ставить лайки'}</small>
-              </Link>
-            </div>
-            }
       </div>
     </div>
   </div>
