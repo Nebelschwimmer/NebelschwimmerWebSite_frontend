@@ -25,9 +25,9 @@ const navigate = useNavigate();
     if (searchQuery === "" || searchQuery === undefined) {
     getTextsList().then((res) => {
       setTexts(res)
-    })
-  }
-}, [searchQuery])
+      })
+    }
+  }, [searchQuery])
 
 const options = { 
   day: "numeric",

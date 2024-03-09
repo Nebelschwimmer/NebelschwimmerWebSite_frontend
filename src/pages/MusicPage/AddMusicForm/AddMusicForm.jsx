@@ -12,20 +12,20 @@ export const AddMusicForm = ({langEn, setShowModal, currentUser, trackList, setT
 
 
 // Стейты для показа информации о файле
-const [showFileName, setShowFileName] = useState('')
-const [showFileSize, setShowFileSize] = useState('')
-const [fileSizeError, setFileSizeError] = useState('')
-const [disableBtn, setDisableButton] = useState(false)
-const [checkedPic, setCheckedPic] = useState(false)
-const [preview, setPreview] = useState(undefined)
-const [showSpinner, setShowSpinner] = useState(false)
+const [showFileName, setShowFileName] = useState('');
+const [showFileSize, setShowFileSize] = useState('');
+const [fileSizeError, setFileSizeError] = useState('');
+const [disableBtn, setDisableButton] = useState(false);
+const [checkedPic, setCheckedPic] = useState(false);
+const [preview, setPreview] = useState(undefined);
+const [showSpinner, setShowSpinner] = useState(false);
 // Для формы
 
 const {
   register,
   handleSubmit,
   formState: { errors },
-} = useForm()
+} = useForm();
 
 
 // Для отображения инфо о файле 
@@ -51,7 +51,7 @@ const onImgFileAdding = (e) => {
 
 };
 const trackNameTrimmed = showFileName.replace('.mp3', '')
-console.log(trackNameTrimmed)
+
 
 
 useEffect(()=>{
@@ -77,7 +77,9 @@ const onSubmitData = async (data) => {
       setShowSpinner(true)
     })
   }
-  catch (err) {console.log(err)}
+  catch (err) {
+    console.log(err)
+  }
 }
 
 

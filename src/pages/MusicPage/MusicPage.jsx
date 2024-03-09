@@ -3,7 +3,7 @@ import {MusicList} from '../../components/MusicList/MusicList'
 import './musicPage.scss'
 import { AddMusicForm } from './AddMusicForm/AddMusicForm';
 import { useState, useEffect } from 'react';
-import { getMusicList } from '../../utils/api_music';
+import { getMusicList, searchMusic } from '../../utils/api_music';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,12 +21,34 @@ export const MusicPage = ({langEn, trackList, setTrackList, showModal, setShowMo
 
   const user_id = currentUser.uid
 
-const handleSearchMusicInputChange = () => {
+const handleSearchMusicInputChange = (event) => {
+  setSearchMusicQuery(event.target.value);
+}
+const handleSearchMusicInputKeyDown = async (e) => {
+  if(e.key === 'Enter' && searchMusicQuery !== undefined) {
+    await searchMusic(searchMusicQuery).then((res)=>{
+      setTrackList(res)
+    })
+  } 
+}
 
+const onSearchClick = async () => {
+  if (searchMusicQuery !== '')
+  await searchMusic(searchMusicQuery).then((res)=>{
+    setTrackList(res)
+    });
+  else  {
+    document.getElementById('search_input').focus()
+  }
 }
-const handleSearchMusicInputKeyDown = () => {
-  
-}
+
+useEffect(()=>{ 
+  if (searchMusicQuery === "" || searchMusicQuery === undefined) {
+    getMusicList().then((res) => {
+      setTrackList(res)
+    })
+  }
+}, [searchMusicQuery])
 
 
 
@@ -48,7 +70,7 @@ const handleSearchMusicInputKeyDown = () => {
               onKeyDown={handleSearchMusicInputKeyDown}
               >  
               </input>
-              <span onClick={()=>{}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon/></span>
+              <span onClick={()=>{onSearchClick()}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon/></span>
             </div>
       
 
@@ -56,7 +78,7 @@ const handleSearchMusicInputKeyDown = () => {
       < MusicList user_id={user_id}  showModal={showModal} setShowModal={setShowModal} trackList={trackList} 
         setTrackList={setTrackList} langEn={langEn}  currentUser={currentUser}/>
       :
-      <span className='music__page__empty'>{langEn ? 'Tracklist is empty' : 'Список треков пустой'}</span>
+      <span className='music__page__empty'>{langEn ? 'Tracklist not found' : 'Треки не найдены'}</span>
       }
       <ModalWindow showModal={showModal} setShowModal={setShowModal}>
         <AddMusicForm langEn={langEn} setShowModal={setShowModal} currentUser={currentUser} trackList={trackList} setTrackList={setTrackList}/>

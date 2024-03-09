@@ -2,7 +2,7 @@ import './header.scss'
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import HomeIcon from '@mui/icons-material/Home';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-import GitHubIcon from '@mui/icons-material/GitHub';
+import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import MenuIcon from '@mui/icons-material/Menu';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -139,8 +139,8 @@ const navigate = useNavigate()
               <button className='header_controls_block_single_btn'><LibraryMusicIcon fontSize='small'/>Music</button></Link>
             <Link className='header_controls_block_single_btn_link' to="/texts">
               <button className='header_controls_block_single_btn'><LibraryBooksIcon fontSize='small'/>Texts</button></Link>
-            <Link className='header_controls_block_single_btn_link' to="/about">
-              <button className='header_controls_block_single_btn'><GitHubIcon fontSize='small'/>About</button></Link>
+            <Link className='header_controls_block_single_btn_link' to="/pictures">
+              <button className='header_controls_block_single_btn'><InsertPhotoOutlinedIcon fontSize='small'/>Pictures</button></Link>
           </div>
         </nav>
         :
@@ -178,8 +178,8 @@ const navigate = useNavigate()
               <button className='header_controls_block_single_btn'><LibraryMusicIcon fontSize='small'/>Музыка</button></Link>
             <Link className='header_controls_block_single_btn_link' to="/texts">
               <button className='header_controls_block_single_btn'><LibraryBooksIcon fontSize='small'/>Тексты</button></Link>
-            <Link className='header_controls_block_single_btn_link' to="/about">
-              <button className='header_controls_block_single_btn'><GitHubIcon fontSize='small'/>О Проекте</button></Link>
+            <Link className='header_controls_block_single_btn_link' to="/pictures">
+              <button className='header_controls_block_single_btn'><InsertPhotoOutlinedIcon fontSize='small'/>Картинки</button></Link>
             
           </div>
         </nav>

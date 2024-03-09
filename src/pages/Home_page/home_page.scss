@@ -5,6 +5,7 @@
   justify-content: center;
   padding-top: 5rem;
   gap:1rem;
+  background: radial-gradient(ellipse farthest-corner at center , rgba(255, 9, 144, 0.2) 0%, rgba(99, 23, 67, 0)55%);
   &__greeting {
     
     color: rgb(167, 98, 8);
@@ -34,13 +35,55 @@
     line-height: 20px;
     &__link {
       text-decoration: none;
-      color: darkorange;
+      color: darkorange;  
       font-weight: 600;
       text-shadow:  0 2px 5px rgb(187, 126, 13, 0.5);
     }
   }
+  &__links {
+    display: flex;
+    gap:10px;
+    position: relative;
+    padding-top: 4rem;
+    
+      &__container {
+        height: clamp(3.75rem, 3.5rem + 1.25vw, 5rem);
+        width: clamp(5.625rem, 5rem + 3.125vw, 8.75rem);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+      }
+      
+      .music {
+      background-color: rgba(112, 11, 78, 0.1);
+      &:hover {
+        background-color: rgba(112, 11, 78, 0.5);  
+      }
+      }
+      .texts {
+        background-color: rgba(167, 98, 8, 0.1);
+        &:hover {
+          background-color: rgba(167, 98, 8, 0.5);  
+        }
+      }
+      .pictures {
+        background-color: rgba(64, 7, 156, 0.1);
+        &:hover {
+          background-color: rgba(64, 7, 156, 0.5);  
+        }
+      }
+      .music, .texts, .pictures {
+        cursor: pointer;
+        transition: 0.2s ease-in-out;
+        color: white;
+        text-decoration: none;
+        box-shadow: var(--box-shadow-gl);
+        text-shadow: var(--violet-text-shadow);
+      }
 }
-
+}
 @keyframes glowing {
  0% { 
   text-shadow:  0 0 21px rgb(112, 11, 78, 0.2);

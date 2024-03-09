@@ -16,6 +16,7 @@ import { ResetPassword } from '../Auth/ResetPassword.jsx';
 import { AddTextPage } from '../AddTextPage/AddTextPage.jsx';
 import { SingleTextPage } from '../../pages/TextsPage/SingleTextPage/SingleTextPage.jsx';
 import { AboutPage } from '../../pages/AboutPage/AboutPage.jsx';
+import { PicturesPage } from '../../pages/PicturesPage/PicturesPage.jsx';
 
 
 function App() {
@@ -89,6 +90,7 @@ return (
         <Route path='/sign-in' element={<SignIn langEn={langEn} signInWithGoogle={signInWithGoogle}/>}></Route>
         <Route path='/password-reset' element={<ResetPassword langEn={langEn}/>}></Route>       
         <Route path='/about' element={<AboutPage langEn={langEn}/>}></Route>
+        <Route path='/pictures' element={<PicturesPage showModal={showModal} setShowModal={setShowModal} langEn={langEn}/>}></Route>
       
       </Routes>
     </main>

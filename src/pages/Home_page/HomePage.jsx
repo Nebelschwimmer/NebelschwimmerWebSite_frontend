@@ -42,6 +42,18 @@ export const HomePage = ({langEn, currentUser}) => {
 
       }
     </section>
+
+    <section className='home__page__links'>
+      
+        <Link className='home__page__links__container music' to={'/music'}>{langEn ? 'Music' : 'Музыка'}</Link>
+    
+      
+        <Link className='home__page__links__container texts' to={'/music'}>{langEn ? 'Texts' : 'Тексты'}</Link>
+     
+      
+        <Link className='home__page__links__container pictures' to={'/music'}>{langEn ? 'Pictures' : 'Картинки'}</Link>
+    
+    </section>
   </div>  
   )
 }

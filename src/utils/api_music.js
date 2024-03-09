@@ -24,6 +24,15 @@ export const getMusicList = () => {
   }).then((res) => onResponse(res));
 }
 
+export const searchMusic = async (searchQuery) => {
+  return fetch(`http://localhost:3020/music?search=${searchQuery}`, {
+    headers: {
+    "Content-Type": "application/json"
+    }
+  }
+  ).then((res) => onResponse(res));
+}
+
 export const deleteMusicLikeById = (track_id, user_id) => {
   return fetch('http://localhost:3020/music/likes/delete', {
     headers: {
