@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Backbutton } from '../BackButton/BackButton';
 
-export const AddTextPage = ({langEn, currentUser, texts, setTexts}) => {
+export const AddTextPage = ({langEn, setPageQuery, currentUser, texts, setTexts}) => {
 const navigate = useNavigate()
 const [printAdded, setPrintAdded] = useState(false)
 const [checked, setChecked] = useState(false);
@@ -20,7 +20,6 @@ const {
 const user_displayName = currentUser.displayName
 const author_id = currentUser.uid
   const SendNewText = async (data) => {
-    console.log(data)
     try {
       await  addNewText(data, user_displayName, author_id)
         .then(res => {
@@ -83,7 +82,8 @@ const author_id = currentUser.uid
   useEffect(()=>{
     if (printAdded)
     setTimeout(()=>{
-      navigate('/texts')
+      setPageQuery(1)
+      navigate('/texts?page=1')
     }, 2000)
   }, [printAdded])
 

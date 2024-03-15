@@ -29,7 +29,7 @@
   justify-content: space-between;
   box-shadow: 0 0 12px 10px rgba(14, 0, 14, 0.3);
   border-radius: 10px;
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
   margin-top: 2rem;
 }
@@ -64,7 +64,8 @@
   box-shadow: black 1px 1px 1px 1px;
   border: none;
   background-color: var(--btn-color);
-  color: white
+  color: white;
+  font-size: clamp(0.75rem, 0.667rem + 0.278vw, 1rem);
 }
 .auth_sign_btn:hover{
 color: darkorange;
@@ -92,13 +93,14 @@ color: darkorange;
   align-items: center;
   gap:2rem;
   height: fit-content;
+  
 }
 
-.auth_sign_btn_wrapper {
+/* .auth_sign_btn_wrapper {
   height: 35%;
   vertical-align: baseline;
   position: relative;
-}
+} */
 
 
 .auth_user_info{
@@ -109,12 +111,12 @@ color: darkorange;
   justify-content: space-around;
   box-shadow: 0 0 12px 10px rgba(14, 0, 14, 0.3);
   border-radius: 10px;
-  width: 80%;
+  width: 70%;
 
 }
 .auth_user_avatar{
   width: clamp(70px, 10vw, 197px);
-  /* height: 100%; */
+  height: clamp(70px, 10vw, 197px);
   min-height: 20px;
   float: left;
   border-radius: 10px;
@@ -167,51 +169,9 @@ color: darkorange;
 .auth_small{
   color: darkorange;
 }
-.auth_clear_btn{
-  background-color: transparent;
-  cursor: pointer;
-  width: 18px;
-  height: 18px;
-  border: none;
-  color: white;
-  opacity: 0.1;
-  font-weight: 600;
-  transition: 0.2s ease-in-out;
-  font-size: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 10px;
-  border-radius: 100%;
-  padding: 10px;
-  visibility: hidden;
-}
 
-.auth_clear_btn_Active{
-  background-color: transparent;
-  cursor: pointer;
-  width: 18px;
-  height: 18px;
-  border: none;
-  color: rgb(255, 255, 255);
-  opacity: 0.4;
-  font-weight: 600;
-  transition: 0.2s ease-in-out;
-  font-size: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 10px;
-  border-radius: 100%;
-  padding: 10px;
-  visibility:visible
-}
 
-.auth_clear_btn_Active:hover{
-  background-color: var(--bg-light);
-  color: white;
-  opacity: 0.6;
-}
+
 
 .auth_form_labels{
   display: flex;
@@ -262,7 +222,9 @@ color: darkorange;
   text-align: center;
   width: 100%;
   color: darkorange;
+  
 }
+h2 {margin: 0;}
 
 .spinner_container{
   position: absolute;
@@ -275,38 +237,73 @@ color: darkorange;
   flex-direction: column;
   gap:20px;
   margin: 0 auto;
-  width: clamp(40px, 70%, 720px);
   margin-top: 20px;
+  width: 90%;
+  padding: 1rem;
+  align-items: center;
 }
 label{
-  width: clamp(40px, 30%, 160px);
-  font-size: clamp(12px, 1vw, 16px);
+  width: clamp(6.25rem, 5.633rem + 2.597vw, 8.75rem);
+  font-size: clamp(0.5rem, 0.407rem + 0.39vw, 0.875rem);
   
 }
 
 .single__input__wrapper {
   display: flex;
   align-items: center;
-  width: clamp(240px, 35vw, 470px);
   gap:10px
 }
 
 .input{
   height: 2rem;
-  max-width: 450px;
-  width: clamp(120px, 20vw, 400px);
-  font-size: 14px;  
+  max-width: 480px;
+  width: 80%;
+  font-size: clamp(0.625rem, 0.563rem + 0.26vw, 0.875rem);
   border-radius: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 15px;
+  padding-right: 5px;
   border: 1px white solid;
   background-color: transparent;
   color: white;
+  &::placeholder {
+    padding: 0;
+  }
+  &:focus {
+  outline: 1px solid rgb(180, 101, 163); 
+  + .auth_clear_btn {
+  opacity: 1;
+  }
+}
 }
 
-.input:focus {
-  outline: 1px solid rgb(180, 101, 163); 
+.auth_clear_btn{
+  background-color: transparent;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  border: none;
+  color: rgb(255, 255, 255);
+  opacity: 0.4;
+  font-weight: 600;
+  transition: 0.2s ease-in-out;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  border-radius: 100%;
+  padding: 10px;
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  &:hover {
+    background-color: var(--btn-color);
+    
+  }
 }
+
+
+
+
 .show__error__container{
   width: 100%;
   text-align: center;
@@ -317,5 +314,15 @@ label{
   height:40px;
   display: flex;
   flex-direction: column;
-  gap:10px
+  gap:10px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.inputs__container__profile {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap:1rem;
+
 }

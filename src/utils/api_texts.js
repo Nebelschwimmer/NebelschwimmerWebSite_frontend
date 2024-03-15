@@ -3,8 +3,8 @@ const onResponse = (res) => {
     ? res.json()
     : Promise.reject('Error');
 };
-export const getTextsList = async () => {
-  return fetch('http://localhost:3020/texts', {
+export const getTextsList = async (pageQuery) => {
+  return fetch(`http://localhost:3020/texts?page=${pageQuery}`, {
     headers: {
     "Content-Type": "application/json"
     }
@@ -134,4 +134,15 @@ export const removeCommentFromTextByCommentId =  (textID, commentID) => {
     body: JSON.stringify({comment_id: commentID})
   }
   ).then((res) => onResponse(res));
+}
+
+export const getCommentAuthorInfoByID = (commentAuthorID) => {
+  return fetch('http://localhost:3020/texts/comments/getAuthorName', {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    method: "PATCH",
+    body: JSON.stringify({user_id: commentAuthorID})
+    
+  }).then((res) => onResponse(res));
 }

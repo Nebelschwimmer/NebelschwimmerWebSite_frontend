@@ -33,8 +33,8 @@ const onImgFileAdding = (e) => {
   
   for (let i = 0; i < filesArray[0].length; i++) {
     reader.readAsDataURL(filesArray[0][i]);
-    reader.onload = event => {
-    previews.push(event.target.result);
+    reader.onload = e => {
+    previews.push(e.target.result);
     setPreviews([...previews]);
     } 
   }

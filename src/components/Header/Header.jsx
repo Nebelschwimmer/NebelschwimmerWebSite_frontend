@@ -137,7 +137,7 @@ const navigate = useNavigate()
               <button className='header_controls_block_single_btn' ><HomeIcon fontSize='small'/>Ноme</button></Link>
             <Link className='header_controls_block_single_btn_link' to="/music">
               <button className='header_controls_block_single_btn'><LibraryMusicIcon fontSize='small'/>Music</button></Link>
-            <Link className='header_controls_block_single_btn_link' to="/texts">
+            <Link className='header_controls_block_single_btn_link' to="/texts?page=1">
               <button className='header_controls_block_single_btn'><LibraryBooksIcon fontSize='small'/>Texts</button></Link>
             <Link className='header_controls_block_single_btn_link' to="/pictures">
               <button className='header_controls_block_single_btn'><InsertPhotoOutlinedIcon fontSize='small'/>Pictures</button></Link>
@@ -147,8 +147,8 @@ const navigate = useNavigate()
         <nav className='header_controls_block'>
           <div className='header_aut_nav'>
           {currentUser ? (
-          <div onClick={()=>{navigate('/user-settings')}} className='header_aut_nav_wrapper'>
-            <img  className='header_aut_nav_img' src={avatarURL}/>
+          <div className='header_aut_nav_wrapper'>
+            <img onClick={()=>{navigate('/user-settings')}}  className='header_aut_nav_img' src={avatarURL}/>
             <span>{userName}</span>
             <button className='header_controls_block_single_btn_signin' title='Выйти' onClick={()=>{setShowPopover(true)}}> <LogoutIcon/></button>
             {!!showPopOver &&

@@ -51,13 +51,13 @@ useEffect(()=>{
 }, [searchMusicQuery])
 
 
-
   return (
     <div className='music_page_container'>
 
       <div  className='music_page_container_title_btn_wrapper'>
         {langEn ? <h1 className='music_page_title'>MUSIC</h1> : <h1 className='music_page_title'>МУЗЫКА</h1>}
-        <button onClick={()=>{setShowModal(true)}} className='music_page_add_btn'>{langEn ? 'Add New Track ' : "Добавить музыку "} </button>
+        {currentUser !== '' ? <button onClick={()=>{setShowModal(true)}} className='music_page_add_btn'>{langEn ? 'Add New Track ' : "Добавить музыку "} </button> : 
+        <span className='music_page_not_auth' onClick={()=>{navigate('/sign-in')}}>{langEn ? 'Please, sign in to publish new tracks' : 'Пожалуйста, авторизуйтесь, чтобы публиковать музыку'}</span>}
       </div>
       
       <div className='texts__page__input__container'>

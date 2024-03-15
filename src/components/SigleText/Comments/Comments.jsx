@@ -5,7 +5,7 @@ export const Comments = ({singleText, currentUser, user_id, options, setSingleTe
 
 return (
       <>
-        { singleText.comments?.map((e) => {
+        { singleText.comments?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((e) => {
           
           return (
           <SingleComment

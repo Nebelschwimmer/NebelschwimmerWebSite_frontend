@@ -7,14 +7,17 @@ import SearchIcon from '@mui/icons-material/Search';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
 import { searchText } from '../../utils/api_texts';
-import {getAuth} from 'firebase/auth'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { PaginationBoard } from './PaginationBoard'
 
-export const TextsPage = ({langEn, texts, setTexts}) => {
- 
+
+
+export const TextsPage = ({langEn, currentUser, texts, setTexts, pageQuery, setPageQuery}) => {
+
 const [searchQuery, setSearchQuery] = useState(undefined);
-
-const auth = getAuth();
-const user = auth.currentUser;
+const [pages, setPages] = useState([])
+const [pagesNumber, setPagesNumber] = useState()
 
 
 
@@ -23,17 +26,27 @@ const navigate = useNavigate();
 
   useEffect(()=>{ 
     if (searchQuery === "" || searchQuery === undefined) {
-    getTextsList().then((res) => {
-      setTexts(res)
+    
+      getTextsList(pageQuery).then((res) => {
+      setTexts(()=>([...res.texts]));
+      setPagesNumber(res.totalPages);
+      navigate(`/texts?page=${pageQuery}`)
       })
     }
-  }, [searchQuery])
+  }, [searchQuery, pageQuery])
 
 const options = { 
   day: "numeric",
   month: "numeric",
   year: "numeric",
   }
+
+useEffect(()=>{
+if (texts.length === 0 && pagesNumber >= 1)
+navigate(-1)
+}, [texts, pagesNumber])
+
+
 
 const handleSearchInput = async (e) => {
 
@@ -58,13 +71,13 @@ const onSearchClick = async () => {
   }
 }
 
-const texts_sorted_en = [{id: 'Author'}, { id: 'New' },  { id: 'Old' }, { id: 'Popular' }, { id: 'Most discussed' }]
-const texts_sorted_ru = [{id: 'Автор'}, { id: 'Новые' },  { id: 'Старые' }, { id: 'Популярные' }, { id: 'Обсуждаемые' }]
+const texts_sorted_en = [{id: 'Author'}, { id: 'New' },  { id: 'Old' }, { id: 'Popular' }]
+const texts_sorted_ru = [{id: 'Автор'}, { id: 'Новые' },  { id: 'Старые' }, { id: 'Популярные' }]
 
 const sortTextsEn = (sortWay) => {
   switch(sortWay){
     case 'Author':
-      const sorTextsByAuthor = texts.sort((a, b) => (b.author_en.localeCompare(a.author)))
+      const sorTextsByAuthor = texts.sort((a, b) => (b.author_en.localeCompare(a.author_en)))
       setTexts([...sorTextsByAuthor]);
     break;
     case 'New':
@@ -79,10 +92,6 @@ const sortTextsEn = (sortWay) => {
     const sortPopularTexts = texts.sort((a, b) => (b.likes.length) - (a.likes.length));
     setTexts([...sortPopularTexts]);
   break;
-  case 'Most discussed':
-    const sortDiscussedTexts = texts.sort((a, b) =>(b.comments.length) - (a.comments.length));
-    setTexts([...sortDiscussedTexts]);
-  break;
       default: 
   }
 }
@@ -90,7 +99,7 @@ const sortTextsEn = (sortWay) => {
 const sortTextsRu = (sortWay) => {
   switch(sortWay){
     case 'Автор':
-      const sorTextsByAuthor = texts.sort((a, b) => (b.author_ru.localeCompare(a.author)))
+      const sorTextsByAuthor = texts.sort((a, b) => (b.author_ru.localeCompare(a.author_ru)))
       setTexts([...sorTextsByAuthor]);
     break;
     case 'Новые':
@@ -105,12 +114,44 @@ const sortTextsRu = (sortWay) => {
     const sortPopularTexts = texts.sort((a, b) => (b.likes.length) - (a.likes.length));
     setTexts([...sortPopularTexts]);
   break;
-  case 'Обсуждаемые':
-    const sortDiscussedTexts = texts.sort((a, b) => (b.comments.length) - (a.comments.length));
-    setTexts([...sortDiscussedTexts]);
-  break;
       default: 
   }
+}
+
+useEffect(()=>{ 
+  const paginationArr = [...Array(pagesNumber).keys()].map(e => (e + 1));
+  const limitArr = []
+  for (let i = 0; i < 5; i++) {
+    limitArr.push((i * 5) + 5)
+  }
+  limitArr.forEach((el, ind, arr) => {
+    if (pageQuery > 5) {
+      // Проблема: нужно сделать так, чтобы на каждой итерации лимитируещего
+      // массива рендерился обрезанный массив из номеров страниц, т.е.
+      // если страниц 11, то выводились сначала числа 1-5, затем 6-10, а потом только 11.
+      // Попытки записать все массивы в стейты не удались, так как в результате
+      // рендерилось только число 11, хотя консоль показывала числа 6-9 при 2-й итерации
+      const slicedPaginationArray = paginationArr.slice(5, pagesNumber)  
+      console.log(slicedPaginationArray)
+      setPages(slicedPaginationArray)
+    }
+    else 
+    setPages(()=>(paginationArr.slice(0, 5))); 
+    }
+  )
+}, [pageQuery, texts])
+
+const handleBackArrowClick = () => {
+  if (pageQuery > 1)
+  setPageQuery(
+  st => st - 1
+  )
+}
+const handleForwardArrowClick = () => {
+  if (pageQuery < pagesNumber)
+  setPageQuery(
+  st => st + 1
+  )
 }
 
 
@@ -133,25 +174,31 @@ const sortTextsRu = (sortWay) => {
               </input>
               <span onClick={()=>{onSearchClick()}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon/></span>
             </div>
+        {currentUser !== '' ?
         <button className='add__text__sumbit_btn' onClick={()=>{navigate('/texts/add-text')}}>{langEn ? 'Publish New Text' : 'Опубликовать текст'}</button>
+        :
+        <span className='music_page_not_auth' onClick={()=>{navigate('/sign-in')}}>{langEn ? 'Please, sign in to publish new texts' : 
+        'Пожалуйста, авторизуйтесь, чтобы публиковать тексты'}</span>
+        }
+        
         </div>
       </div>
       
     { texts.length !== 0 ?
       <div>
       {langEn ?
-        <div className='texts__page__sort__controls'>
-        {texts_sorted_en.map((e)=>{
+        <div className='texts__page__sort__container'>
+        {texts_sorted_en.map((e, i)=>{
           return(
-            <span onClick={() => sortTextsEn(e.id)}>{e.id}</span>
+            <span className='texts__page__sort__item' key={i} onClick={() => sortTextsEn(e.id)}>{e.id}</span>
           )
           })}
         </div>
         :
-        <div className='texts__page__sort__controls'>
-        {texts_sorted_ru.map((e)=>{
+        <div className='texts__page__sort__container'>
+        {texts_sorted_ru.map((e, i)=>{
           return(
-            <span onClick={() => sortTextsRu(e.id)}>{e.id}</span>
+            <span key={i} className='texts__page__sort__item' onClick={() => sortTextsRu(e.id)}>{e.id}</span>
           )
           })}
         </div>
@@ -164,21 +211,21 @@ const sortTextsRu = (sortWay) => {
               <th>{langEn ? 'Author' : 'Автор'}</th>
               <th>{langEn ? 'Published' : 'Опубликовано'}</th>
               {/* <th>{langEn ? 'Language(s)' : 'Язык(и)'}</th> */}
-              <th title={langEn ? 'Liked' : "Понравилось"}><FavoriteIcon fontSize='small' /></th>
-              <th title={langEn ? 'Comments' : "Комментарии"}><CommentIcon fontSize='small' /></th>
+              <th title={langEn ? 'Liked' : "Понравилось"}><FavoriteIcon fontSize='' /></th>
+              <th title={langEn ? 'Comments' : "Комментарии"}><CommentIcon fontSize='' /></th>
             </tr>
             </thead>
-          {texts?.map((el)=>{
+          {texts?.map((el, i)=>{
             return (
         
               <tbody>
+                  
                   <tr key={el._id}>
                     <td>
                       <Link className='texts__page__link'  to={`/texts/${el._id}`}>{langEn ? el.name_en : el.name_ru}</Link>
                     </td>
                     <td>{langEn ? el.author_en : el.author_ru}</td>
                     <td>{new Date (el.createdAt).toLocaleString("ru-RU", options)}</td>
-                    {/* <td>{text.content_en !== ''}</td> */}
                     <td>{el.likes.length}</td>
                     <td>{el.comments.length}</td>
                   </tr>
@@ -191,10 +238,27 @@ const sortTextsRu = (sortWay) => {
       :
       <span className='texts__page__not__found'>{langEn ? "Sorry, no texts found" : "К сожалению, ничего не найдено"}</span>
     }
+    {pagesNumber > 1 && !searchQuery ?
     <div className='texts__page__pagination__container'>
-      <></>
+      <div className='texts__page__pagination__card' onClick={()=>{handleBackArrowClick()}}><ArrowBackIosIcon fontSize=''/></div>
+      {pages.map((currentPage, i)=>{
+
+        return (<PaginationBoard
+        currentPage={currentPage}
+        pageQuery={pageQuery}
+        setPageQuery={setPageQuery}
+        key={i}
+        />)
+      })}
     
-    </div> 
+    <div 
+      className='texts__page__pagination__card'
+      onClick={()=>{handleForwardArrowClick()}}
+      ><ArrowForwardIosIcon fontSize=''/></div>
+    </div>
+    :
+    <div></div> 
+    }
     </div>
   )
 }

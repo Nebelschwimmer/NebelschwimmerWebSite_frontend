@@ -72,6 +72,18 @@ export const deleteTrackByID = (track_id) => {
   }).then((res) => onResponse(res));
 }
 
+export const getAuthorNameByID = (author_id) => {
+  return fetch('http://localhost:3020/music/getAuthorName', {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    method: "PATCH",
+    body: JSON.stringify({track_author_id: author_id})
+    
+  }).then((res) => onResponse(res));
+}
+
+
 export const downloadOnClick = (track_source) => {
   fetch(track_source,  {
     headers: {

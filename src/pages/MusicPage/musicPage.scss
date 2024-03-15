@@ -37,3 +37,14 @@
 .music_page_add_btn:hover{
   color: darkorange;
 }
+.music_page_not_auth {
+  font-size: clamp(0.625rem, 0.542rem + 0.278vw, 0.875rem);
+  cursor: pointer;
+  box-shadow: var(--box-shadow-gl);
+  padding: 10px;
+  border-radius: 5px;
+  transition: 0.2s ease-in-out;
+  &:hover {
+    color: darkorange;
+  }
+}

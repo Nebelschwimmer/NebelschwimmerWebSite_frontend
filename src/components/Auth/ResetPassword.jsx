@@ -1,13 +1,8 @@
-import './auth.css'
-import GoogleIcon from '@mui/icons-material/Google';
-import CloseIcon from '@mui/icons-material/Close';
+import './auth.scss'
 import { useNavigate, Link } from 'react-router-dom';
-
 import { Backbutton } from '../BackButton/BackButton';
-import { useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth} from 'firebase/auth';
 import { useForm, } from "react-hook-form";
-
 import {sendPasswordResetEmail } from 'firebase/auth'
 
 

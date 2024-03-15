@@ -18,6 +18,8 @@ import { Comments } from './Comments/Comments';
 import { Link } from 'react-router-dom';
 import { updateTextNameEn } from '../../utils/api_texts';
 import { updateTextNameRu } from '../../utils/api_texts';
+import { scrollToTop } from '../../utils/utils';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 export const SingleText = ({singleText, langEn, setSingleText, showModal, setLangEn, setShowModal, currentUser, handleTextLike}) => {
@@ -34,19 +36,35 @@ const [showComments, setShowComments] = useState(false);
 const [showDeleteIcon, setShowDeleteIcon] = useState(false);
 const [showNotAuth, setShowNotAuth] = useState(false);
 const [editName, setEditName] = useState(false);
-const [ruName, setRuName] = useState(singleText.name_ru)
-const [enName, setEnName] = useState(singleText.name_en)
-const inputRef = useRef(null)
+const [ruName, setRuName] = useState(singleText.name_ru);
+const [enName, setEnName] = useState(singleText.name_en);
+const [showMore, setShowMore] = useState(true);
+const [checkTextLength, setCheckTextLength] = useState(false);
+const [truncated, setTruncated] = useState(true);
 
-const user_id = currentUser.uid
+
+const user_id = currentUser.uid;
+const textID = singleText._id;
+const options = { 
+  day: "numeric",
+  month: "numeric",
+  year: "numeric",
+  timeZone: "Europe/Moscow",
+  hour: "2-digit", 
+  minute: "2-digit"
+  }
+const createdAtDate = new Date (singleText.createdAt).toLocaleString("ru-RU", options);
+
+
 const {
   register,
   handleSubmit,
   formState: { errors },
 } = useForm();
 
+
 useEffect(()=>{
-if (currentUser !== '' && currentUser.uid === singleText.author_id)
+if (currentUser !== '' && currentUser.uid === singleText.publisher_id)
 setShowDeleteIcon(true)
 }, [currentUser])
 
@@ -56,19 +74,6 @@ useEffect(()=>{
   else setShowNotAuth(false)
 }, [currentUser])
 
-
-const options = { 
-  day: "numeric",
-  month: "numeric",
-  year: "numeric",
-  timeZone: "Europe/Moscow",
-  hour: "2-digit", 
-  minute: "2-digit"
-  }
-
-const createdAtDate = new Date (singleText.createdAt).toLocaleString("ru-RU", options);
-
-const textID = singleText._id;
 
 useEffect(()=>{
   if (singleText.likes?.includes(user_id))
@@ -80,7 +85,7 @@ useEffect(()=>{
 const onTextDelete = async (textID) => {
   try {
   await deleteTextFromItsPage(textID);
-  navigate('/texts');
+  navigate(`/texts?query=1`);
   setShowModal(false)
   }
   catch(err) {
@@ -100,35 +105,88 @@ useEffect(()=>{
   setNoContent(false)
 }, [langEn, contentRu, noContent, updateSuccess])
 
+const enContentSplited = singleText.content_en.split('\n');
+const ruContentSplited = singleText.content_ru.split('\n');
+
+
+useEffect(()=>{
+  if (ruContentSplited.length >= 5 || enContentSplited.length >= 5)
+      setCheckTextLength(true);
+  else 
+    setCheckTextLength(false);
+}, [checkTextLength])
+
+
 useEffect (()=>{
   if (singleText.content_en !== '') {
-  const enContentSplited = singleText.content_en.split('\n');
-  const newEnContent = enContentSplited.map((e, i)=> {  
-    return (
-        <p className='text__readonly__p' key={i}>
-        {e}
-        </p>
-    )
-  })
-  setContentEn(newEnContent)
+    ;
+    const truncatedText = enContentSplited.slice(0,5);
+      console.log(truncatedText)
+      if (showMore && checkTextLength) {
+    const newEnContent = truncatedText.map((p, i)=> {
+      return (
+        <div  className={cn("single__text__read__mode", { ["single__text__read__mode__Truncated"]: truncated })} >
+            <p className='text__readonly__p'key={i}>{p.trim()}</p>
+          </div>
+      )
+    })
+    setContentEn(newEnContent);
+    setTruncated(true)
+    }
+    else {
+    const newEnContent = enContentSplited.map((p, i)=> {
+      return (
+        <p className='text__readonly__p' key={i}>{p}</p>
+      )
+    })
+    setContentEn(newEnContent);
+    setTruncated(false)
+    } 
   }
-  else setContentEn('')
-}, 
-[singleText])
+    
+    else {
+      setContentEn(''); ; setCheckTextLength(false)
+    }
+  }, 
+[singleText, showMore, truncated, checkTextLength])
+
+useEffect(()=>{
+  if (editName)
+  document.getElementById('name_input').focus()
+}, [editName])
+
 
 useEffect (()=>{
   if (singleText.content_ru !== '') {
-  const ruContentSplited = singleText.content_ru.split('\n');
-  const newRuContent = ruContentSplited.map((e, i)=> {
-    return (
-      <p className='text__readonly__p' key={i}>{e}</p>
-    )
-  })
-  setContentRu(newRuContent)
-  }
-  else setContentRu('')
+  
+  const truncatedText = ruContentSplited.slice(0,5);
+    if (showMore && checkTextLength) {
+      const newRuContent = truncatedText.map((p, i) => {
+        return (
+          
+          <div  className={cn("single__text__read__mode", { ["single__text__read__mode__Truncated"]: truncated })} >
+            <p className='text__readonly__p'key={i}>{p.trim()}</p>
+          </div>
+        )
+      })
+      setContentRu(newRuContent);
+      setTruncated(true)
+    }
+    else {
+      const newRuContent = ruContentSplited.map((p, i) => {
+      return (
+        <p className='text__readonly__p' key={i}>{p}</p>
+      )
+    })
+    setContentRu(newRuContent);
+    setTruncated(false)
+  } 
+}
+  
+  else { setContentRu(''); setCheckTextLength(false)
+}
 }, 
-[singleText])
+[singleText, showMore, truncated])
 
 
 
@@ -180,10 +238,6 @@ const sendUpdatedNameRu = async (data) => {
   }
 }
 
-
-
-
-
 useEffect(()=>{
 if (updateSuccess)
   setTimeout(()=>{
@@ -201,18 +255,12 @@ const handleNameEditClick = () => {
   setEditName(false)
 }
 
-
-
-
-
 document.addEventListener("keydown", function(event) {
   if (event.key === 'Escape') {
     setEditName(false);
     setEditMode(false)
   }
 })
-
-
 
 const handleChangeEn = (event) => {
   setEnName(event.target.value)
@@ -222,8 +270,7 @@ const handleChangeRu = (event) => {
   setRuName(event.target.value)
 }
 
-const nameEnRegister = register("name_en", {
-    
+const nameEnRegister = register("name_en", {  
   maxLength: {
     value:50,
     message:
@@ -233,7 +280,6 @@ const nameEnRegister = register("name_en", {
 );
 
 const nameRuRegister = register("name_ru", {
-  
   maxLength: {
     value:50,
     message:
@@ -241,7 +287,8 @@ const nameRuRegister = register("name_ru", {
     }
   }
 );
-console.log(enName, singleText.name_en)
+
+
 
   return (
     <div className='single__text__main__container'>
@@ -260,7 +307,6 @@ console.log(enName, singleText.name_en)
                   <input
                     type='text'
                     value={enName}
-                    readOnly={!editName}
                     onInput={handleChangeEn}
                     id='name_input'
                     {...nameEnRegister}
@@ -354,8 +400,9 @@ console.log(enName, singleText.name_en)
     }
       {updateSuccess && <small>{langEn ? 'Text successfully updated!' : 'Текст успешно обновлен!'}</small>}
       {!editMode ?
-        <div className='single__text__textarea__containter'>
-          <div>{langEn ? contentEn : contentRu}</div>
+        <div className='single__text__textarea__containter'
+        >
+          <div >{langEn ? contentEn : contentRu}</div>
           
           {!!noContent && <div>
             {langEn ? 
@@ -383,7 +430,7 @@ console.log(enName, singleText.name_en)
           {langEn ?
             <form onSubmit={handleSubmit(sendUpdatedEnText)}>
               <textarea className='textarea_auto' defaultValue={singleText.content_en} {...register("content_en")}></textarea>
-              <button className='add__text__sumbit_btn' type='submit'>Send</button>
+              <button className='add__text__sumbit_btn' type='submit'>{langEn? "Send" : "Отправить"}</button>
             </form>
             :
             <form onSubmit={handleSubmit(sendUpdatedRuText)}>
@@ -396,6 +443,18 @@ console.log(enName, singleText.name_en)
           }    
         </div>
       }
+    {/* ------- КНОПКА ДЛЯ РАЗВЕРТЫВАНИЯ ТЕКСТА--------- */}
+    {checkTextLength &&
+    <div className='single__text__show__more__wrapper'>
+      {showMore ?
+      <button onClick={()=>{setShowMore(false)}}  className='add__text__sumbit_btn'>{langEn ? 'Show All' : "Показать все"}</button>
+      : 
+      <button onClick={()=>{setShowMore(true)}}  className='add__text__sumbit_btn'>{langEn ? 'Show Less' : "Свернуть"}</button>
+    }
+    </div>
+    }
+    
+    {/* ------- КОММЕНТАРИИ--------- */}
     <section className='single__text__comments__section'>
       {!showComments && <button 
       onClick={()=>{setShowComments(true)}} 

@@ -13,7 +13,7 @@
   }
   &__label {
     display: flex;
-    gap: 3rem;
+    gap: 2rem;
     align-items: center;
     
   }
@@ -24,15 +24,15 @@
   &__inputs__container {
     display: flex;
     gap: 1rem;
+    flex-direction: column;
     
   }
 
   &__input {
     height: 2rem;
     width: 300px;
-    font-size: 18px;  
     border-radius: 10px;
-    
+    font-size: clamp(0.5rem, 0.407rem + 0.39vw, 0.875rem);
     padding-left: 20px;
     padding-right: 20px;
     border: 1px white solid;

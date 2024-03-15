@@ -1,4 +1,4 @@
-import { removeCommentFromTextByCommentId } from "../../../utils/api_texts";
+import { getCommentAuthorInfoByID, removeCommentFromTextByCommentId } from "../../../utils/api_texts";
 import { useState, useEffect } from "react";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {getAuth, getUser} from 'firebase/auth'
@@ -6,10 +6,11 @@ import {getAuth, getUser} from 'firebase/auth'
 
 export const SingleComment = ({ currentUser, comment, textID, user_id, setSingleText, options}) => {
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
-  
+  const [userInfo, setUserInfo] = useState({});
+
   const commentCreationDate = new Date (comment.createdAt).toLocaleString("ru-RU", options);
   const commentID = comment._id;
- 
+ const commentAuthorID = comment.user_id
   
   const removeComment = async (textID, commentID) => {
     try {
@@ -19,6 +20,14 @@ export const SingleComment = ({ currentUser, comment, textID, user_id, setSingle
     catch(err)
     {console.log(err)}
   }
+
+useEffect(()=>{
+getCommentAuthorInfoByID(commentAuthorID).then(res => {
+  if (res.message === 'Success')
+  setUserInfo(()=>({...res}))
+  else setUserInfo({author_name: 'Deleted / Удаленный', author_avatar: 'https://cdn-icons-png.freepik.com/512/3519/3519212.png'})
+})
+},[])
 
 
 
@@ -34,8 +43,8 @@ export const SingleComment = ({ currentUser, comment, textID, user_id, setSingle
     <div className='single__text__comments__section__array'>
           <div className='single__text__comments__section__array__userInfo'>
             <div className='single__text__comments__section__array__userInfo__left'>
-              <img src={comment.user_photoURL ?? 'https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg'}></img>
-              <div className='single__text__comments__section__array__userInfo__name'>{comment.user_displayName}</div>
+              <img src={userInfo.author_avatar ?? 'https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg'}></img>
+              <div className='single__text__comments__section__array__userInfo__name'>{userInfo.author_name}</div>
               <small>{commentCreationDate}</small>
             </div>
             <div>

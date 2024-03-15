@@ -1,4 +1,4 @@
-import './auth.css'
+import './auth.scss'
 import GoogleIcon from '@mui/icons-material/Google';
 import { useNavigate, Link } from 'react-router-dom';
 import { Backbutton } from '../BackButton/BackButton';

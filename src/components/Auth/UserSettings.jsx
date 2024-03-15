@@ -1,4 +1,4 @@
-import './auth.css'
+import './auth.scss'
 import { useNavigate, Link } from 'react-router-dom';
 import { Backbutton } from '../BackButton/BackButton';
 import { useEffect, useState} from 'react';
@@ -10,7 +10,7 @@ import cn from "classnames";
 import { Spinner } from '../Spinner/Spinner';
 
 
-export const UserSettings = ({currentUser, setCurrentUser, showModal, onSignOut, setShowModal}) => {
+export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, onSignOut, setShowModal}) => {
   
   // Стейт для спиннера
   const [showSpinner, setShowSpinner] = useState(false);
@@ -207,10 +207,8 @@ export const UserSettings = ({currentUser, setCurrentUser, showModal, onSignOut,
              {/* Форма */}
             <form onSubmit={handleSubmit(sendUpdateData)}>
                 {/* Блок с инпутами. При фокусировке отображаются кнопки очистки ввода. При расфокусировке они исчезают */}
-                <div className='inputs__container'>
+                <div className='inputs__container__profile'>
                         <div className='single__input__wrapper'
-                          onFocus={()=>{setShowClearBtn1(true)}}
-                          onBlur={()=>{setShowClearBtn1(false)}}
                         >
                           <label >Display Name  : </label>
                             <input
@@ -221,14 +219,13 @@ export const UserSettings = ({currentUser, setCurrentUser, showModal, onSignOut,
                             >
                             </input>
                           
-                            <button type='button' className={cn("auth_clear_btn", { ["auth_clear_btn_Active"]: showClearBtn1 })}
+                            <button type='button' className="auth_clear_btn"
                             onClick={()=>{reset({userName: ''})}}> <CloseIcon fontSize='small'/> </button>
                         </div>
                       
 
                         <div className='single__input__wrapper'
-                          onFocus={()=>{setShowClearBtn2(true)}}
-                          onBlur={()=>{setShowClearBtn2(false)}}
+
                         >
                           <label>Avatar URL :</label>
                             <input
@@ -241,14 +238,15 @@ export const UserSettings = ({currentUser, setCurrentUser, showModal, onSignOut,
                             >
                             </input>
                           <button type='button' onClick={()=>{reset({avatarURL: ''})}}
-                          className={cn("auth_clear_btn", { ["auth_clear_btn_Active"]: showClearBtn2 })}><CloseIcon fontSize='small'/></button>
+                          className="auth_clear_btn"><CloseIcon fontSize='small'/></button>
                         </div>
 
                   </div>
 
                 {/* Надпись об ошибке при вводе слишком длинного URL + Ошибка при вводе имени */}
                 <div className='show__error__container'>
-                  {showError && <small style={{color: 'darkorange'}}>This URL is too long, try another picture  </small>}
+                  {showError && <small style={{color: 'darkorange'}}>{langEn ? 'This URL is too long, try another picture' : "URL слишком длинный - попробуйте другую картинку"}  
+                  </small>}
                   { errors?.userName  &&
                   <small className='auth_small'>{errors.userName?.message}</small>}
                 </div>

@@ -6,34 +6,55 @@ import DownloadIcon from '@mui/icons-material/Download';
 import cn from 'classnames'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { deleteTrackByID } from "../../utils/api_music";
+import { deleteTrackByID, getAuthorNameByID } from "../../utils/api_music";
 import { MusicEditForm } from "./MusicEditForm/MusicEditForm";
 import { MusicDeleteModal } from "./MusicDeleteModal/MusicDeleteModal";
 import { deleteMusicLikeById } from "../../utils/api_music";
 import { addLikeById } from "../../utils/api_music";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
+import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate } from "react-router-dom";
+import { Spinner } from "../Spinner/Spinner";
+
+
 
 
 export const MusicCard = ({track_name, track, langEn, setTrackList, 
   currentUser, track_image, track_source, user_id, checkPlaying, checkTrackPlaying}) => {
-  // Стейт для лайков
-  const [musicIsLiked, setMusicIsLiked] = useState(false)
-  // Стейт для попапа о том, что нужно авторизоваться
-  const [showPopoverNotAuth, setShowPopoverNotAuth] = useState(false)
-  // Cтейт для модального окна при удалении
-    const [showModalDelete, setShowModalDelete] = useState(false)
-  // Cтейт для модального окна при редактировании
-  const [showModalEdit, setShowModalEdit] = useState(false)
-
-  const [trackSourceError, setTrackSourceError] = useState(false)
-
-
+  
+  //-------------СТЕЙТЫ-----------
+    // для лайков
+  const [musicIsLiked, setMusicIsLiked] = useState(false);
+  // для попапа о том, что нужно авторизоваться
+  const [showPopoverNotAuth, setShowPopoverNotAuth] = useState(false);
+  // для модального окна при удалении
+    const [showModalDelete, setShowModalDelete] = useState(false);
+  // для модального окна при редактировании
+  const [showModalEdit, setShowModalEdit] = useState(false);
+    // если проблема с доступностью трека на серверве
+  const [trackSourceError, setTrackSourceError] = useState(false);
+  // смотрим, чтобы пользователь мог редактировать и удалять только свои карточки
+  const [checkCurrentUser, setCheckCurrentUser] = useState(false);
+  // отображаем имя пользователя по запросу
+  const [authorName, setAuthorName] = useState('');
+// Служебные переменные
+const navigate = useNavigate()
 
 const track_id = track._id
 const track_likes = track?.track_likes
+const author_id = track?.track_author_id
 
+const options = { 
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "Europe/Moscow",
+  }
 
+const createdAtDateEn = new Date (track.createdAt).toLocaleString("en-US", options);
+const createdAtDateRu = new Date (track.createdAt).toLocaleString("ru-RU", options);
+// Функция для лайков
 const handleMusicLike = async (track_id, user_id) =>{
   const trackIsLiked = track_likes.some((s) => s === user_id);
   console.log(trackIsLiked)
@@ -71,12 +92,6 @@ const handleLikeClick = () => {
   else setShowPopoverNotAuth(true)
   } 
 
-useEffect(()=>{
-  if (showPopoverNotAuth)
-    setTimeout(()=>{
-    setShowPopoverNotAuth(false)
-    }, 5000)
-},[currentUser, showPopoverNotAuth])
 
 // Функция для скачивания
 
@@ -108,23 +123,13 @@ useEffect(()=>{
     downloadTrack(blob)
   });
 }
-
+//--------------ЛОГИКА ДЛЯ ПЛЕЕРА------------
+// Стейты
 const [isPlaying, setIsPlaying] = useState(false)  
-
+// UseSound
 const [play, { pause, duration, stop,  sound}] = useSound(track_source, {interrupt: false, onend : () => setIsPlaying(false)});
 
-// Для удаления карточки
-const deleteMusicCard = async (track_id) => {
-  await deleteTrackByID(track_id).then((newTrackList)=>{
-    setTrackList(newTrackList);
-    setIsPlaying(false) 
-  })
-  
-}
-
-
-
-
+// Кнопка для воспроизведения и паузы
   const playingButton = () => {
     if (isPlaying) {
       pause();
@@ -146,7 +151,7 @@ const deleteMusicCard = async (track_id) => {
     }
       
     }, [checkPlaying])
-    
+    // Время
 const [currentTime, setCurrentTime] = useState({
   min: "",
   sec: "",
@@ -179,18 +184,53 @@ useEffect(() => {
   return () => clearInterval(interval);
 }, [sound]);
 
-
+// Если трек недоступен с сервера
 useEffect(()=> {
   if (duration !== null)
   setTrackSourceError(true)
-})
-console.log(duration)
 
+}, [duration])
+
+// Смотрим, чтобы юзер мог редактировать и удалять только свои карточки
+useEffect(()=> {
+  if (currentUser !== '' && currentUser.uid === author_id || "EdMxJTASeEU1PYZqNJqJfrsE8p93")
+  setCheckCurrentUser(true);
+  else setCheckCurrentUser(false);
+}, [currentUser])
+
+// Достаем имя юзера по запросу
+useEffect(()=> {
+  getAuthorNameByID(author_id).then(res => {
+    if (res.message === "Success")
+    setAuthorName(res.authorName);
+    if (res.message === 'User Not Found')
+    setAuthorName(langEn ? 'Deleted User' : "Удаленный");  
+  }
+    ) 
+}, [])
+
+// Для удаления карточки
+const deleteMusicCard = async (track_id) => {
+  await deleteTrackByID(track_id).then((newTrackList)=>{
+    setTrackList(newTrackList);
+    setIsPlaying(false) 
+  })
+  
+}
+
+
+
+
+
+
+
+const [showSpinner, setShowSpinner] = useState(true)
 
   return (
-    <>
+  <div >
   {trackSourceError ?
-  <div className="music__card" >
+  <div className="music__card" onLoad={()=>setShowSpinner(false)}>
+    {showSpinner && <div className="music__card__spinner__container"><Spinner/></div>}
     <div className="music__card__container">
         <div className="music__card__img__wrapper">
           <img 
@@ -215,28 +255,45 @@ console.log(duration)
                   onClick={()=>{downloadOnClick(track_source)}} title={langEn ? 'Download' : 'Скачать'} >
                   <DownloadIcon fontSize="small"/>
                 </button>
-                <button onClick={()=>{setShowModalEdit(true)}} className="music__card__left__top__controls__edit__btn"
-                  title={langEn ? 'Edit' : 'Редактировать'}><EditIcon fontSize="small"/>
-                </button>
-                {showModalEdit && (
-                  <div className={cn("modal", { ["active"]: showModalEdit })} onClick={()=>{setShowModalEdit(false)}}>
-                    <div className={cn("modal_content", { ["active"]: showModalEdit })}  onClick={(e) => e.stopPropagation()}>
-                      <MusicEditForm track={track} track_id={track_id} setTrackList={setTrackList} langEn={langEn} setShowModalEdit={setShowModalEdit}/>
-                    </div>
-                  </div> 
-                )}
-                  <span className="music__card__left__top__controls__delete__icon" 
-                    onClick={()=>{setShowModalDelete(true)}} title="Delete"><DeleteOutlineIcon fontSize="small"/>
-                  </span>
-                  {showModalDelete &&
-                    <MusicDeleteModal showModalDelete={showModalDelete} track_id={track_id} deleteMusicCard={deleteMusicCard} setShowModalDelete={setShowModalDelete}/>
-                  }
+                {checkCurrentUser &&  
+                <div>
+                  <button onClick={()=>{setShowModalEdit(true)}} className="music__card__left__top__controls__edit__btn"
+                    title={langEn ? 'Edit' : 'Редактировать'}><EditIcon fontSize="small"/>
+                  </button>
                   
+                  {showModalEdit && (
+                    <div className={cn("modal", { ["active"]: showModalEdit })} onClick={()=>{setShowModalEdit(false)}}>
+                      <div className={cn("modal_content", { ["active"]: showModalEdit })}  onClick={(e) => e.stopPropagation()}>
+                        <MusicEditForm track={track} track_id={track_id} setTrackList={setTrackList} langEn={langEn} setShowModalEdit={setShowModalEdit}/>
+                      </div>
+                    </div>
+                  )}
+                  
+                    <span className="music__card__left__top__controls__delete__icon"
+                      onClick={()=>{setShowModalDelete(true)}} title="Delete"><DeleteOutlineIcon fontSize="small"/>
+                    </span>
+                  
+                    {showModalDelete &&
+                      <MusicDeleteModal showModalDelete={showModalDelete} track_id={track_id} deleteMusicCard={deleteMusicCard} setShowModalDelete={setShowModalDelete}/>
+                    }
+                </div>
+                }
               </div>
+            
+            {showPopoverNotAuth &&
+            <div className="music__card__popover">
+              <span onClick={()=>{navigate('/sign-in')}}>{langEn ? 'Sign in to add track to favorites' : 
+            'Войдите в аккаунт, чтобы ставить лайки'}</span>
+            <span onClick={()=>{setShowPopoverNotAuth(false)}}>
+              <CloseIcon fontSize=""/>
+            </span></div>
+            }
             </div>
 
             <div className="music__card__left__bottom__container">
-              <small>{langEn ? 'Published by' : 'Опубликовал'} <span>{track.track_author}</span></small>
+              <small>{langEn ? 'Published by' : 'Опубликовал'} <span>{authorName} </span>
+              <span> {langEn ? createdAtDateEn : createdAtDateRu}</span>
+              </small>
               <div className="music__card__left__bottom___like__btn__wrapper">
                 <button onClick={()=>{handleLikeClick()}}  
                   className={cn("music__card__left__bottom__like__btn", { ["music__card__left__bottom__like__btn__Active"]: musicIsLiked })} 
@@ -288,21 +345,23 @@ console.log(duration)
     </div>
   </div>
   :
+ 
   <div className="music__card">
   <div className="music__card__container">
         <div className="music__card__img__wrapper">
         <img src={'https://img.freepik.com/premium-photo/neon-flat-musical-note-icon-3d-rendering-ui-ux-interface-element-dark-glowing-symbol_187882-2481.jpg?size=626&ext=jpg'}></img>
         </div>
         <div className="music__card__error">{langEn? 'Unfortunately, track is unavailable' : "К сожалению, трек не доступен"}
+        {checkCurrentUser &&
         <span className="music__card__error__delete__icon" 
             onClick={()=>{deleteMusicCard(track_id)}} title={langEn ? 'Delete' : "Удалить"}><DeleteOutlineIcon />
         </span>
-        
+        }
         </div>
-  </div> 
+  </div>
   
   </div>
   }
-  </>
+  </div>
   )
 }

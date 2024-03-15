@@ -1,7 +1,7 @@
 :root {
   --bg-light:  rgba(88, 52, 81, 0.4);
   --main-bg-color: rgb(20, 4, 22);
-  --main-bg-color-op-main: rgba(52, 30, 56, 0.3);
+  --main-bg-color-op-main: rgba(53, 12, 49, 0.3);
   --btn-color: rgba(68, 25, 65, 0.8);
   --lilac-color: #ffdaeb;
   --violet-text-shadow:  0 2px 5px rgb(156, 50, 121);
@@ -26,7 +26,7 @@ body {
   width: 100vw;
   overflow-x: hidden;
   font-family: "Titillium Web", sans-serif;
-  counter-reset: contents_counter;  
+  // counter-reset: contents_counter;  
   color: white;
   -webkit-transition: all 0.2s ease-in;  /* Chrome 1-25, Safari 3.2+ */
   -moz-transition: all 0.2s ease-in;  /* Firefox 4-15 */
@@ -39,7 +39,7 @@ max-width: 60%;
 padding-right: clamp(0.313rem, -0.425rem + 3.688vw, 4rem);
 color: white;
 padding-bottom: 4rem;
-font-size: clamp(0.625rem, 0.525rem + 0.5vw, 1.125rem);
+font-size: clamp(0.625rem, 0.532rem + 0.39vw, 1rem);
 padding-left: clamp(0.313rem, -0.425rem + 3.688vw, 4rem);
 margin: 0 auto;
 min-height: 68vh;
@@ -52,43 +52,15 @@ h1, h2, h3, h4 {
   color: darkorange;
   font-weight: 700; 
   text-align: center;
+  font-size: clamp(1.125rem, 1.002rem + 0.519vw, 1.625rem);
 }
 
-
-// button[type=submit] {
-//   background-color: var(--btn-color);
-//   padding: 5px;
-//   border-radius: 5px;
-//   font-size: clamp(0.75rem, 0.688rem + 0.26vw, 1rem);
-//   text-align: center;
-//   width: clamp(2.5rem, 6.883rem + 2.597vw, 10rem);
-//   border: none;
-//   color: white;
-//   cursor: pointer;
-//     &:hover {
-//       color:darkorange;
-//       box-shadow: var(--box-shadow-gl);
-//   }
-// }
 
 
 input[type=checkbox] {
   cursor: pointer;
   accent-color:  var(--bg-light);
 }
-
-// input[type=text] {
-//   height: 2rem;
-//     width: clamp(120px, 10vw, 300px);
-//     font-size: 14px;  
-//     border-radius: 5px;
-//     border: 1px white solid;
-//     background-color: transparent;
-//     color: white;
-//     &:focus {
-//       outline: var(--orange-outline);
-//     }
-// }
 
 
 
@@ -100,14 +72,14 @@ input[type="range"] {
   width: 100%;
 }
 input[type="range"]::-webkit-slider-runnable-track {
-  background: #8721b6;
+  background: rgba(185, 87, 7, 0.1);
   height: 0.5rem;
   
   border-radius: 5px;
 }
 
 input[type="range"]::-moz-range-track {
-  background: var(--main-bg-color-op-main);
+  background: rgba(185, 87, 7, 0.1);;
   height: 1rem;
   border-radius: 15px;
   
