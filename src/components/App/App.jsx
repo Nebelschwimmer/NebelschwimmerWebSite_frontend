@@ -32,7 +32,7 @@ function App() {
 
   const [trackList, setTrackList] = useState([]);
 
-  const [pageQuery, setPageQuery] = useState(1)
+  
   // Функция для навигации
   const navigate = useNavigate()
 
@@ -85,9 +85,9 @@ return (
           setLangEn={setLangEn} showModal={showModal} setShowModal={setShowModal} texts={texts} setTexts={setTexts} langEn={langEn} />}> </Route> 
         <Route path='/music' element={<MusicPage showModal={showModal} setShowModal={setShowModal} trackList={trackList} setTrackList={setTrackList}  
         langEn={langEn} currentUser={currentUser}/>}></Route>
-        <Route path='/texts' element={<TextsPage pageQuery={pageQuery} setPageQuery={setPageQuery}  currentUser={currentUser} showModal={showModal} 
+        <Route path='/texts' element={<TextsPage currentUser={currentUser} showModal={showModal} 
         setShowModal={setShowModal} langEn={langEn} texts={texts} setTexts={setTexts}/>}></Route>
-        <Route path='/texts/add-text' element={<AddTextPage setPageQuery={setPageQuery} currentUser={currentUser} texts={texts} setTexts={setTexts} langEn={langEn} showModal={showModal} setShowModal={setShowModal}/>}></Route> 
+        <Route path='/texts/add-text' element={<AddTextPage currentUser={currentUser} texts={texts} setTexts={setTexts} langEn={langEn} showModal={showModal} setShowModal={setShowModal}/>}></Route> 
         <Route path='/register' element={<Register langEn={langEn} currentUser={currentUser} setCurrentUser={setCurrentUser} signInWithGoogle={signInWithGoogle}/>}></Route>
         <Route path='/user-settings' element={<UserSettings langEn={langEn} showModal={showModal} setShowModal={setShowModal} onSignOut={onSignOut}  currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
         <Route path='/sign-in' element={<SignIn langEn={langEn} signInWithGoogle={signInWithGoogle}/>}></Route>

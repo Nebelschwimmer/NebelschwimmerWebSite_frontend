@@ -14,7 +14,7 @@ export const AddMusicForm = ({langEn, setShowModal, currentUser, trackList, setT
 // Стейты для показа информации о файле
 const [showFileName, setShowFileName] = useState('');
 const [showFileSize, setShowFileSize] = useState('');
-const [fileSizeError, setFileSizeError] = useState('');
+const [fileSizeError, setFileSizeError] = useState(false);
 const [disableBtn, setDisableButton] = useState(false);
 const [checkedPic, setCheckedPic] = useState(false);
 const [preview, setPreview] = useState(undefined);
@@ -37,9 +37,9 @@ const onAudioFileAdding = (e) => {
     setShowFileName(findAudFile.name.substring(0, 43) + '...') 
   }
   else setShowFileName(findAudFile.name);
-  setShowFileSize((findAudFile.size / 1048576 ).toFixed(2) +' MB')
-  if (findAudFile.size > 1e+7 ) setFileSizeError('This file is too big! It must not exceed 20 MB!')
-  else (setFileSizeError(''))
+  setShowFileSize((findAudFile.size / 1048576 ).toFixed(2) +' MB');
+  if (findAudFile.size > 1e+7 ) setFileSizeError(true)
+  else setFileSizeError(false)
 };
 
 const onImgFileAdding = (e) => {
@@ -125,7 +125,9 @@ const audioFileRegister = register("file__audio", {
                   <small>{showFileName}</small>
                   {showFileSize !== '' &&  <small>{showFileSize}</small> }
                 </div>
-                    <span>{fileSizeError}</span>
+                    {fileSizeError &&
+                    <span>{langEn ? 'This file is too big! It must not exceed 20 MB.' : "Файл слишком большой! Он не должен превышать 20 Мб."}</span>
+                    } 
                 </div>
               
                 <div>

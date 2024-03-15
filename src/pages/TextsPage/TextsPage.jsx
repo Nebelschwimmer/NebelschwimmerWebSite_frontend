@@ -13,12 +13,12 @@ import { PaginationBoard } from './PaginationBoard'
 
 
 
-export const TextsPage = ({langEn, currentUser, texts, setTexts, pageQuery, setPageQuery}) => {
+export const TextsPage = ({langEn, currentUser, texts, setTexts}) => {
 
 const [searchQuery, setSearchQuery] = useState(undefined);
 const [pages, setPages] = useState([])
 const [pagesNumber, setPagesNumber] = useState()
-
+const [pageQuery, setPageQuery] = useState(1)
 
 
 

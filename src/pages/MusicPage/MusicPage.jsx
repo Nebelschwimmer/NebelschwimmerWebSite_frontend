@@ -6,18 +6,22 @@ import { useState, useEffect } from 'react';
 import { getMusicList, searchMusic } from '../../utils/api_music';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
+import { PaginationBoard } from '../TextsPage/PaginationBoard';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export const MusicPage = ({langEn, trackList, setTrackList, showModal, setShowModal, currentUser}) => {
 
   const [searchMusicQuery, setSearchMusicQuery] = useState('')
-  
+  const [pages, setPages] = useState([])
+  const [pagesNumber, setPagesNumber] = useState()
+  const [pageQuery, setPageQuery] = useState(1)
+
+
+
+
   const navigate = useNavigate()
 
-  useEffect(()=>{
-    getMusicList().then((result)=>{
-      setTrackList(result)
-    })
-  }, [])
 
   const user_id = currentUser.uid
 
@@ -44,11 +48,49 @@ const onSearchClick = async () => {
 
 useEffect(()=>{ 
   if (searchMusicQuery === "" || searchMusicQuery === undefined) {
-    getMusicList().then((res) => {
-      setTrackList(res)
+    getMusicList(pageQuery).then((res) => {
+      setTrackList(()=>([...res.tracks]));
+      setPagesNumber(res.totalPages);
+      navigate(`/music?page=${pageQuery}`)
     })
   }
-}, [searchMusicQuery])
+}, [searchMusicQuery, pageQuery])
+
+const handleBackArrowClick = () => {
+  if (pageQuery > 1)
+  setPageQuery(
+  st => st - 1
+  )
+}
+const handleForwardArrowClick = () => {
+  if (pageQuery < pagesNumber)
+  setPageQuery(
+  st => st + 1
+  )
+}
+
+useEffect(()=>{ 
+  const paginationArr = [...Array(pagesNumber).keys()].map(e => (e + 1));
+  const limitArr = []
+  for (let i = 0; i < 5; i++) {
+    limitArr.push((i * 5) + 5)
+  }
+  limitArr.forEach((el, ind, arr) => {
+    if (pageQuery > 5) {
+      // Проблема: нужно сделать так, чтобы на каждой итерации лимитируещего
+      // массива рендерился обрезанный массив из номеров страниц, т.е.
+      // если страниц 11, то выводились сначала числа 1-5, затем 6-10, а потом только 11.
+      // Попытки записать все массивы в стейты не удались, так как в результате
+      // рендерилось только число 11, хотя консоль показывала числа 6-9 при 2-й итерации
+      const slicedPaginationArray = paginationArr.slice(5, pagesNumber)  
+      console.log(slicedPaginationArray)
+      setPages(slicedPaginationArray)
+    }
+    else 
+    setPages(()=>(paginationArr.slice(0, 5))); 
+    }
+  )
+}, [pageQuery, trackList])
 
 
   return (
@@ -80,6 +122,29 @@ useEffect(()=>{
       :
       <span className='music__page__empty'>{langEn ? 'Tracklist not found' : 'Треки не найдены'}</span>
       }
+      {pagesNumber > 1 && !searchMusicQuery ?
+        <div className='texts__page__pagination__container'>
+          <div className='texts__page__pagination__card' onClick={()=>{handleBackArrowClick()}}><ArrowBackIosIcon fontSize=''/></div>
+          {pages.map((currentPage, i)=>{
+
+            return (<PaginationBoard
+            currentPage={currentPage}
+            pageQuery={pageQuery}
+            setPageQuery={setPageQuery}
+            key={i}
+            />)
+          })}
+        
+        <div 
+          className='texts__page__pagination__card'
+          onClick={()=>{handleForwardArrowClick()}}
+          ><ArrowForwardIosIcon fontSize=''/></div>
+        </div>
+        :
+        <div></div> 
+      }
+
+
       <ModalWindow showModal={showModal} setShowModal={setShowModal}>
         <AddMusicForm langEn={langEn} setShowModal={setShowModal} currentUser={currentUser} trackList={trackList} setTrackList={setTrackList}/>
       </ModalWindow>

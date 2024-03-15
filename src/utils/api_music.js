@@ -16,8 +16,8 @@ export const addLikeById = (track_id, user_id) => {
   }).then((res) => onResponse(res));
 }
 
-export const getMusicList = () => {
-  return fetch('http://localhost:3020/music/', {
+export const getMusicList = (pageQuery) => {
+  return fetch(`http://localhost:3020/music?page=${pageQuery}`, {
     headers: {
       "Content-Type": "application/json"
     },
