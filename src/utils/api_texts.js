@@ -146,3 +146,14 @@ export const getCommentAuthorInfoByID = (commentAuthorID) => {
     
   }).then((res) => onResponse(res));
 }
+
+export const getPublisherInfoByID = (publisherID) => {
+  return fetch('http://localhost:3020/texts/getPublisherInfo', {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    method: "PATCH",
+    body: JSON.stringify({publisher_id: publisherID})
+    
+  }).then((res) => onResponse(res));
+}

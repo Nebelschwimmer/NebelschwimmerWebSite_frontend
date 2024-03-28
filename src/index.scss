@@ -7,10 +7,8 @@
   --violet-text-shadow:  0 2px 5px rgb(156, 50, 121);
   --orange-outline: 1px solid rgb(243, 131, 39);
   --dark-orange-op:rgba(150, 79, 21, 0.2);
-  --box-shadow-gl: 2px 2px 4px 2px rgba(14, 0, 14, 0.3);
+  --box-shadow-gl: 2px 2px 5px 5px rgba(14, 0, 14, 0.4);
 
-
-  
 }
 
 
@@ -25,13 +23,8 @@ body {
   background-size: cover;
   width: 100vw;
   overflow-x: hidden;
-  font-family: "Titillium Web", sans-serif;
-  // counter-reset: contents_counter;  
+  font-family: "Titillium Web", sans-serif; 
   color: white;
-  -webkit-transition: all 0.2s ease-in;  /* Chrome 1-25, Safari 3.2+ */
-  -moz-transition: all 0.2s ease-in;  /* Firefox 4-15 */
-  -o-transition: all 0.2s ease-in;  /* Opera 10.50–12.00 */
-  transition: all 0.2s ease-in; 
 }
 
 .main_content_container {
@@ -52,7 +45,8 @@ h1, h2, h3, h4 {
   color: darkorange;
   font-weight: 700; 
   text-align: center;
-  font-size: clamp(1.125rem, 1.002rem + 0.519vw, 1.625rem);
+  // font-size: clamp(1.125rem, 1.002rem + 0.519vw, 1.625rem);
+  font-size: clamp(0.875rem, 0.659rem + 0.909vw, 1.75rem);
 }
 
 
@@ -82,6 +76,7 @@ input[type="range"]::-moz-range-track {
   background: rgba(185, 87, 7, 0.1);;
   height: 1rem;
   border-radius: 15px;
+  width: 100%;
   
 }
 input[type="range"]::-webkit-slider-thumb {
@@ -110,8 +105,8 @@ input[type="range"]::-moz-range-progress {
 @media screen and (max-width: 480px) {
   .main_content_container {
     max-width: 100%;
-    width: 100%;
-    border-radius: 0;
-    padding: 10px;
+    // width: fit-content;
+    border-radius: 0px;
+    padding: 5px;
   }
 }

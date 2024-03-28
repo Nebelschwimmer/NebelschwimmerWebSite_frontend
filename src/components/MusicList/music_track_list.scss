@@ -9,3 +9,9 @@
   gap: 1rem;
 
 }
+
+@media screen and (max-width: 480px) {
+  .track__list__cards {
+  width: 100%; 
+  }
+}

@@ -6,13 +6,7 @@
   padding-top: 5rem;
   gap:1rem;
   background: radial-gradient(ellipse farthest-corner at center , rgba(255, 9, 144, 0.2) 0%, rgba(99, 23, 67, 0)55%);
-  &__greeting {
-    
-    color: rgb(167, 98, 8);
-    text-shadow: 1px 1px 10px rgb(126, 7, 80);
-    letter-spacing: clamp(10px, 0.5vw, 30px);
-    font-size: clamp(8px, 5vw, 18px);  
-  }
+
   &__title {
     font-family: "Notable", sans-serif; 
     letter-spacing: clamp(10px, 1.5vw, 120px);
@@ -107,4 +101,10 @@
   100% {
   background-position: 0%;
   }
+  }
+
+  @media screen and (max-width: 480px) { 
+    .home__page {
+      padding-top: 1rem;
+    }
   }

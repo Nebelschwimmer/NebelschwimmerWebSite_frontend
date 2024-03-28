@@ -92,6 +92,12 @@ useEffect(()=>{
   )
 }, [pageQuery, trackList])
 
+useEffect(()=>{
+  if (trackList.length === 0 && pagesNumber >= 1)
+  navigate(-1)
+  }, [trackList, pagesNumber])
+
+
 
   return (
     <div className='music_page_container'>

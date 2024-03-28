@@ -38,7 +38,7 @@ const onAudioFileAdding = (e) => {
   }
   else setShowFileName(findAudFile.name);
   setShowFileSize((findAudFile.size / 1048576 ).toFixed(2) +' MB');
-  if (findAudFile.size > 1e+7 ) setFileSizeError(true)
+  if (findAudFile.size > 2e+7 ) setFileSizeError(true)
   else setFileSizeError(false)
 };
 

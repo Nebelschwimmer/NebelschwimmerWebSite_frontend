@@ -2,14 +2,14 @@
 .header{
   position: sticky;
   background-color: transparent;
+  max-width: 70%;
   margin: 0 auto;
   font-size: 14px;
 }
 .header_container {
 height: 70px;
-margin: 0 auto;
 display: flex;
-width: fit-content;
+justify-content: space-evenly;
 align-items: center;
 padding-top: 10px;
 padding-bottom: 10px;
@@ -41,7 +41,8 @@ justify-content: space-around;
 align-items: center;
 gap: 10px;
 height: fit-content;
-width: 940px;
+width: fit-content;
+
 text-decoration: none;
 position: relative;
 }
@@ -84,13 +85,13 @@ color: darkorange;
   color: white;
 }
 .header_controls_block_single_btn_signin{
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;  
   transition: ease-out 0.2s;
   border: none;
   color: white;
   background-color: transparent;
-  padding: 10px;
+  padding: 5px;
   height: 30px;
   max-width: 120px;
   border-radius: 10px;
@@ -108,9 +109,9 @@ color: darkorange;
   padding: 5px;
   height: fit-content;
   align-items: center;
-  background-color: var(--main-bg-color);
   flex-direction: row;
   justify-content: flex-start;
+  background-color: var(--dark-orange-op);
 }
 .header_aut_nav_img{
   border-radius: 100%;
@@ -217,30 +218,54 @@ color: darkorange;
 
 
 @media screen and (max-width: 480px) {
+  
   .header_container {
     align-items: flex-start;
-   
-    padding: 10px;
-    width: 100%;
+    padding: 0;
     flex-direction: column;
     height: fit-content;
+    gap:1rem;
+    justify-content: flex-start;
+    max-width: 100%;
+    margin-top: 1.5rem;
   }
   .header_icon{
-    display: block;
+    display: flex;
+    align-items: flex-end;
+    padding: 0;
+    font-size: 48px;
     
     
   }
-  .header_name_wrapper_logo {
-    font-size: 25px;
+  .header_icon_container {
+    display: flex;
     width: 100%;
+  }
+  .header_name_wrapper_logo {
+    font-size: 42px;
+    width: 100%;
+    text-align: center;
   }
 
   .header_controls_block{
-    width: fit-content;
-    height: fit-content;
+    max-width: 100%;
+    width: 90%;
+    justify-content: flex-start;
+    
   }
   .header_controls_block_nav_btns_wrapper{
     display: none;
+  }
+
+  .header_controls_block_languages {
+  
+  }
+  .header_popover {
+    z-index: 3;
+  }
+
+  .header_controls_block_single_btn_signin  {
+    padding: 0;
   }
 }
 

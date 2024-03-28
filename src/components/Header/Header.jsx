@@ -90,7 +90,7 @@ const navigate = useNavigate()
     <div className='header_container'>
       <div className='header_icon_container'>
         <span className='header_icon'>
-          <MenuIcon fontSize='large'/>
+          <MenuIcon fontSize=''/>
         </span>
         <span onClick={()=>{navigate('/')}} className='header_name_wrapper_logo'>SurLand</span>
 
@@ -108,7 +108,7 @@ const navigate = useNavigate()
               <img className='header_aut_nav_img' src={avatarURL}/>
             </div>
         
-            <button className='header_controls_block_single_btn_signin' title='Sign out' onClick={()=>{setShowPopover(true)}}><LogoutIcon /></button>
+            <button className='header_controls_block_single_btn_signin' title='Sign out' onClick={()=>{setShowPopover(true)}}><LogoutIcon fontSize='small' /></button>
             {!!showPopOver &&
           <div className='header_popover'>
             <span>{langEn ? 'Are you sure?' : "Вы уверены?"}</span>
@@ -123,9 +123,9 @@ const navigate = useNavigate()
           :
           (<div className='header_aut_nav_wrapper'>
             <button onClick={()=>navigate('/sign-in')} title='Sign in' className='header_controls_block_single_btn_signin' >
-            <LoginIcon/>Sign in</button>
+            <LoginIcon fontSize='small'/>Sign in</button>
             <button  onClick={()=>navigate('/register')} title='Sign up' className='header_controls_block_single_btn_signin' >
-            <HowToRegIcon/>Sign up</button>
+            <HowToRegIcon fontSize='small'/>Sign up</button>
           </div>)}
           </div>
           
@@ -150,7 +150,7 @@ const navigate = useNavigate()
           <div className='header_aut_nav_wrapper'>
             <img onClick={()=>{navigate('/user-settings')}}  className='header_aut_nav_img' src={avatarURL}/>
             <span>{userName}</span>
-            <button className='header_controls_block_single_btn_signin' title='Выйти' onClick={()=>{setShowPopover(true)}}> <LogoutIcon/></button>
+            <button className='header_controls_block_single_btn_signin' title='Выйти' onClick={()=>{setShowPopover(true)}}> <LogoutIcon fontSize='small'/></button>
             {!!showPopOver &&
           <div className='header_popover'>
             <span>{langEn ? 'Are you sure?' : "Вы уверены?"}</span>

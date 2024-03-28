@@ -1,16 +1,16 @@
 import { getCommentAuthorInfoByID, removeCommentFromTextByCommentId } from "../../../utils/api_texts";
 import { useState, useEffect } from "react";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import {getAuth, getUser} from 'firebase/auth'
 
 
-export const SingleComment = ({ currentUser, comment, textID, user_id, setSingleText, options}) => {
+
+export const SingleComment = ({comment, textID, user_id, setSingleText, options}) => {
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
   const [userInfo, setUserInfo] = useState({});
 
   const commentCreationDate = new Date (comment.createdAt).toLocaleString("ru-RU", options);
   const commentID = comment._id;
- const commentAuthorID = comment.user_id
+  const commentAuthorID = comment.user_id
   
   const removeComment = async (textID, commentID) => {
     try {
@@ -48,7 +48,7 @@ getCommentAuthorInfoByID(commentAuthorID).then(res => {
               <small>{commentCreationDate}</small>
             </div>
             <div>
-            {showDeleteBtn &&
+            {!showDeleteBtn &&
               <small className='single__text__comments__section__array__userInfo__deleteICON' onClick={()=> removeComment(textID, commentID)}><DeleteForeverIcon fontSize='small'/></small>
             }
               </div>

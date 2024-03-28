@@ -33,7 +33,7 @@ export const MusicCard = ({track_name, track, langEn, setTrackList,
   // для модального окна при редактировании
   const [showModalEdit, setShowModalEdit] = useState(false);
     // если проблема с доступностью трека на серверве
-  const [trackSourceError, setTrackSourceError] = useState(false);
+  const [loading, setLoading] = useState(false);
   // смотрим, чтобы пользователь мог редактировать и удалять только свои карточки
   const [checkCurrentUser, setCheckCurrentUser] = useState(false);
   // отображаем имя пользователя по запросу
@@ -187,7 +187,7 @@ useEffect(() => {
 // Если трек недоступен с сервера
 useEffect(()=> {
   if (duration !== null)
-  setTrackSourceError(true)
+  setLoading(true)
 
 }, [duration])
 
@@ -213,24 +213,18 @@ useEffect(()=> {
 const deleteMusicCard = async (track_id) => {
   await deleteTrackByID(track_id).then((newTrackList)=>{
     setTrackList(newTrackList);
-    setIsPlaying(false) 
+    setIsPlaying(false);
+    navigate('/music?page=1') 
   })
   
 }
-
-
-
-
-
-
 
 const [showSpinner, setShowSpinner] = useState(true)
 
   return (
   <div >
-  {trackSourceError ?
-  <div className="music__card" onLoad={()=>setShowSpinner(false)}>
-    {showSpinner && <div className="music__card__spinner__container"><Spinner/></div>}
+  {loading ?
+  <div className="music__card">
     <div className="music__card__container">
         <div className="music__card__img__wrapper">
           <img 
@@ -344,10 +338,11 @@ const [showSpinner, setShowSpinner] = useState(true)
       </div>
     </div>
   </div>
+  
   :
- 
+
   <div className="music__card">
-  <div className="music__card__container">
+  {/* <div className="music__card__container">
         <div className="music__card__img__wrapper">
         <img src={'https://img.freepik.com/premium-photo/neon-flat-musical-note-icon-3d-rendering-ui-ux-interface-element-dark-glowing-symbol_187882-2481.jpg?size=626&ext=jpg'}></img>
         </div>
@@ -358,8 +353,10 @@ const [showSpinner, setShowSpinner] = useState(true)
         </span>
         }
         </div>
+  </div> */}
+  <div className="music__card__loading">
+    <Spinner/>
   </div>
-  
   </div>
   }
   </div>

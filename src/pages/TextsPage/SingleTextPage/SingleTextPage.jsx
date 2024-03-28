@@ -1,8 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { SingleText } from '../../../components/SigleText/SingleText';
-
-import { useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { getTextByID } from '../../../utils/api_texts';
 import { addTextToFavourites } from '../../../utils/api_texts';
 import { removeTextFromFavourites } from '../../../utils/api_texts';
@@ -45,7 +44,7 @@ const handleTextLike = async (textID, user_id) =>{
 
 
   return (
-    <>
+    <div>
       {
         singleText !== undefined ?
           <SingleText
@@ -62,7 +61,7 @@ const handleTextLike = async (textID, user_id) =>{
       :
         <div className='single__text__page__spinner__container'><Spinner/></div>
       }
-  </> 
+  </div> 
       )
 
   

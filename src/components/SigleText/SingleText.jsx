@@ -18,11 +18,10 @@ import { Comments } from './Comments/Comments';
 import { Link } from 'react-router-dom';
 import { updateTextNameEn } from '../../utils/api_texts';
 import { updateTextNameRu } from '../../utils/api_texts';
-import { scrollToTop } from '../../utils/utils';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
-export const SingleText = ({singleText, langEn, setSingleText, showModal, setLangEn, setShowModal, currentUser, handleTextLike}) => {
+
+export const SingleText = ({singleText, langEn, pageQuery, setSingleText, showModal, setLangEn, setShowModal, currentUser, handleTextLike}) => {
 
 const navigate = useNavigate(); 
 
@@ -109,20 +108,11 @@ const enContentSplited = singleText.content_en.split('\n');
 const ruContentSplited = singleText.content_ru.split('\n');
 
 
-useEffect(()=>{
-  if (ruContentSplited.length >= 5 || enContentSplited.length >= 5)
-      setCheckTextLength(true);
-  else 
-    setCheckTextLength(false);
-}, [checkTextLength])
-
 
 useEffect (()=>{
   if (singleText.content_en !== '') {
-    ;
     const truncatedText = enContentSplited.slice(0,5);
-      console.log(truncatedText)
-      if (showMore && checkTextLength) {
+      if (showMore) {
     const newEnContent = truncatedText.map((p, i)=> {
       return (
         <div  className={cn("single__text__read__mode", { ["single__text__read__mode__Truncated"]: truncated })} >
@@ -131,7 +121,8 @@ useEffect (()=>{
       )
     })
     setContentEn(newEnContent);
-    setTruncated(true)
+    setTruncated(true);
+    setCheckTextLength(true)
     }
     else {
     const newEnContent = enContentSplited.map((p, i)=> {
@@ -140,15 +131,22 @@ useEffect (()=>{
       )
     })
     setContentEn(newEnContent);
-    setTruncated(false)
+    setTruncated(false);
+      if (enContentSplited.length < 5) 
+        setCheckTextLength(false)
+      else setCheckTextLength(true)
+
     } 
   }
-    
     else {
-      setContentEn(''); ; setCheckTextLength(false)
+      setContentEn(''); setCheckTextLength(false)
     }
   }, 
 [singleText, showMore, truncated, checkTextLength])
+
+
+
+
 
 useEffect(()=>{
   if (editName)
@@ -160,17 +158,22 @@ useEffect (()=>{
   if (singleText.content_ru !== '') {
   
   const truncatedText = ruContentSplited.slice(0,5);
-    if (showMore && checkTextLength) {
+    if (showMore ) {
       const newRuContent = truncatedText.map((p, i) => {
         return (
-          
           <div  className={cn("single__text__read__mode", { ["single__text__read__mode__Truncated"]: truncated })} >
             <p className='text__readonly__p'key={i}>{p.trim()}</p>
           </div>
         )
       })
+      
       setContentRu(newRuContent);
       setTruncated(true)
+      
+      if (ruContentSplited.length < 5) 
+        setCheckTextLength(false)
+      else setCheckTextLength(true)
+      
     }
     else {
       const newRuContent = ruContentSplited.map((p, i) => {
@@ -180,13 +183,26 @@ useEffect (()=>{
     })
     setContentRu(newRuContent);
     setTruncated(false)
+    setCheckTextLength(true)
   } 
 }
-  
   else { setContentRu(''); setCheckTextLength(false)
 }
 }, 
-[singleText, showMore, truncated])
+[singleText, showMore, truncated, checkTextLength])
+
+// useEffect(()=>{
+//   if (ruContentSplited.length < 5 || enContentSplited.length < 5)
+//       {setCheckTextLength(false);
+//       }
+    
+//   else 
+//     setCheckTextLength(true);
+    
+// }, [])
+
+
+
 
 
 
@@ -293,7 +309,7 @@ const nameRuRegister = register("name_ru", {
   return (
     <div className='single__text__main__container'>
     <div className='single__text__top'>
-        <div onClick={()=>{navigate(-1)}}>
+        <div  onClick={()=>{navigate(`/texts?page=${pageQuery}`)}}>
           <Backbutton/>
         </div>
       <div className='single__text__top__wrapper'>
@@ -447,12 +463,13 @@ const nameRuRegister = register("name_ru", {
     {checkTextLength &&
     <div className='single__text__show__more__wrapper'>
       {showMore ?
-      <button onClick={()=>{setShowMore(false)}}  className='add__text__sumbit_btn'>{langEn ? 'Show All' : "Показать все"}</button>
+      <button onClick={()=>{setShowMore(false)}}  className='add__text__sumbit_btn'>{langEn ? 'Expand' : "Развернуть"}</button>
       : 
-      <button onClick={()=>{setShowMore(true)}}  className='add__text__sumbit_btn'>{langEn ? 'Show Less' : "Свернуть"}</button>
+      <button onClick={()=>{setShowMore(true)}}  className='add__text__sumbit_btn'>{langEn ? 'Collapse' : "Свернуть"}</button>
     }
     </div>
-    }
+  }
+   
     
     {/* ------- КОММЕНТАРИИ--------- */}
     <section className='single__text__comments__section'>

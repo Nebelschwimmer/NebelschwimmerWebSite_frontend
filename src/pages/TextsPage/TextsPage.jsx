@@ -1,24 +1,23 @@
 import './textPage.scss'
 import { useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 import { getTextsList } from '../../utils/api_texts'
 import SearchIcon from '@mui/icons-material/Search';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import CommentIcon from '@mui/icons-material/Comment';
 import { searchText } from '../../utils/api_texts';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { PaginationBoard } from './PaginationBoard'
+import { TextLink } from './TextLink'
 
 
 
-export const TextsPage = ({langEn, currentUser, texts, setTexts}) => {
+export const TextsPage = ({langEn, pageQuery, setPageQuery, currentUser, texts, setTexts}) => {
 
 const [searchQuery, setSearchQuery] = useState(undefined);
 const [pages, setPages] = useState([])
+
 const [pagesNumber, setPagesNumber] = useState()
-const [pageQuery, setPageQuery] = useState(1)
+
 
 
 
@@ -35,11 +34,7 @@ const navigate = useNavigate();
     }
   }, [searchQuery, pageQuery])
 
-const options = { 
-  day: "numeric",
-  month: "numeric",
-  year: "numeric",
-  }
+
 
 useEffect(()=>{
 if (texts.length === 0 && pagesNumber >= 1)
@@ -172,7 +167,7 @@ const handleForwardArrowClick = () => {
               onKeyDown={handleSearchInput}
               >  
               </input>
-              <span onClick={()=>{onSearchClick()}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon/></span>
+              <span onClick={()=>{onSearchClick()}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon fontSize=''/></span>
             </div>
         {currentUser !== '' ?
         <button className='add__text__sumbit_btn' onClick={()=>{navigate('/texts/add-text')}}>{langEn ? 'Publish New Text' : 'Опубликовать текст'}</button>
@@ -182,57 +177,44 @@ const handleForwardArrowClick = () => {
         }
         
         </div>
+        {texts.length !== 0 &&
+        <div>
+          {langEn ?
+          <div className='texts__page__sort__container'>
+            <span>Sort by:</span>
+          {texts_sorted_en.map((e, i)=>{
+            return(
+              <span className='texts__page__sort__item' key={i} onClick={() => sortTextsEn(e.id)}>{e.id}</span>
+            )
+            })}
+          </div>
+          :
+          <div className='texts__page__sort__container'>
+            <span>Сортировать:</span>
+          {texts_sorted_ru.map((e, i)=>{
+            return(
+              <span key={i} className='texts__page__sort__item' onClick={() => sortTextsRu(e.id)}>{e.id}</span>
+            )
+            })}
+          </div>
+          }   
+        </div>
+        }
       </div>
-      
     { texts.length !== 0 ?
-      <div>
-      {langEn ?
-        <div className='texts__page__sort__container'>
-        {texts_sorted_en.map((e, i)=>{
-          return(
-            <span className='texts__page__sort__item' key={i} onClick={() => sortTextsEn(e.id)}>{e.id}</span>
-          )
-          })}
-        </div>
-        :
-        <div className='texts__page__sort__container'>
-        {texts_sorted_ru.map((e, i)=>{
-          return(
-            <span key={i} className='texts__page__sort__item' onClick={() => sortTextsRu(e.id)}>{e.id}</span>
-          )
-          })}
-        </div>
-      }
-        
-        <table>
-          <thead>
-              <tr>
-              <th>{langEn ? 'Text Name' : 'Название текста'}</th>
-              <th>{langEn ? 'Author' : 'Автор'}</th>
-              <th>{langEn ? 'Published' : 'Опубликовано'}</th>
-              {/* <th>{langEn ? 'Language(s)' : 'Язык(и)'}</th> */}
-              <th title={langEn ? 'Liked' : "Понравилось"}><FavoriteIcon fontSize='' /></th>
-              <th title={langEn ? 'Comments' : "Комментарии"}><CommentIcon fontSize='' /></th>
-            </tr>
-            </thead>
+      <div className='text__page__links'>
           {texts?.map((el, i)=>{
             return (
-        
-              <tbody>
+              
+              <TextLink
+              {...el}
+              link={el}
+              key={i}
+              langEn={langEn}
+              />
                   
-                  <tr key={el._id}>
-                    <td>
-                      <Link className='texts__page__link'  to={`/texts/${el._id}`}>{langEn ? el.name_en : el.name_ru}</Link>
-                    </td>
-                    <td>{langEn ? el.author_en : el.author_ru}</td>
-                    <td>{new Date (el.createdAt).toLocaleString("ru-RU", options)}</td>
-                    <td>{el.likes.length}</td>
-                    <td>{el.comments.length}</td>
-                  </tr>
-              </tbody>
               )
             })}
-        </table>
         
       </div>
       :

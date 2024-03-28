@@ -11,7 +11,7 @@ import { Spinner } from '../Spinner/Spinner';
 
 
 
-export const SignIn = ({signInWithGoogle}) => {
+export const SignIn = ({signInWithGoogle, langEn}) => {
 
   // Для навигации
   const navigate = useNavigate()
@@ -63,17 +63,29 @@ export const SignIn = ({signInWithGoogle}) => {
 
 
 // Поле формы для почты
-const emailRegister = register("email", {
+const emailRegisterEn = register("email", {
   required: "Email required",
   pattern: {
     message: "Incrorrect email!",
     value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
   }
 });
+
+const emailRegisterRu = register("email", {
+  required: "Email обязателен",
+  pattern: {
+    message: "Некорректный email!",
+    value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+  }
+});
 // Поле формы для пароля
-const passwordRegister = register("password", {
+const passwordRegisterEn = register("password", {
   required: "Password required"
   })
+
+  const passwordRegisterRu = register("password", {
+    required: "Пароль обязателен"
+    })
 
 
 // Фунция для отправки данных
@@ -95,8 +107,8 @@ const sendSignInData = async (data) => {
         <div className="auth_container">
           <div onClick={()=>navigate(-1)} className="auth_backbtn"><Backbutton/></div>
             <div className='auth_top'>
-              <h1 style={{color:'darkorange'}}>SIGN IN</h1>
-              <span >New user? <Link style={{color: 'violet'}} to='/register'>SIGN UP!</Link></span>
+              <h1>{langEn ? 'SIGN IN' : "ВОЙТИ"}</h1>
+              <span >{langEn ? 'New user?' : 'Новый пользователь?'} <Link style={{color: 'violet'}} to='/register'>{langEn ? 'SIGN UP!' : "ЗАРЕГИСТРИРУЙТЕСЬ!"}</Link></span>
             </div>
           {/* Форма */}
             <form onSubmit={handleSubmit(sendSignInData)}>
@@ -104,22 +116,40 @@ const sendSignInData = async (data) => {
                     <div className='inputs__container'>
                         <div className='single__input__wrapper'>
                           <label >Email :</label>
+                            {langEn ?
                             <input
                               className='input'
                               type='text'
-                              {...emailRegister}
+                              {...emailRegisterEn}
                             >
                             </input>
+                            :
+                            <input
+                            className='input'
+                            type='text'
+                            {...emailRegisterRu}
+                          >
+                          </input>
+                          }
                         </div>
                       
                         <div className='single__input__wrapper'>
-                          <label>Password :</label>
+                          <label>{langEn ? 'Password' : 'Пароль'}</label>
+                           {langEn ?
                             <input
                               className='input'
                               type='password'
-                              {...passwordRegister}
+                              {...passwordRegisterEn}
                             >
                             </input>
+                            :
+                            <input
+                            className='input'
+                            type='password'
+                            {...passwordRegisterRu}
+                          >
+                          </input>
+                          }
                         </div>
                     </div>
 
@@ -130,7 +160,8 @@ const sendSignInData = async (data) => {
                   { errors?.password  &&
                   <small className='auth_small'>{errors.password?.message}</small>
                   }
-                  {loginErr && <small style={{color: 'darkorange'}}>Login error! Check if your email address and your password are correct.</small>}
+                  {loginErr && <small style={{color: 'darkorange'}}>{langEn ? 'Login error. Check if your email address and your password are correct.' : 
+                  'Ошибка входа. Проверьте правильность введнных почты и пароля'}</small>}
                   </div>
                 </div>
 
@@ -144,7 +175,7 @@ const sendSignInData = async (data) => {
               </div>
             </form> 
           {/* Кнопки "Войти с гугл" и "Сброс пароля" */}
-          <button className='auth_sign_btn' onClick={()=>{onSignInWithGoogle()}}>Sign in with Google Account <GoogleIcon fontSize='large'/></button>
+          <button className='auth_sign_btn' onClick={()=>{onSignInWithGoogle()}}>Sign in with Google Account <GoogleIcon fontSize='medium'/></button>
           <button onClick={()=>{navigate('/password-reset')}} className='auth_sign_btn'>Forgot My Password</button>
         </div>
     

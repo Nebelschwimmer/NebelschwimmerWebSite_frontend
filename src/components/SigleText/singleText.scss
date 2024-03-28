@@ -13,7 +13,7 @@
   }
 
   &__read__mode__Truncated{
-    &:last-child {
+    &:nth-child(5) {
       
       background: linear-gradient(180deg, rgba(225, 225, 225, 1) 0% , rgba(0, 0, 0, 0) 100%);
       -webkit-background-clip: text;
