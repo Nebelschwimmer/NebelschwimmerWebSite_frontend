@@ -16,7 +16,7 @@ export const HomePage = ({langEn, currentUser}) => {
         <p>This website is dedicated to exchanging music and texts related to surrealism.</p>
       
         <div>
-          <p>In order to be able to publish your own art, leave comments and set favorites, please, </p>
+          <p>In order to be able to publish your own art, leave comments and add to favorites, please, </p>
             <p>
               <Link className='home__page__about__link' to="/register"> sign up </Link>
             or
@@ -48,10 +48,10 @@ export const HomePage = ({langEn, currentUser}) => {
         <Link className='home__page__links__container music' to={'/music'}>{langEn ? 'Music' : 'Музыка'}</Link>
     
       
-        <Link className='home__page__links__container texts' to={'/music'}>{langEn ? 'Texts' : 'Тексты'}</Link>
-     
+        <Link className='home__page__links__container texts' to={'/texts'}>{langEn ? 'Texts' : 'Тексты'}</Link>
       
-        <Link className='home__page__links__container pictures' to={'/music'}>{langEn ? 'Pictures' : 'Картинки'}</Link>
+      
+        <Link className='home__page__links__container pictures' to={'/pictures'}>{langEn ? 'Pictures' : 'Картинки'}</Link>
     
     </section>
   </div>  

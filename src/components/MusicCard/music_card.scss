@@ -202,3 +202,23 @@
   background-position: 0%;
   }
   }
+
+  @media screen and (max-width: 480px) {
+    .music__card__container {
+      width: 90%;
+    }
+    .music__card__left__player__running__wrapper {
+      width: 90%;
+    }
+    .music__card__left__container {
+      width: 90%;
+      margin-bottom: 1rem;
+    }
+    .music__card__left__player {
+      align-items: center;
+    }
+    .music__card__left__player__btn {
+      font-size: 15px;
+    }
+  }
+  

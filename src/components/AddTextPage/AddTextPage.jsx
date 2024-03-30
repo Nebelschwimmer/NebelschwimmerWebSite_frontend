@@ -99,36 +99,23 @@ const author_id = currentUser.uid
               <input type='checkbox' checked={checked} onChange={handleCheckChange}></input>
             </label>
           <div className='add__text__inputs'>
-            <label className='add__text__label'>
-              <div className='add__text__inputs__container'>
-                <div>
-                  <input
-                    className='add__text__input'
-                    type="text"
-                    {...nameEnRegister}
-                    placeholder={langEn ? 'Text Name (English)' : 'Название текста (англ.)'}
-                  />
-                  { errors?.name_en  &&
-                    <small >{errors.name_en?.message}</small>
-                    }
-                </div>
-                
-                <div>
-                  <input
-                    className='add__text__input'
-                    type="text"
-                    {...authorEnRegister}
-                    placeholder={langEn ? 'Author (English)' : 'Автор (англ.)'}
-                  />
-                    {errors?.author_en  &&
-                    <small >{errors.author_en?.message}</small>}
-                </div>
-              </div>
-                
-              
-            </label>
-            
-            
+            <input
+              className='add__text__input'
+              type="text"
+              {...nameEnRegister}
+              placeholder={langEn ? 'Text Name (English)' : 'Название текста (англ.)'}
+            />
+            { errors?.name_en  &&
+              <small >{errors.name_en?.message}</small>
+              }
+            <input
+              className='add__text__input'
+              type="text"
+              {...authorEnRegister}
+              placeholder={langEn ? 'Author (English)' : 'Автор (англ.)'}
+            />
+              {errors?.author_en  &&
+              <small >{errors.author_en?.message}</small>}
           </div>
         
             <div className='add__text__textarea__wrapper'> 
@@ -140,33 +127,27 @@ const author_id = currentUser.uid
               </TextareaAutosize>
             </div>
             { showSecondTextarea &&
-                  <div className='add__text__textarea__wrapper'>
-                    <label className='add__text__label'>
-                      <div className='add__text__inputs__container'>
-                        <div>
-                          <input
-                            className='add__text__input'
-                            type="text"
-                            {...nameRuRegister}
-                            placeholder={langEn ? 'Text Name (Russian)' : 'Название текста (русс.)'}
-                          />
-                            {errors?.name_ru  &&
-                              <small >{errors.name_ru?.message}</small>}
-                        </div>
-                        <div>
-                          <input
-                            className='add__text__input'
-                            type="text"
-                            {...authorRuRegister}
-                            placeholder={langEn ? 'Author (Russian)' : 'Автор (русс.)'}
-                          />
-                              {errors?.author_ru  &&
-                                <small >{errors.author_ru?.message}</small>}
-                        </div>
-                      </div>
-                        
-                          
-                    </label>
+              <div className='add__text__textarea__wrapper'>
+                <div className='add__text__inputs'>
+                  <input
+                    className='add__text__input'
+                    type="text"
+                    {...nameRuRegister}
+                    placeholder={langEn ? 'Text Name (Russian)' : 'Название текста (русс.)'}
+                  />
+                    {errors?.name_ru  &&
+                      <small >{errors.name_ru?.message}</small>}
+              
+              
+                  <input
+                    className='add__text__input'
+                    type="text"
+                    {...authorRuRegister}
+                    placeholder={langEn ? 'Author (Russian)' : 'Автор (русс.)'}
+                  />
+                      {errors?.author_ru  &&
+                        <small >{errors.author_ru?.message}</small>}
+      </div>
                   <TextareaAutosize
                   placeholder={langEn ? 'Place your Russian text here' : 'Разместите текст на русском здесь'}
                   className='add__text__textarea'

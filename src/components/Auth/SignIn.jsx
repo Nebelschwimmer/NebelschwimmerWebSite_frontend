@@ -115,7 +115,7 @@ const sendSignInData = async (data) => {
               <div className='auth_form'>
                     <div className='inputs__container'>
                         <div className='single__input__wrapper'>
-                          <label >Email :</label>
+                          <label >Email</label>
                             {langEn ?
                             <input
                               className='input'
@@ -135,7 +135,7 @@ const sendSignInData = async (data) => {
                       
                         <div className='single__input__wrapper'>
                           <label>{langEn ? 'Password' : 'Пароль'}</label>
-                           {langEn ?
+                          {langEn ?
                             <input
                               className='input'
                               type='password'

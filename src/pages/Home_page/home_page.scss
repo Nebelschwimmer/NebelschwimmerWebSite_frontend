@@ -106,5 +106,9 @@
   @media screen and (max-width: 480px) { 
     .home__page {
       padding-top: 1rem;
+      &__title {
+        display: none;
+      }
     }
+    
   }

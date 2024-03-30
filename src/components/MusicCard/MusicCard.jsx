@@ -6,7 +6,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import cn from 'classnames'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { deleteTrackByID, getAuthorNameByID } from "../../utils/api_music";
+import { checkIfTrackFileExists, deleteTrackByID, getAuthorNameByID } from "../../utils/api_music";
 import { MusicEditForm } from "./MusicEditForm/MusicEditForm";
 import { MusicDeleteModal } from "./MusicDeleteModal/MusicDeleteModal";
 import { deleteMusicLikeById } from "../../utils/api_music";
@@ -38,6 +38,8 @@ export const MusicCard = ({track_name, track, langEn, setTrackList,
   const [checkCurrentUser, setCheckCurrentUser] = useState(false);
   // отображаем имя пользователя по запросу
   const [authorName, setAuthorName] = useState('');
+
+  const [missingFile, setMissingFile] = useState(false)
 // Служебные переменные
 const navigate = useNavigate()
 
@@ -184,10 +186,13 @@ useEffect(() => {
   return () => clearInterval(interval);
 }, [sound]);
 
-// Если трек недоступен с сервера
+
+
+// Во время загрузки
 useEffect(()=> {
-  if (duration !== null)
-  setLoading(true)
+  if (duration === null ) {
+    setLoading(true);
+      }
 
 }, [duration])
 
@@ -210,8 +215,8 @@ useEffect(()=> {
 }, [])
 
 // Для удаления карточки
-const deleteMusicCard = async (track_id) => {
-  await deleteTrackByID(track_id).then((newTrackList)=>{
+const deleteMusicCard = async () => {
+  await deleteTrackByID(track_id, track_source).then((newTrackList)=>{
     setTrackList(newTrackList);
     setIsPlaying(false);
     navigate('/music?page=1') 
@@ -219,10 +224,9 @@ const deleteMusicCard = async (track_id) => {
   
 }
 
-const [showSpinner, setShowSpinner] = useState(true)
 
   return (
-  <div >
+  <>
   {loading ?
   <div className="music__card">
     <div className="music__card__container">
@@ -342,7 +346,8 @@ const [showSpinner, setShowSpinner] = useState(true)
   :
 
   <div className="music__card">
-  {/* <div className="music__card__container">
+  {missingFile &&
+  <div className="music__card__container">
         <div className="music__card__img__wrapper">
         <img src={'https://img.freepik.com/premium-photo/neon-flat-musical-note-icon-3d-rendering-ui-ux-interface-element-dark-glowing-symbol_187882-2481.jpg?size=626&ext=jpg'}></img>
         </div>
@@ -353,12 +358,16 @@ const [showSpinner, setShowSpinner] = useState(true)
         </span>
         }
         </div>
-  </div> */}
+  </div>
+  }
+  {!missingFile &&
   <div className="music__card__loading">
     <Spinner/>
   </div>
-  </div>
   }
   </div>
+  }
+  
+  </>
   )
 }

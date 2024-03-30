@@ -9,19 +9,36 @@ import { useNavigate } from 'react-router-dom';
 import { PaginationBoard } from '../TextsPage/PaginationBoard';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import cn from 'classnames'
+
 
 export const MusicPage = ({langEn, trackList, setTrackList, showModal, setShowModal, currentUser}) => {
 
   const [searchMusicQuery, setSearchMusicQuery] = useState('')
-  const [pages, setPages] = useState([])
-  const [pagesNumber, setPagesNumber] = useState()
-  const [pageQuery, setPageQuery] = useState(1)
-
+  const [pages, setPages] = useState([]);
+  const [pagesNumber, setPagesNumber] = useState();
+  const [pageQuery, setPageQuery] = useState(1);
+  const [sortWay, setSortWay] = useState('desc');
+  const [activeSort, setActiveSort] = useState(true);
+  const [disButton, setDisButton] = useState(false)
 
 
 
   const navigate = useNavigate()
 
+  useEffect(()=>{
+    if (!currentUser) {
+      setDisButton(true);
+  }
+    else setDisButton(false)
+  }, [currentUser])
+  
+  
+  useEffect(()=>{
+    if (sortWay === 'desc')
+    setActiveSort(true)
+  else setActiveSort(false)
+  }, [sortWay])
 
   const user_id = currentUser.uid
 
@@ -48,13 +65,13 @@ const onSearchClick = async () => {
 
 useEffect(()=>{ 
   if (searchMusicQuery === "" || searchMusicQuery === undefined) {
-    getMusicList(pageQuery).then((res) => {
+    getMusicList(pageQuery, sortWay).then((res) => {
       setTrackList(()=>([...res.tracks]));
       setPagesNumber(res.totalPages);
-      navigate(`/music?page=${pageQuery}`)
+      navigate(`/music?page=${pageQuery}&sort=${sortWay}`)
     })
   }
-}, [searchMusicQuery, pageQuery])
+}, [searchMusicQuery, pageQuery, sortWay])
 
 const handleBackArrowClick = () => {
   if (pageQuery > 1)
@@ -77,11 +94,6 @@ useEffect(()=>{
   }
   limitArr.forEach((el, ind, arr) => {
     if (pageQuery > 5) {
-      // Проблема: нужно сделать так, чтобы на каждой итерации лимитируещего
-      // массива рендерился обрезанный массив из номеров страниц, т.е.
-      // если страниц 11, то выводились сначала числа 1-5, затем 6-10, а потом только 11.
-      // Попытки записать все массивы в стейты не удались, так как в результате
-      // рендерилось только число 11, хотя консоль показывала числа 6-9 при 2-й итерации
       const slicedPaginationArray = paginationArr.slice(5, pagesNumber)  
       console.log(slicedPaginationArray)
       setPages(slicedPaginationArray)
@@ -97,6 +109,12 @@ useEffect(()=>{
   navigate(-1)
   }, [trackList, pagesNumber])
 
+const handlePublishClick = () => {
+  if (!disButton)
+  setShowModal(true);
+  else navigate('/')
+}
+
 
 
   return (
@@ -104,8 +122,12 @@ useEffect(()=>{
 
       <div  className='music_page_container_title_btn_wrapper'>
         {langEn ? <h1 className='music_page_title'>MUSIC</h1> : <h1 className='music_page_title'>МУЗЫКА</h1>}
-        {currentUser !== '' ? <button onClick={()=>{setShowModal(true)}} className='music_page_add_btn'>{langEn ? 'Add New Track ' : "Добавить музыку "} </button> : 
-        <span className='music_page_not_auth' onClick={()=>{navigate('/sign-in')}}>{langEn ? 'Please, sign in to publish new tracks' : 'Пожалуйста, авторизуйтесь, чтобы публиковать музыку'}</span>}
+        <button 
+        onClick={()=>{handlePublishClick()}} 
+        className={cn("add__text__sumbit_btn", { ["add__text__sumbit_btn__Disabled"]: disButton })}
+        >
+        {langEn ? 'Add New Track ' : "Добавить музыку "} </button> 
+      
       </div>
       
       <div className='texts__page__input__container'>
@@ -120,7 +142,21 @@ useEffect(()=>{
               </input>
               <span onClick={()=>{onSearchClick()}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon/></span>
             </div>
-      
+            {trackList.length > 1 &&
+          <div className='texts__page__sort__container'>
+          <span>{langEn ? 'Show:' : 'Показать:'}</span>
+          <span onClick={()=>{setSortWay('desc')}} 
+          className={cn("texts__page__sort__item", { ["texts__page__sort__item__Active"]: activeSort })} 
+          >
+            {langEn ? 'Latest' : 'Новые'}
+          </span>
+          <span onClick={()=>{setSortWay('asc')}} 
+          className={cn("texts__page__sort__item", { ["texts__page__sort__item__Active"]: !activeSort })} 
+          >
+            {langEn ? 'Oldest' : 'Старые'}
+          </span>
+      </div>  
+        }
 
       {trackList.length !== 0 ? 
       < MusicList user_id={user_id}  showModal={showModal} setShowModal={setShowModal} trackList={trackList} 

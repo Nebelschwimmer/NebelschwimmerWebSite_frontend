@@ -19,18 +19,14 @@
   }
   &__inputs {
     display: flex;
-    gap: 1rem
-  }
-  &__inputs__container {
-    display: flex;
     gap: 1rem;
     flex-direction: column;
-    
   }
+
 
   &__input {
     height: 2rem;
-    width: 300px;
+    width: 50%;
     border-radius: 10px;
     font-size: clamp(0.5rem, 0.407rem + 0.39vw, 0.875rem);
     padding-left: 20px;
@@ -81,9 +77,9 @@
     background-color: var(--btn-color);
     padding: clamp(0.125rem, 0.002rem + 0.519vw, 0.625rem);
     border-radius: 5px;
-    font-size: clamp(0.5rem, 0.377rem + 0.519vw, 1rem);
+    font-size: clamp(0.75rem, 0.657rem + 0.39vw, 1.125rem);
     text-align: center;
-    // width: clamp(2.5rem, 6.883rem + 2.597vw, 10rem);
+    width: auto;
     border: none;
     color: white;
     cursor: pointer;
@@ -92,7 +88,11 @@
         box-shadow: var(--box-shadow-gl);
     }
       &__Disabled {
-        background-color: var(--bg-light);
+        background-color: rgb(34, 34, 34);
+        &:hover{
+          color: white;
+          box-shadow: none;
+        }
       }  
   }
   
@@ -107,4 +107,10 @@ small {
   gap: 1rem;
   width: 50%;
   height: 50px;
+}
+
+@media screen and (max-width: 480px) {
+  .add__text__input {
+    width: 87%;
+  }
 }

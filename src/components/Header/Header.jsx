@@ -3,11 +3,8 @@ import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import HomeIcon from '@mui/icons-material/Home';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
-import ContactPageIcon from '@mui/icons-material/ContactPage';
 import MenuIcon from '@mui/icons-material/Menu';
-import LanguageIcon from '@mui/icons-material/Language';
 import {Link, useNavigate } from 'react-router-dom';
-import cn from "classnames";
 import {scrollToTop} from '../../utils/utils.js'
 import { useEffect, useState } from 'react';
 import LoginIcon from '@mui/icons-material/Login';
@@ -15,9 +12,8 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import LogoutIcon from '@mui/icons-material/Logout';
 import uk_flag from '../../pictures/uk-flag.webp';
 import rus_flag from '../../pictures/rus_flag.png';
-import logo from '../../pictures/Logo_surLand2.svg';
-
-
+import CloseIcon from '@mui/icons-material/Close';
+import cn from "classnames";
 
 
 export const Header = ({langEn, setLangEn, currentUser, onSignOut, user}) => {
@@ -30,7 +26,7 @@ export const Header = ({langEn, setLangEn, currentUser, onSignOut, user}) => {
   const [showPopOver, setShowPopover] = useState(false)
 
   const [showLangPopOver, setShowLangPopOver] = useState(false)
-  
+  const [showMenu, setShowMenu] = useState(false)
 
   
   
@@ -83,19 +79,65 @@ const navigate = useNavigate()
   }
 
 
-  // console.log(user)
-
   return (
   <div className='header'>
     <div className='header_container'>
       <div className='header_icon_container'>
         <span className='header_icon'>
-          <MenuIcon fontSize=''/>
+          <MenuIcon onClick={()=>{setShowMenu(true)}} fontSize=''/>
         </span>
         <span onClick={()=>{navigate('/')}} className='header_name_wrapper_logo'>SurLand</span>
 
       </div>
-
+      {showMenu &&
+      <div className={cn("modal", { ["active"]: showMenu })} onClick={()=>{setShowMenu(false)}}>
+        <div className={cn("menu__container", { ["active"]: showMenu })} >
+          <div className='menu__top'>
+          
+              <span className='menu__section'>{langEn ? 'Navigation' : 'Навигация'}</span>
+              <span onClick={()=>(setShowMenu(false))}><CloseIcon/></span>
+          </div>
+        {langEn ?
+          <nav>
+            <Link to="/">
+              <span className='menu__item' ><HomeIcon fontSize='small'/>Ноme</span></Link>
+            <Link  to="/music">
+              <span className='menu__item'><LibraryMusicIcon fontSize='small'/>Music</span></Link>
+            <Link  to="/texts?page=1">
+              <span className='menu__item'><LibraryBooksIcon fontSize='small'/>Texts</span></Link>
+            <Link  to="/pictures">
+              <span className='menu__item'><InsertPhotoOutlinedIcon fontSize='small'/>Pictures</span></Link>
+          </nav>
+          :
+          <nav>
+          <Link  to="/">
+            <span className='menu__item'><HomeIcon fontSize='small'/>Главная</span></Link>
+          <Link  to="/music">
+            <span className='menu__item'><LibraryMusicIcon fontSize='small'/>Музыка</span></Link>
+          <Link  to="/texts">
+            <span className='menu__item'><LibraryBooksIcon fontSize='small'/>Тексты</span></Link>
+          <Link  to="/pictures">
+            <span className='menu__item'><InsertPhotoOutlinedIcon fontSize='small'/>Картинки</span></Link>
+          </nav>
+        }
+          
+          <nav>
+            <span className='menu__section'>{langEn ? 'Account' : 'Аккаунт'}</span>
+            {currentUser ?
+            <div>
+              <span onClick={()=>{navigate('/user-settings')}} className='menu__item'><HowToRegIcon/> {langEn ? 'Profile' : 'Личный кабинет'} </span>
+              <span onClick={()=>{onSignOut()}} className='menu__item'><LogoutIcon/> {langEn ? 'Sign out' : 'Выйти из аккаунта'} </span>
+            </div>
+            :
+            <div>
+              <span className='menu__item'><HowToRegIcon/> {langEn ? 'Sign up' : 'Регистрация'} </span>
+            </div>
+            }
+          </nav>
+        
+        </div>
+      </div>
+      }
       
       {langEn ? 
         <nav className='header_controls_block'>
@@ -182,9 +224,10 @@ const navigate = useNavigate()
               <button className='header_controls_block_single_btn'><InsertPhotoOutlinedIcon fontSize='small'/>Картинки</button></Link>
             
           </div>
+        
         </nav>
       }
-        <div className='header_controls_block_languages' >
+      <div className='header_controls_block_languages' >
           
           <div className='header_controls_languages_wrapper' onClick={()=>{setShowLangPopOver(true)}} title={langEn? "Switch languages" : "Переключить язык"}>
           {langEn? "Language" : "Язык"}

@@ -473,12 +473,17 @@ const nameRuRegister = register("name_ru", {
     
     {/* ------- КОММЕНТАРИИ--------- */}
     <section className='single__text__comments__section'>
-      {!showComments && <button 
-      onClick={()=>{setShowComments(true)}} 
-      disabled={showNotAuth} 
-      className={cn("add__text__sumbit_btn", { ["add__text__sumbit_btn__Disabled"]: showNotAuth })}
-      >
-        {langEn ? 'Comment' : 'Комментировать'}</button> }
+      {!showComments && 
+      <div >
+        <button
+        onClick={()=>{setShowComments(true)}}
+        disabled={showNotAuth}
+        className={cn("add__text__sumbit_btn", { ["add__text__sumbit_btn__Disabled"]: showNotAuth })}
+        >
+          {langEn ? 'Comment' : 'Комментировать'}
+          </button> 
+      </div>
+      }
       {showComments &&
         <div className='single__text__comments__section__upper'>
           <small onClick={()=>{setShowComments(false)}}><CloseIcon/></small>

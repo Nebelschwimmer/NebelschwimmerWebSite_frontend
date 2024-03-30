@@ -47,14 +47,18 @@ export const TextLink = ({link, langEn}) => {
                       <div>
                         <span>{langEn ? 'Likes:': "Понравилось:"}</span>
                         <span>{link.likes.length}</span>
-                        <FavoriteIcon fontSize=''/>
+                        <span>
+                          <FavoriteIcon fontSize=''/>
+                        </span>
                       </div>
                       }
                       {link.comments.length !== 0 &&
                       <div>
                         <span>{langEn ? 'Comments:': "Комментарии:"}</span>  
                         <span>{link.comments.length}</span>
-                        <CommentIcon fontSize=''/>
+                        <span>
+                          <CommentIcon fontSize=''/>
+                        </span>
                       </div>
                       }
                     </div>

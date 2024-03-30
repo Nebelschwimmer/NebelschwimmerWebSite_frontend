@@ -8,31 +8,38 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { PaginationBoard } from './PaginationBoard'
 import { TextLink } from './TextLink'
+import cn from 'classnames'
 
 
 
 export const TextsPage = ({langEn, pageQuery, setPageQuery, currentUser, texts, setTexts}) => {
 
 const [searchQuery, setSearchQuery] = useState(undefined);
-const [pages, setPages] = useState([])
-
-const [pagesNumber, setPagesNumber] = useState()
-
-
-
+const [pages, setPages] = useState([]);
+const [pagesNumber, setPagesNumber] = useState();
+const [sortWay, setSortWay] = useState('desc');
+const [activeSort, setActiveSort] = useState(true);
+const [disButton, setDisButton] = useState(false)
 
 const navigate = useNavigate();
 
   useEffect(()=>{ 
     if (searchQuery === "" || searchQuery === undefined) {
     
-      getTextsList(pageQuery).then((res) => {
+      getTextsList(pageQuery, sortWay).then((res) => {
       setTexts(()=>([...res.texts]));
       setPagesNumber(res.totalPages);
-      navigate(`/texts?page=${pageQuery}`)
+      navigate(`/texts?page=${pageQuery}&sort=${sortWay}`)
       })
     }
-  }, [searchQuery, pageQuery])
+  }, [searchQuery, pageQuery, sortWay])
+
+useEffect(()=>{
+  if (sortWay === 'desc')
+  setActiveSort(true)
+else setActiveSort(false)
+}, [sortWay])
+
 
 
 
@@ -66,52 +73,7 @@ const onSearchClick = async () => {
   }
 }
 
-const texts_sorted_en = [{id: 'Author'}, { id: 'New' },  { id: 'Old' }, { id: 'Popular' }]
-const texts_sorted_ru = [{id: 'Автор'}, { id: 'Новые' },  { id: 'Старые' }, { id: 'Популярные' }]
 
-const sortTextsEn = (sortWay) => {
-  switch(sortWay){
-    case 'Author':
-      const sorTextsByAuthor = texts.sort((a, b) => (b.author_en.localeCompare(a.author_en)))
-      setTexts([...sorTextsByAuthor]);
-    break;
-    case 'New':
-      const sortNewTexts = texts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setTexts([...sortNewTexts]);
-    break;
-  case 'Old':
-    const sortOldTexts = texts.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-    setTexts([...sortOldTexts]);
-      break;
-  case 'Popular':
-    const sortPopularTexts = texts.sort((a, b) => (b.likes.length) - (a.likes.length));
-    setTexts([...sortPopularTexts]);
-  break;
-      default: 
-  }
-}
-
-const sortTextsRu = (sortWay) => {
-  switch(sortWay){
-    case 'Автор':
-      const sorTextsByAuthor = texts.sort((a, b) => (b.author_ru.localeCompare(a.author_ru)))
-      setTexts([...sorTextsByAuthor]);
-    break;
-    case 'Новые':
-      const sortNewTexts = texts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setTexts([...sortNewTexts]);
-    break;
-  case 'Старые':
-    const sortOldTexts = texts.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-    setTexts([...sortOldTexts]);
-      break;
-  case 'Популярные':
-    const sortPopularTexts = texts.sort((a, b) => (b.likes.length) - (a.likes.length));
-    setTexts([...sortPopularTexts]);
-  break;
-      default: 
-  }
-}
 
 useEffect(()=>{ 
   const paginationArr = [...Array(pagesNumber).keys()].map(e => (e + 1));
@@ -149,6 +111,19 @@ const handleForwardArrowClick = () => {
   )
 }
 
+const handlePublishClick = () => {
+  if (!disButton)
+  navigate('/texts/add-text')
+  else navigate('/sign-in')
+}
+
+useEffect(()=>{
+  if (!currentUser) {
+    setDisButton(true);
+}
+  else setDisButton(false)
+}, [currentUser])
+
 
 
   return (
@@ -167,38 +142,31 @@ const handleForwardArrowClick = () => {
               onKeyDown={handleSearchInput}
               >  
               </input>
-              <span onClick={()=>{onSearchClick()}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon fontSize=''/></span>
+              <span onClick={()=>{onSearchClick()}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon fontSize='medium'/></span>
             </div>
-        {currentUser !== '' ?
-        <button className='add__text__sumbit_btn' onClick={()=>{navigate('/texts/add-text')}}>{langEn ? 'Publish New Text' : 'Опубликовать текст'}</button>
-        :
-        <span className='music_page_not_auth' onClick={()=>{navigate('/sign-in')}}>{langEn ? 'Please, sign in to publish new texts' : 
-        'Пожалуйста, авторизуйтесь, чтобы публиковать тексты'}</span>
-        }
+        <button 
+        className={cn("add__text__sumbit_btn", { ["add__text__sumbit_btn__Disabled"]: disButton })}
+        onClick={()=>{handlePublishClick()}}
+        >
+        {langEn ? 'Publish New Text' : 'Опубликовать текст'}</button>
+
+        
         
         </div>
         {texts.length !== 0 &&
-        <div>
-          {langEn ?
-          <div className='texts__page__sort__container'>
-            <span>Sort by:</span>
-          {texts_sorted_en.map((e, i)=>{
-            return(
-              <span className='texts__page__sort__item' key={i} onClick={() => sortTextsEn(e.id)}>{e.id}</span>
-            )
-            })}
-          </div>
-          :
-          <div className='texts__page__sort__container'>
-            <span>Сортировать:</span>
-          {texts_sorted_ru.map((e, i)=>{
-            return(
-              <span key={i} className='texts__page__sort__item' onClick={() => sortTextsRu(e.id)}>{e.id}</span>
-            )
-            })}
-          </div>
-          }   
-        </div>
+        <div className='texts__page__sort__container'>
+          <span>{langEn ? 'Show:' : 'Показать:'}</span>
+          <span onClick={()=>{setSortWay('desc')}} 
+          className={cn("texts__page__sort__item", { ["texts__page__sort__item__Active"]: activeSort })} 
+          >
+            {langEn ? 'Latest' : 'Новые'}
+          </span>
+          <span onClick={()=>{setSortWay('asc')}} 
+          className={cn("texts__page__sort__item", { ["texts__page__sort__item__Active"]: !activeSort })} 
+          >
+            {langEn ? 'Oldest' : 'Старые'}
+          </span>
+      </div>  
         }
       </div>
     { texts.length !== 0 ?

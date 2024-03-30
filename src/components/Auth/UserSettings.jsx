@@ -201,7 +201,7 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
                 }     
             </div>
             <div className='auth_edit_top_wrapper'>
-              <h2 >Edit Profile</h2>
+              <h2 >{langEn ? 'Edit Profile' : 'Редактировать профиль'}</h2>
               <small className={cn("auth_updated", { ["auth_updated_Active"]: printChanged })}>Profile Updated!</small>
             </div>  
              {/* Форма */}
@@ -210,7 +210,7 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
                 <div className='inputs__container__profile'>
                         <div className='single__input__wrapper'
                         >
-                          <label >Display Name  : </label>
+                          <label >Display Name</label>
                             <input
                               className='input'
                               defaultValue={currentUser.displayName}
@@ -227,7 +227,7 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
                         <div className='single__input__wrapper'
 
                         >
-                          <label>Avatar URL :</label>
+                          <label>Avatar URL</label>
                             <input
                             
                               style={{fontSize:'12px'}}

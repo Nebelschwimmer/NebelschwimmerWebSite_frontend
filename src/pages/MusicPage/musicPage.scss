@@ -33,6 +33,7 @@
   display: inline-block;
   width: 100%;
   font-size: 22px;
+  margin-top: 2rem;
 }
 
 .music_page_add_btn:hover{
@@ -51,20 +52,7 @@
 }
 
 @media screen and (max-width: 480px) {
-  .music__card__container {
-    width: 90%;
-  }
-  .music__card__left__player__running__wrapper {
-    width: 90%;
-  }
-  .music__card__left__container {
-    width: 90%;
-    margin-bottom: 1rem;
-  }
-  .music__card__left__player {
-    align-items: center;
-  }
-  .music__card__left__player__btn {
-    font-size: 15px;
+  .music_page_container {
+    height: 100vh;
   }
 }

@@ -28,7 +28,7 @@
   justify-content: space-between;
   box-shadow: 0 0 12px 10px rgba(14, 0, 14, 0.3);
   border-radius: 10px;
-  width: 80%;
+  // width: 80%;
   margin: 0 auto;
  
 }
@@ -79,6 +79,7 @@ color: darkorange;
   color: white;
   width: 100%;
   align-items: center;
+  margin-bottom: 2rem;
   h1 {
     font-size: clamp(1.375rem, 1.282rem + 0.39vw, 1.75rem); 
   }
@@ -146,9 +147,9 @@ color: darkorange;
 .auth_user_info_edt_btn{
   max-width: 150px;
   width: clamp(12px, 45%, 8rem);
-  padding: 10px;
+  padding: clamp(0.188rem, 0.08rem + 0.455vw, 0.625rem);
   margin-top: 20px;
-  height: 3rem;
+  height: clamp(2rem, 1.753rem + 1.039vw, 3rem);
   display: flex;
   align-items: center;
   justify-content: center;

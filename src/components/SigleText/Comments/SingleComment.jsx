@@ -48,7 +48,7 @@ getCommentAuthorInfoByID(commentAuthorID).then(res => {
               <small>{commentCreationDate}</small>
             </div>
             <div>
-            {!showDeleteBtn &&
+            {showDeleteBtn &&
               <small className='single__text__comments__section__array__userInfo__deleteICON' onClick={()=> removeComment(textID, commentID)}><DeleteForeverIcon fontSize='small'/></small>
             }
               </div>

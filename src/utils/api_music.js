@@ -5,9 +5,11 @@ const onResponse = (res) => {
     : Promise.reject('Error');
 };
 
+const baseURL = '185.180.230.199:3020'
+
 
 export const addLikeById = (track_id, user_id) => {
-  return fetch('http://localhost:3020/music/likes/add', {
+  return fetch(`http://${baseURL}/music/likes/add`, {
     headers: {
       "Content-Type": "application/json"
     },
@@ -16,8 +18,8 @@ export const addLikeById = (track_id, user_id) => {
   }).then((res) => onResponse(res));
 }
 
-export const getMusicList = (pageQuery) => {
-  return fetch(`http://localhost:3020/music?page=${pageQuery}`, {
+export const getMusicList = (pageQuery, sortWay) => {
+  return fetch(`http://${baseURL}/music?page=${pageQuery}&sort=${sortWay}`, {
     headers: {
       "Content-Type": "application/json"
     },
@@ -25,7 +27,7 @@ export const getMusicList = (pageQuery) => {
 }
 
 export const searchMusic = async (searchQuery) => {
-  return fetch(`http://localhost:3020/music?search=${searchQuery}`, {
+  return fetch(`http://${baseURL}/music?search=${searchQuery}`, {
     headers: {
     "Content-Type": "application/json"
     }
@@ -34,7 +36,7 @@ export const searchMusic = async (searchQuery) => {
 }
 
 export const deleteMusicLikeById = (track_id, user_id) => {
-  return fetch('http://localhost:3020/music/likes/delete', {
+  return fetch(`http://${baseURL}/music/likes/delete`, {
     headers: {
       "Content-Type": "application/json"
     },
@@ -46,14 +48,14 @@ export const deleteMusicLikeById = (track_id, user_id) => {
 
 
 export const addNewTrack = (formData) => {
-  return fetch('http://localhost:3020/music/add', {
+  return fetch(`http://${baseURL}/music/add`, {
     method: "POST",
     body: formData
     
   }).then((res) => onResponse(res));
 }
 export const updateTrack = (track_id, formData) => {
-  return fetch('http://localhost:3020/music/update', {
+  return fetch(`http://${baseURL}/music/update`, {
     method: "PUT",
     body: formData
     
@@ -61,19 +63,19 @@ export const updateTrack = (track_id, formData) => {
 }
 
 
-export const deleteTrackByID = (track_id) => {
-  return fetch('http://localhost:3020/music/delete', {
+export const deleteTrackByID = (track_id, track_source) => {
+  return fetch(`http://${baseURL}/music/delete`, {
     headers: {
       "Content-Type": "application/json"
     },
     method: "DELETE",
-    body: JSON.stringify({_id: track_id})
+    body: JSON.stringify({_id: track_id, track_source: track_source})
     
   }).then((res) => onResponse(res));
 }
 
 export const getAuthorNameByID = (author_id) => {
-  return fetch('http://localhost:3020/music/getAuthorName', {
+  return fetch(`http://${baseURL}/music/getAuthorName`, {
     headers: {
       "Content-Type": "application/json"
     },
@@ -84,12 +86,17 @@ export const getAuthorNameByID = (author_id) => {
 }
 
 
-export const downloadOnClick = (track_source) => {
-  fetch(track_source,  {
+
+
+
+
+export const checkIfTrackFileExists = (track_id) => {
+  return fetch(`http://${baseURL}/music/checkFile`, {
     headers: {
-    "Content-Type": "audio/mpeg",
-    "Content-Disposition": "attachment"},
-  })
-  .then( res => res.blob() )
-  
+      "Content-Type": "application/json"
+    },
+    method: "PUT",
+    body: JSON.stringify({_id: track_id})
+    
+  }).then((res) => onResponse(res));
 }
