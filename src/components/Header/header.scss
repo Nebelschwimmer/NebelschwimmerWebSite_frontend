@@ -237,6 +237,7 @@ color: darkorange;
     justify-content: flex-start;
     max-width: 100%;
     width: 100%;
+    background-color: var(--main-bg-color);
   }
   .header_icon{
     display: flex;
@@ -250,7 +251,7 @@ color: darkorange;
     width: 100%;
     margin-bottom: 1rem;
     justify-content: center;
-    gap:6rem;
+    gap:5rem;
   }
   .header_name_wrapper_logo {
     font-size: 36px;
@@ -260,61 +261,50 @@ color: darkorange;
   }
 
   .header_controls_block{
-    width: fit-content;
-    display: block;
-    margin-left: 2rem;
-  }
-  .header_controls_block_nav_btns_wrapper{
     display: none;
   }
+
 
   .header_popover {
     z-index: 3;
   }
 
-  .header_controls_block_single_btn_signin  {
-    padding: 0;
-  }
-.menu__overlay {
-  position: fixed;
-  z-index: 20;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0);
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  opacity: 0;
-  transition: 0.3s ease-in-out;
 
-}
+
 
   .menu__container {
     width: 93%;
-    background-color: rgba(61, 0, 48);
+    // background: radial-gradient(ellipse farthest-corner at center , rgba(108, 5, 61, 1) 0%, rgba(75, 18, 67, 0.48)70%);
+    background: radial-gradient(ellipse farthest-corner at center , rgb(68, 30, 73) 0%, rgba(75, 18, 67, 0.1)100%);
+    overflow: hidden;
     position: absolute;
-    left:0;
-    top: 10%;
+    height: 100vh;
     z-index: 50;
     font-size: 18px;
     padding: 1rem;
-    border-radius: 10px;
-    opacity: 1;
+    
     nav a {
       text-decoration: none;
       color: inherit;
       font-size: 16px;
+      width: fit-content;
     }
     nav {
       display: flex;
       flex-direction: column;
       margin-top: 1rem;
-      gap:2rem;
+      gap:1rem;
+      box-shadow: var(--box-shadow-gl);
+      padding: 20px;
+      border-radius: 10px;
     }
     nav div {
       flex-direction: column;
       display: flex;
-      gap:2rem
+      gap:1rem
+    }
+    img {
+      width: 20px;
     }
   }
   .menu__item {
@@ -323,13 +313,12 @@ color: darkorange;
       align-items: center;
       cursor: pointer;
       font-size: 16px;
+      width: fit-content;
+
   }
 
-  .header_controls_block_single_btn {
-    font-size: 16px;
-  }
   .header_controls_block_languages {
-    margin-left: 2rem;
+    display: none;
   }
   .header_controls_languages_popover {
     top:0;
@@ -337,16 +326,23 @@ color: darkorange;
     right: -100%
   }
   .menu__section {
-    text-decoration: underline;
+    color: darkorange;
+    border-bottom: 1px solid white;
+    padding-bottom: 10px;
+
   }
   .menu__top{
     display: flex;
     width: 100%;
+    font-size: 24px;
+    padding-top: 2rem;
     align-items: center;
     justify-content: space-between;
+    color: darkorange;
     span {
       display: flex;
       align-items: center;
+      color: white;
       cursor: pointer;
       transition: 0.1s ease-in-out;
       :hover {

@@ -65,6 +65,7 @@ const onImgFileAdding = (e) => {
         
           {/*Cекция для добавления музыки из файла  */}
         <form className="edit__music__form" onSubmit={handleSubmit(onSubmitData)}>
+            <label>{langEn ? 'Change Name' : 'Изменить название'}</label>
             <input
               type="text"
               className="edit__music__text__input"
@@ -89,7 +90,7 @@ const onImgFileAdding = (e) => {
             <div className="edit__music__submit__btn__wrapper">
             {!showSpinner ?
               <button  type="submit"
-                className="add__music__submit__btn"
+                className="add__text__sumbit_btn"
                 >{langEn ? 'Send' : "Отправить"}
               </button>
               :

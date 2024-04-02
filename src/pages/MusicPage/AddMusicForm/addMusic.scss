@@ -1,9 +1,8 @@
 .add__music {
-  width: 100%;
+  width: 80%;
   margin: 0 auto;
 
   &__container {
-      padding: 1rem;
     font-size: clamp(10px, 1.5vw, 16px);
     width: 100%;
     
@@ -15,15 +14,15 @@
       display: flex;
       flex-direction: column;
       box-shadow: var(--box-shadow-gl);
-      width: 95%;
+      width: 100%;
       margin: 0 auto;
     }
     &__hidden{
       display: none;
     }
     &__preview__image{
-      height: 140px;
-      width: 140px;
+      height: 120px;
+      width: 120px;
       object-fit:cover;
       border-radius: 10px;
       box-shadow: var(--box-shadow-gl);
@@ -36,11 +35,13 @@
       margin-top: 1rem;
       border-top: 1px solid var(--lilac-color);
       border-bottom: 1px solid var(--lilac-color);
-      padding: 1rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
     }
 
     &__top {
       display: flex;
+      width: 50%;
       flex-direction: column;
       padding: 1rem;
       gap:10px;
@@ -131,6 +132,7 @@
     gap:1rem;
   }
 
+
   &__submit__btn {
       background-color: var(--btn-color);
       color: white;
@@ -153,5 +155,11 @@
             cursor: not-allowed;
           } 
         }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .add__music__container {
+    width: 90%;
   }
 }

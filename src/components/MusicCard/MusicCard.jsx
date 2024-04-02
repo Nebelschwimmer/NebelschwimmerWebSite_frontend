@@ -251,24 +251,26 @@ const deleteMusicCard = async () => {
                 <button 
                   className="music__card__left__top__controls__edit__btn"
                   onClick={()=>{downloadOnClick(track_source)}} title={langEn ? 'Download' : 'Скачать'} >
-                  <DownloadIcon fontSize="small"/>
+                  <DownloadIcon fontSize=""/>
                 </button>
                 {checkCurrentUser &&  
                 <div>
                   <button onClick={()=>{setShowModalEdit(true)}} className="music__card__left__top__controls__edit__btn"
-                    title={langEn ? 'Edit' : 'Редактировать'}><EditIcon fontSize="small"/>
+                    title={langEn ? 'Edit' : 'Редактировать'}><EditIcon fontSize=""/>
                   </button>
                   
                   {showModalEdit && (
                     <div className={cn("modal", { ["active"]: showModalEdit })} onClick={()=>{setShowModalEdit(false)}}>
+                      
                       <div className={cn("modal_content", { ["active"]: showModalEdit })}  onClick={(e) => e.stopPropagation()}>
+                      <span className='modal__close' onClick={()=>{setShowModalEdit(false)}}><CloseIcon/></span>
                         <MusicEditForm track={track} track_id={track_id} setTrackList={setTrackList} langEn={langEn} setShowModalEdit={setShowModalEdit}/>
                       </div>
                     </div>
                   )}
                   
                     <span className="music__card__left__top__controls__delete__icon"
-                      onClick={()=>{setShowModalDelete(true)}} title="Delete"><DeleteOutlineIcon fontSize="small"/>
+                      onClick={()=>{setShowModalDelete(true)}} title="Delete"><DeleteOutlineIcon fontSize=""/>
                     </span>
                   
                     {showModalDelete &&
@@ -296,7 +298,7 @@ const deleteMusicCard = async () => {
                 <button onClick={()=>{handleLikeClick()}}  
                   className={cn("music__card__left__bottom__like__btn", { ["music__card__left__bottom__like__btn__Active"]: musicIsLiked })} 
                   title={langEn ? 'Like' : 'Нравится'}>
-                  <FavoriteIcon fontSize="small"/>
+                  <FavoriteIcon fontSize=""/>
                   <span >{track_likes.length}</span>
                 </button>                  
               </div>

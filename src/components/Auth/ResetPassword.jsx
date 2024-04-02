@@ -7,7 +7,7 @@ import {sendPasswordResetEmail } from 'firebase/auth'
 
 
 
-export const ResetPassword = () => {
+export const ResetPassword = ({langEn}) => {
   const navigate = useNavigate()
 
   const {register, handleSubmit, formState: { errors }} = useForm({ mode: "onSubmit" });
@@ -19,7 +19,7 @@ export const ResetPassword = () => {
   const sendResetPasswordData = async (data) => {
     try {
       await sendPasswordResetEmail(auth, data.email)
-      .then(data =>{alert('Reminder sent!');})
+      .then(() =>{alert('A reset email sent! / Письмо со ссылкой для сброса пароля отправлено');})
       .then(()=>{navigate('/sign-in')});
     }
     catch(errors) {
@@ -27,10 +27,19 @@ export const ResetPassword = () => {
     } 
   }
 
-  const emailRegister = register("email", {
+  const emailRegisterEn = register("email", {
     required: "Email required",
     pattern: {
       message: "Incrorrect email!",
+      value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+    }
+  });
+
+  
+  const emailRegisterRu = register("email", {
+    required: "Email обязателен",
+    pattern: {
+      message: "Некоректный email!",
       value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
     }
   });
@@ -43,33 +52,46 @@ export const ResetPassword = () => {
         <div className="auth_container">
           <div onClick={()=>navigate(-1)} className="auth_backbtn"><Backbutton/></div>
             <div className='auth_top'>
-              <h1 style={{color:'darkorange'}}>Password Reset</h1>
+              <h1 style={{color:'darkorange'}}>{langEn ? 'Password Reset' : "Сброс пароля"}</h1>
             </div>
 
             <form onSubmit={handleSubmit(sendResetPasswordData)}>
                 <div className='inputs__container'>
+                        {langEn ? 
                         <div className='single__input__wrapper'>
-                          <label >Email :</label>
+                          <label >Email</label>
                             <input
                               className='input'
                               type='text'
-                              {...emailRegister}
+                              {...emailRegisterEn}
                             >
                             </input>
                         </div>
+                        :
+                        <div className='single__input__wrapper'>
+                        <label >Email</label>
+                          <input
+                            className='input'
+                            type='text'
+                            {...emailRegisterRu}
+                          >
+                          </input>
+                      </div>
+                      } 
                     {/* Текст при ошибках email*/}
                     { errors?.email  &&
                       <small className='auth_small'>{errors.email?.message}</small>
                     }
                 <div style={{textAlign: 'center'}}>
-                  <span>A reset link will be sent to your e-mail box. </span>
-                  <span>Check it, then sign in with the new password</span>
+                  <span>{langEn ? 'A reset link will be sent to your e-mail box.' : 'Письмо со ссылкой для сброса пароля будет отправлено на указанный электронный ящик. ' }</span>
+                  <span>{langEn ? 'Check it, then sign in with the new password' : 'Проверьте его, затем войдите с новым паролем' }</span>
+                  
                 </div>
                 
                 </div>
               
               <div className='auth_sign_btn_wrapper'>
-                <button type="submit" className='auth_sign_btn'>Send</button>
+                <button type="submit" className='auth_sign_btn'>{langEn ? 'Send' : 'Отправить'}</button>
               </div>
             </form> 
         </div>

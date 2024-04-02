@@ -113,8 +113,16 @@
       padding-top: 1rem;
       &__timestamps{
         display: flex;
-        flex-direction: column;
+        gap:10px;
         font-size: 12px;
+        div {
+          display: flex;
+          gap: 10px;
+        img {
+          border-radius: 100%;
+        }
+        }
+
       }
       &__middle {
         &__container {
@@ -299,4 +307,34 @@
     padding-top: 2rem;
     border-top: 1px solid gray;    
   }
+}
+
+
+@media screen and (max-width: 480px) {
+  .single__text__main__container {
+    padding: 10px;
+    border-radius: 0;
+    // height: 80vh;
+  }
+  .single__text__comments__section {
+    width: 90%;
+  }
+  .single__text__comments__section__array {
+    width: 100%;
+  }
+  .single__text__top__name {
+    gap:10px;
+  }
+  .single__text__top__lower__timestamps span em {
+    font-size: 8px;
+  }
+  .single__text__top__lower__timestamps {
+    flex-direction: column;
+  }
+  .single__text__top__titile__container {
+    flex-direction: column;
+    gap:1rem;
+    align-items: flex-start;
+  }
+
 }

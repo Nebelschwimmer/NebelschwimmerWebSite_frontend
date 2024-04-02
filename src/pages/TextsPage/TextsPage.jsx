@@ -26,13 +26,13 @@ const navigate = useNavigate();
   useEffect(()=>{ 
     if (searchQuery === "" || searchQuery === undefined) {
     
-      getTextsList(pageQuery, sortWay).then((res) => {
+      getTextsList(pageQuery).then((res) => {
       setTexts(()=>([...res.texts]));
       setPagesNumber(res.totalPages);
-      navigate(`/texts?page=${pageQuery}&sort=${sortWay}`)
+      navigate(`/texts?page=${pageQuery}`)
       })
     }
-  }, [searchQuery, pageQuery, sortWay])
+  }, [searchQuery, pageQuery])
 
 useEffect(()=>{
   if (sortWay === 'desc')
@@ -150,24 +150,8 @@ useEffect(()=>{
         >
         {langEn ? 'Publish New Text' : 'Опубликовать текст'}</button>
 
-        
-        
+
         </div>
-        {texts.length !== 0 &&
-        <div className='texts__page__sort__container'>
-          <span>{langEn ? 'Show:' : 'Показать:'}</span>
-          <span onClick={()=>{setSortWay('desc')}} 
-          className={cn("texts__page__sort__item", { ["texts__page__sort__item__Active"]: activeSort })} 
-          >
-            {langEn ? 'Latest' : 'Новые'}
-          </span>
-          <span onClick={()=>{setSortWay('asc')}} 
-          className={cn("texts__page__sort__item", { ["texts__page__sort__item__Active"]: !activeSort })} 
-          >
-            {langEn ? 'Oldest' : 'Старые'}
-          </span>
-      </div>  
-        }
       </div>
     { texts.length !== 0 ?
       <div className='text__page__links'>

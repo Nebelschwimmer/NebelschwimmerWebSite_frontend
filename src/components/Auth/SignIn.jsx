@@ -107,7 +107,7 @@ const sendSignInData = async (data) => {
         <div className="auth_container">
           <div onClick={()=>navigate(-1)} className="auth_backbtn"><Backbutton/></div>
             <div className='auth_top'>
-              <h1>{langEn ? 'SIGN IN' : "ВОЙТИ"}</h1>
+              <h1>{langEn ? 'SIGN IN' : "ВХОД"}</h1>
               <span >{langEn ? 'New user?' : 'Новый пользователь?'} <Link style={{color: 'violet'}} to='/register'>{langEn ? 'SIGN UP!' : "ЗАРЕГИСТРИРУЙТЕСЬ!"}</Link></span>
             </div>
           {/* Форма */}
@@ -168,15 +168,15 @@ const sendSignInData = async (data) => {
 
               {/* Кнопка отправки */}
               <div className='auth_sign_btn_wrapper'>
-                <button type="submit" className='auth_sign_btn'>Sign In</button>
+                <button type="submit" className='auth_sign_btn'>{langEn ? 'Sign In' : "Войти"}</button>
                 {showSpinner &&
                   <span className='spinner_container'><Spinner/></span>
                   }
               </div>
             </form> 
           {/* Кнопки "Войти с гугл" и "Сброс пароля" */}
-          <button className='auth_sign_btn' onClick={()=>{onSignInWithGoogle()}}>Sign in with Google Account <GoogleIcon fontSize='medium'/></button>
-          <button onClick={()=>{navigate('/password-reset')}} className='auth_sign_btn'>Forgot My Password</button>
+          <button className='auth_sign_btn' onClick={()=>{onSignInWithGoogle()}}>{langEn ? 'Sign in with Google Account' : "Войти с аккаунта Google" } <GoogleIcon fontSize='medium'/></button>
+          <button onClick={()=>{navigate('/password-reset')}} className='auth_sign_btn'>{langEn ? 'Forgot My Password' : "Забыли пароль?" }</button>
         </div>
     
       </div>

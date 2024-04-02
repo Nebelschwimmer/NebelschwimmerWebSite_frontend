@@ -109,8 +109,9 @@ const audioFileRegister = register("file__audio", {
                 <div className="add__music__file__input__top">
                   <span>
                     {langEn ? 'Choose audio file ' : 'Выберите аудио файл'}<span className='auth_req'> *</span></span>
-                  <span>{langEn ? 'Your file must be in .mp3 extension and not exceed 20 MB' 
-                  : 'Ваш файл должен быть в формате mp3 и не превышать размером 20 Мб'}</span>
+                  <span>{langEn ? 'Your file must be in .mp3 extension, must not exceed 20 MB and violate copyright.' 
+                  : 'Ваш файл должен быть в формате mp3 и не превышать размером 20 Мб и не нарушать авторские права.'}</span>
+                  <span>{langEn ? 'Please, make sure your file contains the author\'s name' : 'Убедитесь, что ваш файл содержит информацию об авторе.'}</span>
                 </div>
                 <div className="add__music__file__input__bottom">
                   <label className="add__music__file__input__label">
@@ -136,18 +137,21 @@ const audioFileRegister = register("file__audio", {
                     <input checked={checkedPic} onChange={()=>{setCheckedPic(!checkedPic)}} type="checkbox"/>
                   </label>
                   {checkedPic &&
-                    <div className="add__music__file__input__add__image__container">
-                      <label className="add__music__file__input__label">
-                        {langEn ? 'Add image file' : 'Добавить картинку' }
-                        <input
-                          type="file"
-                          className="add__music__file__input__hidden"
-                          {...register("file__image")}
-                          onInput={onImgFileAdding}
-                          accept="image/*"/>
-                      </label>
-                      {preview && <img className="add__music__file__input__preview__image" src={preview}/>}
-                    </div>
+                      <div>
+                        <span>{langEn ? 'Your file must not violate copyright.' : 'Файл не должен нарушать авторских прав.'}</span>
+                                            <div className="add__music__file__input__add__image__container">
+                        <label className="add__music__file__input__label">
+                          {langEn ? 'Add image file' : 'Добавить картинку' }
+                          <input
+                            type="file"
+                            className="add__music__file__input__hidden"
+                            {...register("file__image")}
+                            onInput={onImgFileAdding}
+                            accept="image/*"/>
+                        </label>
+                        {preview && <img className="add__music__file__input__preview__image" src={preview}/>}
+                                            </div>
+                      </div>
                   }
                   </div>
                   <div className="add__music__submit__btn__wrapper">

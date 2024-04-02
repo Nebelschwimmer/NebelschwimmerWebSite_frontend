@@ -18,8 +18,7 @@ import { Comments } from './Comments/Comments';
 import { Link } from 'react-router-dom';
 import { updateTextNameEn } from '../../utils/api_texts';
 import { updateTextNameRu } from '../../utils/api_texts';
-
-
+import { getPublisherInfoByID } from '../../utils/api_texts';
 
 export const SingleText = ({singleText, langEn, pageQuery, setSingleText, showModal, setLangEn, setShowModal, currentUser, handleTextLike}) => {
 
@@ -40,9 +39,15 @@ const [enName, setEnName] = useState(singleText.name_en);
 const [showMore, setShowMore] = useState(true);
 const [checkTextLength, setCheckTextLength] = useState(false);
 const [truncated, setTruncated] = useState(true);
+const [publisheInfo, setPublisherInfo] = useState({})
+
+const scrollRef = useRef(null)
+
+
 
 
 const user_id = currentUser.uid;
+const publisher_id = singleText.publisher_id
 const textID = singleText._id;
 const options = { 
   day: "numeric",
@@ -60,6 +65,13 @@ const {
   handleSubmit,
   formState: { errors },
 } = useForm();
+
+useEffect(()=>{
+  getPublisherInfoByID(publisher_id).then(
+  res => setPublisherInfo({publisher_name: res.publisher_name, publisher_avatar: res.publisher_avatar}))
+  
+}, [])
+
 
 
 useEffect(()=>{
@@ -191,15 +203,6 @@ useEffect (()=>{
 }, 
 [singleText, showMore, truncated, checkTextLength])
 
-// useEffect(()=>{
-//   if (ruContentSplited.length < 5 || enContentSplited.length < 5)
-//       {setCheckTextLength(false);
-//       }
-    
-//   else 
-//     setCheckTextLength(true);
-    
-// }, [])
 
 
 
@@ -353,40 +356,49 @@ const nameRuRegister = register("name_ru", {
               
               
               {showDeleteIcon && 
-              <div className='single__text__top__icons__wrapper'> {editName && <small onClick={()=>{setEditName(false)}}><CloseIcon/></small>}
+              <div className='single__text__top__icons__wrapper'> {editName && <small onClick={()=>{setEditName(false)}}><CloseIcon fontSize=''/></small>}
                 {!editName &&
                 <span title={langEn ? "Edit Name" : "Редактировать название"}
-                  onClick={()=>{handleNameEditClick()}}><EditIcon fontSize='small' />
+                  onClick={()=>{handleNameEditClick()}}><EditIcon fontSize='' />
                 </span>
                 }
               </div>
               }
             </div>
         
-          <button onClick={()=>{navigate('/texts/add-text')}} className='add__text__sumbit_btn' type='submit'>{langEn? "Publish new Text" : "Опубликовать новый текст"}</button>
+          <button onClick={()=>{navigate('/texts/add-text')}} 
+          className={cn("add__text__sumbit_btn", { ["add__text__sumbit_btn__Disabled"]: showNotAuth })}
+          type='submit'>{langEn? "Publish new Text" : "Опубликовать новый текст"}</button>
         </div>
       </div>
             <em >{langEn ? singleText.author_en : singleText.author_ru }</em>
       
       <div className='single__text__top__lower' >
         <div className='single__text__top__lower__timestamps'>
-          <span><em>{langEn ? "Published" : "Опубликовано"} : {createdAtDate}</em></span>
+         <em>{langEn ? "Published" : "Опубликовал"} </em>
+          <div>
+            <span>{ publisheInfo.publisher_name} </span>
+            <img src={publisheInfo.publisher_avatar} width='20px' height='20px'/>
+          </div>
+          <span>{createdAtDate}</span>
         
         </div>
         <div className='single__text__top__lower__middle__container'> 
           <div className='single__text__top__lower__middle__wrapper'>
             {showNotAuth && 
             <Link to='/sign-in' style={{color: 'darkorange'}}>{langEn ? 
-              <span >Please, sign in or sign up to set text favorite or comment it</span> : 
-              <span>Пожалуйста, авторизуйтесь, чтобы добавить текст в избранное и комментировать его</span>}
+              <span >Sign in to add text to favorites and comment it</span> : 
+              <span>Войдите, чтобы ставить лайки и комментировать</span>}
             </Link>}
             <button className={cn("single__text__top__lower__like__btn", { ["single__text__top__lower__like__btn__Active"]: favText })} onClick={()=> onTextLike()}>
-              <FavoriteIcon fontSize='small'/>
+              <FavoriteIcon fontSize=''/>
             </button>
             <span title={langEn ? 'Like it' : 'Нравится'}>{singleText.likes.length}</span>
           </div>
           <div className='single__text__top__lower__middle__wrapper'>
-            <CommentIcon className='single__text__top__lower__like__btn' fontSize='small'/>
+            <span onClick={() => scrollRef.current.scrollIntoView() }>
+              <CommentIcon className='single__text__top__lower__like__btn' fontSize=''/>
+            </span>
             <span title={langEn ? 'Comments' : 'Комментарии'}>{singleText.comments.length}</span>
           </div>
         </div>
@@ -394,9 +406,9 @@ const nameRuRegister = register("name_ru", {
         {showDeleteIcon &&
           <div className='single__text__top__lower__ctrl__btn__container'>
             <button className='single__text__top__lower__ctrl__btn' title={langEn ? "Delete" : "Удалить"}  
-            onClick={()=>{setShowModal(true)}}> <DeleteForeverIcon fontSize='small' /> </button>
+            onClick={()=>{setShowModal(true)}}> <DeleteForeverIcon fontSize='' /> </button>
             <button className='single__text__top__lower__ctrl__btn' title={langEn ? "Edit" : "Редактировать"}  
-            onClick={()=>{setEditMode(true)}}><EditIcon fontSize='small' /> </button>
+            onClick={()=>{setEditMode(true)}}><EditIcon fontSize='' /> </button>
           </div>
           
         }
@@ -472,7 +484,7 @@ const nameRuRegister = register("name_ru", {
    
     
     {/* ------- КОММЕНТАРИИ--------- */}
-    <section className='single__text__comments__section'>
+    <section ref={scrollRef} className='single__text__comments__section'>
       {!showComments && 
       <div >
         <button

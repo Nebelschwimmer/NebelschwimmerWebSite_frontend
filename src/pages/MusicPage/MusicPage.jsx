@@ -18,8 +18,8 @@ export const MusicPage = ({langEn, trackList, setTrackList, showModal, setShowMo
   const [pages, setPages] = useState([]);
   const [pagesNumber, setPagesNumber] = useState();
   const [pageQuery, setPageQuery] = useState(1);
-  const [sortWay, setSortWay] = useState('desc');
-  const [activeSort, setActiveSort] = useState(true);
+ 
+
   const [disButton, setDisButton] = useState(false)
 
 
@@ -34,12 +34,6 @@ export const MusicPage = ({langEn, trackList, setTrackList, showModal, setShowMo
   }, [currentUser])
   
   
-  useEffect(()=>{
-    if (sortWay === 'desc')
-    setActiveSort(true)
-  else setActiveSort(false)
-  }, [sortWay])
-
   const user_id = currentUser.uid
 
 const handleSearchMusicInputChange = (event) => {
@@ -65,13 +59,13 @@ const onSearchClick = async () => {
 
 useEffect(()=>{ 
   if (searchMusicQuery === "" || searchMusicQuery === undefined) {
-    getMusicList(pageQuery, sortWay).then((res) => {
+    getMusicList(pageQuery).then((res) => {
       setTrackList(()=>([...res.tracks]));
       setPagesNumber(res.totalPages);
-      navigate(`/music?page=${pageQuery}&sort=${sortWay}`)
+      navigate(`/music?page=${pageQuery}`)
     })
   }
-}, [searchMusicQuery, pageQuery, sortWay])
+}, [searchMusicQuery, pageQuery])
 
 const handleBackArrowClick = () => {
   if (pageQuery > 1)
@@ -112,7 +106,7 @@ useEffect(()=>{
 const handlePublishClick = () => {
   if (!disButton)
   setShowModal(true);
-  else navigate('/')
+  else navigate('/sign-in')
 }
 
 
@@ -142,22 +136,7 @@ const handlePublishClick = () => {
               </input>
               <span onClick={()=>{onSearchClick()}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon/></span>
             </div>
-            {trackList.length > 1 &&
-          <div className='texts__page__sort__container'>
-          <span>{langEn ? 'Show:' : 'Показать:'}</span>
-          <span onClick={()=>{setSortWay('desc')}} 
-          className={cn("texts__page__sort__item", { ["texts__page__sort__item__Active"]: activeSort })} 
-          >
-            {langEn ? 'Latest' : 'Новые'}
-          </span>
-          <span onClick={()=>{setSortWay('asc')}} 
-          className={cn("texts__page__sort__item", { ["texts__page__sort__item__Active"]: !activeSort })} 
-          >
-            {langEn ? 'Oldest' : 'Старые'}
-          </span>
-      </div>  
-        }
-
+            
       {trackList.length !== 0 ? 
       < MusicList user_id={user_id}  showModal={showModal} setShowModal={setShowModal} trackList={trackList} 
         setTrackList={setTrackList} langEn={langEn}  currentUser={currentUser}/>

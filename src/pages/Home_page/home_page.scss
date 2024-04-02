@@ -37,7 +37,7 @@
   &__links {
     display: flex;
     gap:10px;
-    position: relative;
+    
     padding-top: 4rem;
     
       &__container {
@@ -105,10 +105,25 @@
 
   @media screen and (max-width: 480px) { 
     .home__page {
-      padding-top: 1rem;
+      padding-top: 2rem;
       &__title {
         display: none;
       }
+      &__about {
+        font-size: 14px;
+      }
+    }
+    .home__page__links {
+      flex-direction: column;
+      gap:1rem;
+      width: 100%;
+      & a, .music, .texts, .pictures {
+        font-size: 16px;
+      }
+    }
+    .home__page__links__container {
+      width: 70%;
+     
     }
     
   }

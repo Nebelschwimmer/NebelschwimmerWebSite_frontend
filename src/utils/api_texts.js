@@ -6,8 +6,8 @@ const onResponse = (res) => {
 
 const baseURL = '185.180.230.199:3020'
 
-export const getTextsList = async (pageQuery, sortWay) => {
-  return fetch(`http://${baseURL}/texts?page=${pageQuery}&sort=${sortWay}`, {
+export const getTextsList = async (pageQuery) => {
+  return fetch(`http://${baseURL}/texts?page=${pageQuery}`, {
     headers: {
     "Content-Type": "application/json"
     }

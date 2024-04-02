@@ -26,7 +26,10 @@
     text-decoration: none;
     color: inherit;
     padding: clamp(0.2rem, -0.244rem + 1.87vw, 2rem);
-    box-shadow: var(--box-shadow-gl);
+    // box-shadow: var(--box-shadow-gl);
+    background: radial-gradient(ellipse farthest-corner at center , rgb(63, 9, 38) 0%, rgba(82, 1, 48, 0.0) 100%);
+    width: 70%;
+   
     // width: 50%;
   }
   &__text__main__info__wrapper{
@@ -106,39 +109,12 @@
     text-align: center;
     padding-top: 2rem;
   }
-    &__sort__container {
-      display: flex;
-      gap: 10px;
-      justify-content: space-around;
-      font-size: clamp(0.563rem, 0.485rem + 0.325vw, 0.875rem);
-      background-color: var(--dark-orange-op);
-      width: fit-content;
-      padding: 10px;
-      box-shadow: var(--box-shadow-gl);
-      border-radius: 10px;
-      cursor: pointer;
-      margin: 1rem 0 1rem 0;
-  }
-    &__sort__item {
-      transition: 0.2s ease-in-out;
-      &:hover {
-        color: darkorange;
-      }
-      &__Active {
-        color: darkorange;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
 
   &__input__container {
-    position: relative;
     height: fit-content;
     display: flex;
-    flex-direction: column;
-    // width: 30%;
-    gap:1rem;
+    
+    
     width: calc(100% / 3)
 
     }
@@ -152,19 +128,29 @@
       width: 100%;
       background-color: transparent;
       &:focus {
-        outline: 1px solid rgb(180, 101, 163); 
+        outline: 1px solid rgb(180, 101, 163);
+        border-radius: 10px 0 0 10px;
       }
+      &:focus +.texts__page__input__search__icon {
+        background-color: rgba(56, 22, 44, 0.8);
+        display: block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20%;
+        border-radius: 0 10px 10px 0;
+        outline: 1px solid rgb(180, 101, 163);
+        object-fit: fill;
+        cursor: pointer;
+        font-size: 10px;
+        z-index: 5;
+      } 
       &::placeholder {
         font-size: clamp(0.75rem, 0.688rem + 0.26vw, 1rem);
         padding-left: 10px;
       }
       &__search__icon {
-        position: absolute;
-        right:0;
-        top: calc(100% / 4);
-        object-fit: fill;
-        cursor: pointer;
-        font-size: 10px;
+        display: none;
       }
     }
 
@@ -179,8 +165,9 @@
 
 .text__page__links {
   display: flex;
- flex-direction: column;
-  gap:2rem
+  flex-direction: column;
+  gap:2rem;
+  margin-top: 2rem;
 }
 
 .single__text__page__spinner__container{
@@ -192,5 +179,9 @@
   .texts__page__input__container {
     width: calc(100%/2);
   }
+  .texts__page__text__info__container{
+    width: 95%;
+    padding: 10px;
 }
 
+}

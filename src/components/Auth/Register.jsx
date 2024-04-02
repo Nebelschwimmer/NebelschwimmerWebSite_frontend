@@ -220,11 +220,6 @@ const sendSignUpData = async (data) => {
                           </input>
                       </div>
                       }
-                    
-                    
-                    
-                    
-                    
                     </div>
               <div className='errors__container'>
                 { errors?.email  &&
@@ -235,11 +230,11 @@ const sendSignUpData = async (data) => {
                   {errors?.passwordConfirm && (
                     <small className='auth_small'>{errors.passwordConfirm?.message}</small>)}
               </div>
+                  <a className='policy' target='blank' onClick={()=>{navigate('/privacy-policy')}}>{langEn ? 'Privacy Policy and Rules' : 'Политика конфиденциальности и правила'}</a>
               </div>
               
               <div className='auth_sign_btn_wrapper'>
                 {/* Кнопка для отправки данных */}
-                
                   <button type="submit" className='auth_sign_btn'>{langEn ? 'Create Account' : 'Создать аккаунт'}</button>
                   {showSpinner &&
                     <span className='spinner_container'><Spinner/></span>

@@ -3,24 +3,22 @@
  
   &__container{
     width: 100%;
-    padding: 1rem;
-    margin: 0 auto;
     border-radius: 10px;
     font-size: clamp(10px, 1.5vw, 16px);
     display: flex;
     flex-direction: column;
+    gap:2rem;
+    
   }
   &__inputs__container {
-  
+  width: 100%;
     
   }
   &__form {
-    width: 100%;
-    
+    width: 100%;    
   }
   &__image__input{
     display: flex;
-    width: 100%;
     gap:1rem
   }
  
@@ -32,19 +30,24 @@
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
+    &:hover {
+      color: darkorange;
+      box-shadow: var(--box-shadow-gl);
+    }
   }
   &__submit__btn__wrapper{
     width: 100%;
-    text-align: center;
+    display: flex;
+    justify-content: center;
     button {
-      width: fit-content;
+      width: 50%
     }
   }
   &__text__input {
     height: 2rem;
     font-size: clamp(0.75rem, 0.723rem + 0.127vw, 0.875rem); 
     border-radius: 5px;
-    width: 95%;
+    width: 90%;
     border: 1px white solid;
     background-color: transparent;
     padding-left: 1rem;

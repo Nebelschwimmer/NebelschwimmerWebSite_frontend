@@ -1,0 +1,41 @@
+.footer__container {
+width: 100vw; 
+color: white;
+height: 35px;
+background-color: var(--main-bg-color-op-main);
+margin-top: 30px;
+padding-top: 20px;
+padding-bottom: 20px;
+font-size: 16px;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 5px;
+flex-direction: column;
+
+a {
+  color: white;
+  text-decoration: none;
+  text-align: center;
+&:hover {
+  color: darkorange;
+}
+}
+div {
+  display: flex;
+  gap: 2rem;
+}
+}
+
+@media screen and (max-width: 480px) {
+  .footer__container {
+    height: 60px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-size: 10px;
+    div {
+      flex-direction: column;
+      gap: 5px;
+    }
+  }
+}

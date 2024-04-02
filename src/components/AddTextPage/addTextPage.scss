@@ -75,7 +75,7 @@
   }
   &__sumbit_btn{
     background-color: var(--btn-color);
-    padding: clamp(0.125rem, 0.002rem + 0.519vw, 0.625rem);
+    padding: 7px;
     border-radius: 5px;
     font-size: clamp(0.75rem, 0.657rem + 0.39vw, 1.125rem);
     text-align: center;
@@ -111,6 +111,6 @@ small {
 
 @media screen and (max-width: 480px) {
   .add__text__input {
-    width: 87%;
+    width: 80%;
   }
 }

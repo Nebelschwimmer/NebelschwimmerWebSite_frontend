@@ -43,7 +43,7 @@ const author_id = currentUser.uid
   },[checked, showSecondTextarea])
 
   const nameEnRegister = register("name_en", {
-  
+    required: 'Text\'s name required!',
     maxLength: {
       value:50,
       message:
@@ -52,7 +52,7 @@ const author_id = currentUser.uid
     }
   );
   const authorEnRegister = register("author_en", {
-
+    required: 'Author\'s name required!',
     maxLength: {
       value:50,
       message:
@@ -62,6 +62,7 @@ const author_id = currentUser.uid
   );
 
   const authorRuRegister = register("author_ru", {
+    required: 'Укажите имя автора!',
     maxLength: {
       value:50,
       message:
@@ -71,6 +72,7 @@ const author_id = currentUser.uid
   );
 
   const nameRuRegister = register("name_ru", {
+    required: 'Название текста обязательно!',
     maxLength: {
       value:50,
       message:
@@ -95,6 +97,7 @@ const author_id = currentUser.uid
         {currentUser!== '' ?
         <form className='add__text__container' onSubmit={handleSubmit(SendNewText)}>
           <h1>{langEn ? 'Add Text' : 'Добавить текст'}</h1>
+          <span>{langEn ? 'Your text must not violate copyright.' : 'Файл не должен нарушать авторских прав.'}</span>
           <label className='add__text__label'>{langEn ? '2 languages' : '2 языка'}
               <input type='checkbox' checked={checked} onChange={handleCheckChange}></input>
             </label>

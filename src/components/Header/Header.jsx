@@ -13,6 +13,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import uk_flag from '../../pictures/uk-flag.webp';
 import rus_flag from '../../pictures/rus_flag.png';
 import CloseIcon from '@mui/icons-material/Close';
+import InfoIcon from '@mui/icons-material/Info';
 import cn from "classnames";
 
 
@@ -93,23 +94,24 @@ const navigate = useNavigate()
       <div className={cn("modal", { ["active"]: showMenu })} onClick={()=>{setShowMenu(false)}}>
         <div className={cn("menu__container", { ["active"]: showMenu })} >
           <div className='menu__top'>
-          
-              <span className='menu__section'>{langEn ? 'Navigation' : 'Навигация'}</span>
+              <span>{langEn ? 'Menu' : 'Меню'}</span>
               <span onClick={()=>(setShowMenu(false))}><CloseIcon/></span>
           </div>
         {langEn ?
           <nav>
+            <span className='menu__section'>Navigation</span>
             <Link to="/">
               <span className='menu__item' ><HomeIcon fontSize='small'/>Ноme</span></Link>
             <Link  to="/music">
               <span className='menu__item'><LibraryMusicIcon fontSize='small'/>Music</span></Link>
-            <Link  to="/texts?page=1">
+            <Link  to="/texts">
               <span className='menu__item'><LibraryBooksIcon fontSize='small'/>Texts</span></Link>
             <Link  to="/pictures">
               <span className='menu__item'><InsertPhotoOutlinedIcon fontSize='small'/>Pictures</span></Link>
           </nav>
           :
           <nav>
+            <span className='menu__section'>Навигация</span>
           <Link  to="/">
             <span className='menu__item'><HomeIcon fontSize='small'/>Главная</span></Link>
           <Link  to="/music">
@@ -130,9 +132,20 @@ const navigate = useNavigate()
             </div>
             :
             <div>
-              <span className='menu__item'><HowToRegIcon/> {langEn ? 'Sign up' : 'Регистрация'} </span>
+              <span onClick={()=>{navigate('/sign-in')}} className='menu__item'><LoginIcon/> {langEn ? 'Sign in' : 'Вход'} </span>
+              <span onClick={()=>{navigate('/sign-up')}}  className='menu__item'><HowToRegIcon/> {langEn ? 'Sign up' : 'Регистрация'} </span>
             </div>
             }
+          </nav>
+          
+          <nav>
+          <span className='menu__item' onClick={()=>{navigate('/about')}}><InfoIcon/>{langEn ? 'About project and its creator' : 'О проекте и его создателе'}</span>
+
+          </nav>
+          <nav>
+            <span className='menu__section'>{langEn ? 'Language' : 'Язык'}</span>
+            <span onClick={()=>{setLangEn(true)}} className='menu__item'><img src={uk_flag}/> {langEn ? 'English' : 'Английский'} </span>
+            <span onClick={()=>{setLangEn(false)}} className='menu__item'><img src={rus_flag}/> {langEn ? 'Русский' : 'Russian'} </span>
           </nav>
         
         </div>

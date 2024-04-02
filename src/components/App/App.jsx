@@ -12,7 +12,7 @@ import { auth } from "../../firebase.js";
 import { SignIn } from '../Auth/SignIn.jsx';
 import { UserSettings } from '../Auth/UserSettings.jsx';
 import { ResetPassword } from '../Auth/ResetPassword.jsx';
-
+import { Privacy } from '../Privacy/Privacy.jsx';
 import { AddTextPage } from '../AddTextPage/AddTextPage.jsx';
 import { SingleTextPage } from '../../pages/TextsPage/SingleTextPage/SingleTextPage.jsx';
 import { AboutPage } from '../../pages/AboutPage/AboutPage.jsx';
@@ -95,11 +95,12 @@ return (
         <Route path='/sign-in' element={<SignIn langEn={langEn} signInWithGoogle={signInWithGoogle}/>}></Route>
         <Route path='/password-reset' element={<ResetPassword langEn={langEn}/>}></Route>       
         <Route path='/about' element={<AboutPage langEn={langEn}/>}></Route>
+        <Route path='/privacy-policy' element={<Privacy langEn={langEn}/>}></Route>
         <Route path='/pictures' element={<PicturesPage showModal={showModal} setShowModal={setShowModal} langEn={langEn}/>}></Route>
       
       </Routes>
     </main>
-    <Footer/>
+    <Footer lanEn={langEn}/>
   </>
   );
 }

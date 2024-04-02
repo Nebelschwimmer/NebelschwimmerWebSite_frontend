@@ -105,8 +105,28 @@ input[type="range"]::-moz-range-progress {
 @media screen and (max-width: 480px) {
   .main_content_container {
     max-width: 100%;
-    // width: fit-content;
     border-radius: 0px;
     padding: 5px;
+    min-height: calc(100vh - 80px);
+    // height: 100vh;
+  }
+  body {
+    height: 100vh;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; 
+    appearance: none;
+    margin-top: -5px;
+    background-color: white;
+    height:1.3rem;
+    width: 10px;
+    border-radius: 20%;  
+  }
+  input[type="range"]::-moz-range-thumb {
+    border: none;
+    border-radius: 20%;
+    background-color: white;
+    height:1.3rem;
+    width: 10px;
   }
 }
