@@ -26,11 +26,9 @@
     text-decoration: none;
     color: inherit;
     padding: clamp(0.2rem, -0.244rem + 1.87vw, 2rem);
-    // box-shadow: var(--box-shadow-gl);
     background: radial-gradient(ellipse farthest-corner at center , rgb(63, 9, 38) 0%, rgba(82, 1, 48, 0.0) 100%);
     width: 70%;
-   
-    // width: 50%;
+
   }
   &__text__main__info__wrapper{
     display: flex;
@@ -41,14 +39,14 @@
     border-bottom: 1px solid var(--lilac-color);
     padding-bottom: 1rem;
     h4 {
-      font-size: clamp(0.625rem, 0.471rem + 0.649vw, 1.25rem);
+      font-size: clamp(1rem, 0.918rem + 0.272vw, 1.25rem);
       margin: 0;
     }
     div {
-      font-size: clamp(0.5rem, 0.346rem + 0.649vw, 1.125rem);  
+      font-size: clamp(0.875rem, 0.793rem + 0.272vw, 1.125rem);
     }
     
-    
+
   }
   &__text__add__info {
     display: flex;
@@ -113,10 +111,7 @@
   &__input__container {
     height: fit-content;
     display: flex;
-    
-    
     width: calc(100% / 3)
-
     }
   &__input{
       border-radius: 10px;
@@ -127,24 +122,15 @@
       padding: 5px; 
       width: 100%;
       background-color: transparent;
+  
       &:focus {
         outline: 1px solid rgb(180, 101, 163);
         border-radius: 10px 0 0 10px;
-      }
-      &:focus +.texts__page__input__search__icon {
-        background-color: rgba(56, 22, 44, 0.8);
-        display: block;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 20%;
-        border-radius: 0 10px 10px 0;
-        outline: 1px solid rgb(180, 101, 163);
-        object-fit: fill;
-        cursor: pointer;
-        font-size: 10px;
-        z-index: 5;
+      
+      & +.texts__page__input__search__icon {
+        opacity: 1;
       } 
+    }
       &::placeholder {
         font-size: clamp(0.75rem, 0.688rem + 0.26vw, 1rem);
         padding-left: 10px;
@@ -153,6 +139,7 @@
         display: none;
       }
     }
+    
 
   &__search__wrapper {
     display: flex;
@@ -162,6 +149,20 @@
   }
 
 }
+
+.texts__page__input__search__icon {
+  background-color: rgba(56, 22, 44, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  border-radius: 0 10px 10px 0;
+  outline: 1px solid rgb(180, 101, 163);
+  object-fit: fill;
+  cursor: pointer;
+  font-size: 10px;
+  opacity: 0;
+} 
 
 .text__page__links {
   display: flex;

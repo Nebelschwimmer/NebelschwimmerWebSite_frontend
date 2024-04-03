@@ -60,7 +60,6 @@ const [pageQuery, setPageQuery] = useState(1)
           const credential = GoogleAuthProvider.credentialFromResult(result);
           const token = credential.accessToken;
           const user = result.user;
-          console.log(user.displayName)
         }).catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
@@ -78,7 +77,7 @@ const [pageQuery, setPageQuery] = useState(1)
 
 return (
   <>
-    <Header langEn={langEn} setLangEn={setLangEn} currentUser={currentUser} user={user} onSignOut={onSignOut} />
+    <Header showModal={showModal} setShowModal={setShowModal} langEn={langEn} setLangEn={setLangEn} currentUser={currentUser} user={user} onSignOut={onSignOut} />
       <main className='main_content_container'>
 
       <Routes>

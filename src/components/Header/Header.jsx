@@ -15,9 +15,9 @@ import rus_flag from '../../pictures/rus_flag.png';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoIcon from '@mui/icons-material/Info';
 import cn from "classnames";
+import { ModalWindow } from '../ModalWindow/ModalWindow.jsx';
 
-
-export const Header = ({langEn, setLangEn, currentUser, onSignOut, user}) => {
+export const Header = ({langEn, setLangEn, currentUser, onSignOut, showModal, setShowModal}) => {
 
   // Стейт для отображения аватара
   const [avatarURL, setAvatarURL] = useState('');
@@ -28,7 +28,7 @@ export const Header = ({langEn, setLangEn, currentUser, onSignOut, user}) => {
 
   const [showLangPopOver, setShowLangPopOver] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
-
+const [showModalSignout, setShowModalSignout] = useState(false)
   
   
   // Указываем Реакту, чтобы не показывал поповер, когда пользователь регистрируется либо входит в аккаунт
@@ -137,15 +137,13 @@ const navigate = useNavigate()
             </div>
             }
           </nav>
-          
           <nav>
-          <span className='menu__item' onClick={()=>{navigate('/about')}}><InfoIcon/>{langEn ? 'About project and its creator' : 'О проекте и его создателе'}</span>
-
+            <span className='menu__section'>{langEn ? 'Language / Язык' : 'Язык / Language'}</span>
+            <span onClick={()=>{setLangEn(true)}} className='menu__item'><img src={uk_flag}/> English / Английский </span>
+            <span onClick={()=>{setLangEn(false)}} className='menu__item'><img src={rus_flag}/>Русский / Russian </span>
           </nav>
           <nav>
-            <span className='menu__section'>{langEn ? 'Language' : 'Язык'}</span>
-            <span onClick={()=>{setLangEn(true)}} className='menu__item'><img src={uk_flag}/> {langEn ? 'English' : 'Английский'} </span>
-            <span onClick={()=>{setLangEn(false)}} className='menu__item'><img src={rus_flag}/> {langEn ? 'Русский' : 'Russian'} </span>
+            <span className='menu__item' onClick={()=>{navigate('/about')}}><InfoIcon/>{langEn ? 'About project' : 'О проекте'}</span>
           </nav>
         
         </div>

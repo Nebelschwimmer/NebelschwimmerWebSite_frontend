@@ -4,6 +4,7 @@
   background-color: var(--main-bg-color-op-main);
   padding: 2rem;
   border-radius: 10px;
+  min-height: 70vh;
   &__container {
     width: 80%;
     display: flex;
@@ -75,9 +76,9 @@
   }
   &__sumbit_btn{
     background-color: var(--btn-color);
-    padding: 7px;
+    padding: 9px;
     border-radius: 5px;
-    font-size: clamp(0.75rem, 0.657rem + 0.39vw, 1.125rem);
+    font-size: clamp(0.875rem, 0.793rem + 0.272vw, 1.125rem);
     text-align: center;
     width: auto;
     border: none;

@@ -29,6 +29,11 @@
     width: 100%;
     align-items: flex-start;
     margin-bottom: 2rem;
+    &__upper {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
     &__wrapper {
       display: flex;
       width: 100%;
@@ -322,19 +327,32 @@
   .single__text__comments__section__array {
     width: 100%;
   }
-  .single__text__top__name {
+  .single__text__top__name h1{
     gap:10px;
+    font-size: 24px;
+  }
+  .single__text__top em {
+    font-size: 16px;
   }
   .single__text__top__lower__timestamps span em {
     font-size: 8px;
   }
   .single__text__top__lower__timestamps {
     flex-direction: column;
+    gap:5px;
   }
   .single__text__top__titile__container {
     flex-direction: column;
     gap:1rem;
     align-items: flex-start;
+  }
+  .single__text__top__lower {
+    width: fit-content;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .single__text__textarea__containter .text__readonly__p {
+    font-size: 16px;
   }
 
 }

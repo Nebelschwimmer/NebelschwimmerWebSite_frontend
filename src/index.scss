@@ -32,7 +32,7 @@ max-width: 60%;
 padding-right: clamp(0.313rem, -0.425rem + 3.688vw, 4rem);
 color: white;
 padding-bottom: 4rem;
-font-size: clamp(0.625rem, 0.532rem + 0.39vw, 1rem);
+font-size: clamp(0.875rem, 0.834rem + 0.136vw, 1rem);
 padding-left: clamp(0.313rem, -0.425rem + 3.688vw, 4rem);
 margin: 0 auto;
 min-height: 68vh;
@@ -46,7 +46,7 @@ h1, h2, h3, h4 {
   font-weight: 700; 
   text-align: center;
   
-  font-size: clamp(1.125rem, 1.002rem + 0.519vw, 1.625rem);
+  font-size: clamp(1.25rem, 1.087rem + 0.544vw, 1.75rem);
 }
 
 
@@ -67,7 +67,7 @@ input[type="range"] {
 }
 input[type="range"]::-webkit-slider-runnable-track {
   background: rgba(185, 87, 7, 0.1);
-  height: 0.5rem;
+  height: 1rem;
   
   border-radius: 5px;
 }
@@ -84,8 +84,8 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   margin-top: -5px;
   background-color: white;
-  height: 1rem;
-  width: 0.5rem;
+  height: 25px;
+  width: 12px;
   border-radius: 20%;  
 }
 input[type="range"]::-moz-range-thumb {

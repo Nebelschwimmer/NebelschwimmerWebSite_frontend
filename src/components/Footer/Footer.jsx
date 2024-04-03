@@ -10,7 +10,7 @@ export const Footer = ({lanEn}) => {
     <div className="footer__container">
       <span>{lanEn ? 'Development - © Andrew Dyakov, 2023-2024' : 'Разработка - © Андрей Дьяков, 2023-2024'}</span>
       <div>
-        <Link to='/about'>{lanEn ? 'About project and its creator' : 'О проекте и создателе'}</Link>
+        <Link to='/about'>{lanEn ? 'About project' : 'О проекте'}</Link>
         <Link to='/privacy-policy'>{lanEn ? 'Privacy Policy and Rules' : 'Политика конфидециальности и правила'}</Link>
       </div>
     </div>

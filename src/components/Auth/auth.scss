@@ -124,7 +124,7 @@ color: darkorange;
 }
 
 .auth_user_info_name{
-  font-size: clamp(16px, 1.5vw, 27px);
+  font-size: clamp(1.125rem, 1.043rem + 0.272vw, 1.375rem);
   font-weight: 600;
 }
 .auth_user_info_name_wrapper{
@@ -253,7 +253,8 @@ label{
 .single__input__wrapper {
   display: flex;
   align-items: center;
-  gap:10px
+  gap:10px;
+  
 }
 
 .input{
@@ -342,6 +343,9 @@ label{
   }
   .errors__container {
     height: 10px;
+  }
+  .auth_user_info {
+    width: 90%;
   }
 
   .spinner_container{

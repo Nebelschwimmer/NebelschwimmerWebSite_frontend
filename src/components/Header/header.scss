@@ -292,7 +292,7 @@ color: darkorange;
     nav {
       display: flex;
       flex-direction: column;
-      margin-top: 1rem;
+      margin-top: 10px;
       gap:1rem;
       box-shadow: var(--box-shadow-gl);
       padding: 20px;
@@ -335,7 +335,7 @@ color: darkorange;
     display: flex;
     width: 100%;
     font-size: 24px;
-    padding-top: 2rem;
+    padding-top: 1rem;
     align-items: center;
     justify-content: space-between;
     color: darkorange;

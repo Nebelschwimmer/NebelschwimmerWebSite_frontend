@@ -18,7 +18,7 @@ export const MusicPage = ({langEn, trackList, setTrackList, showModal, setShowMo
   const [pages, setPages] = useState([]);
   const [pagesNumber, setPagesNumber] = useState();
   const [pageQuery, setPageQuery] = useState(1);
- 
+  const [showPagination, setShowPagination] = useState(false)
 
   const [disButton, setDisButton] = useState(false)
 
@@ -109,6 +109,11 @@ const handlePublishClick = () => {
   else navigate('/sign-in')
 }
 
+useEffect(()=>{
+  if (!searchMusicQuery && pagesNumber > 1)
+  setShowPagination(true);
+  else setShowPagination(false)
+}, [searchMusicQuery, showPagination])
 
 
   return (
@@ -143,7 +148,7 @@ const handlePublishClick = () => {
       :
       <span className='music__page__empty'>{langEn ? 'Tracklist not found' : 'Треки не найдены'}</span>
       }
-      {pagesNumber > 1 && !searchMusicQuery ?
+      {showPagination ?
         <div className='texts__page__pagination__container'>
           <div className='texts__page__pagination__card' onClick={()=>{handleBackArrowClick()}}><ArrowBackIosIcon fontSize=''/></div>
           {pages.map((currentPage, i)=>{

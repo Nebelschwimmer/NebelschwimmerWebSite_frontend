@@ -146,7 +146,7 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
       <div className='auth_main'>
         <div className="auth_container">
           <div onClick={()=>navigate(-1)} className="auth_backbtn"><Backbutton/>
-          <h1>PROFILE</h1>
+          <h1>{ langEn ? "PROFILE" : 'Личный кабинет'}</h1>
           </div>
           
             <div className='auth_top'>
@@ -163,35 +163,35 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
                     <span>{currentUser.email}</span>
                   </div>
                   <div className='auth_user_info_edt_btns_wrapper'>
-                    <button onClick={()=>{setShowModalSignout(true)}} className='auth_user_info_edt_btn'>Sign Out</button>
+                    <button onClick={()=>{setShowModalSignout(true)}} className='auth_user_info_edt_btn'>{ langEn ? "Sign out" : 'Выйти'}</button>
                     {/* Модальное окно с подтверднением выхода из аккаунта */}
                       {!!showModalSignout &&
                     
                         <div className={cn("modal", { ["active"]: showModalSignout })} onClick={()=>{setShowModalSignout(false)}}>
                           <div className={cn("modal_content", { ["active"]: showModalSignout })}  onClick={(e) => e.stopPropagation()}>
                               <div className='modal_top'>
-                                <h3 style={{color:'darkorange'}}>Are you sure?</h3>
+                                <h3 style={{color:'darkorange'}}>{ langEn ? "Sign out" : 'Выйти из аккаунта?'}</h3>
                               </div>
                               <div className='modal_btns_wrapper'>
-                                <button onClick={()=>{onSignOut()}} className='modal_btn_warn'>Sign out</button>
-                                <button onClick={()=>{setShowModalSignout(false)}} className='modal_btn'>Cancel</button>
+                                <button onClick={()=>{onSignOut()}} className='modal_btn_warn'>{ langEn ? "Submit" : 'Подтвердить'}</button>
+                                <button onClick={()=>{setShowModalSignout(false)}} className='modal_btn'>{ langEn ? "Cancel" : 'Отмена'}</button>
                             </div>
                           </div>
                       </div>
                     
                     }
-                    <button onClick={()=>{setShowModal(true)}}  className='auth_user_info_edt_btn'>Delete Accout</button>
+                    <button onClick={()=>{setShowModal(true)}}  className='auth_user_info_edt_btn'>{ langEn ? "Delete account" : 'Удалить аккаунт'}</button>
                   </div>
                   {/* Модальное окно с подтверждением удаления */}
                   {!!showModal &&
                   <ModalWindow setShowModal={setShowModal} showModal={showModal}>
                     <div className='modal_top'>
-                      <h3 style={{color:'darkorange'}}>Are you sure you want to delete your account?</h3>
-                      <span>This action cannot be undone</span>
+                      <h3 style={{color:'darkorange'}}>{ langEn ? "Are you sure you want to delete your account" : 'Вы уверены, что хотите удалить аккаунт'}</h3>
+                      <span>{ langEn ? "This action cannot be undone." : 'Это действие нельзя отменить.'}</span>
                     </div>
                     <div className='modal_btns_wrapper'>
-                      <button onClick={()=>{deleteUserAccount()}} className='modal_btn_warn'>Delete</button>
-                      <button onClick={()=>{setShowModal(false)}} className='modal_btn'>Cancel</button>
+                      <button onClick={()=>{deleteUserAccount()}} className='modal_btn_warn'>{ langEn ? "Delete" : 'Удалить'}</button>
+                      <button onClick={()=>{setShowModal(false)}} className='modal_btn'>{ langEn ? "Cancel" : 'Отмена'}</button>
                     </div>
                   </ModalWindow>
                 }
@@ -202,7 +202,7 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
             </div>
             <div className='auth_edit_top_wrapper'>
               <h2 >{langEn ? 'Edit Profile' : 'Редактировать профиль'}</h2>
-              <small className={cn("auth_updated", { ["auth_updated_Active"]: printChanged })}>Profile Updated!</small>
+              <small className={cn("auth_updated", { ["auth_updated_Active"]: printChanged })}>{ langEn ? "Profile updated!" : 'Профиль изменен'}</small>
             </div>  
              {/* Форма */}
             <form onSubmit={handleSubmit(sendUpdateData)}>
@@ -210,7 +210,7 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
                 <div className='inputs__container__profile'>
                         <div className='single__input__wrapper'
                         >
-                          <label >Display Name</label>
+                          <label >{ langEn ? "Display Name" : 'Имя / Никнейм'}</label>
                             <input
                               className='input'
                               defaultValue={currentUser.displayName}
@@ -227,7 +227,7 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
                         <div className='single__input__wrapper'
 
                         >
-                          <label>Avatar URL</label>
+                          <label>{ langEn ? "Avatar URL" : 'URL аватара'}</label>
                             <input
                             
                               style={{fontSize:'12px'}}
@@ -254,7 +254,7 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
                 
                 {/* Кнопка "Отправить" + спиннер */}
                 <div className='auth_sign_btn_wrapper'>
-                  <button type="submit" className='auth_sign_btn'>Send</button>
+                  <button type="submit" className='auth_sign_btn'>{ langEn ? "Send" : 'Отправить'}</button>
                   {/* Спиннер */}
                   {showSpinner &&
                     <span className='spinner_container'><Spinner/></span>

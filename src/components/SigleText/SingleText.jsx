@@ -312,8 +312,12 @@ const nameRuRegister = register("name_ru", {
   return (
     <div className='single__text__main__container'>
     <div className='single__text__top'>
-        <div  onClick={()=>{navigate(`/texts?page=${pageQuery}`)}}>
-          <Backbutton/>
+        <div className='single__text__top__upper'>
+          <span onClick={()=>{navigate(`/texts?page=${pageQuery}`)}}><Backbutton/></span>
+          <button onClick={()=>{navigate('/texts/add-text')}} 
+          className={cn("add__text__sumbit_btn", { ["add__text__sumbit_btn__Disabled"]: showNotAuth })}
+          type='submit'>{langEn? "Publish new Text" : "Опубликовать новый текст"}
+          </button>
         </div>
       <div className='single__text__top__wrapper'>
         <div className='single__text__top__titile__container'>
@@ -366,16 +370,14 @@ const nameRuRegister = register("name_ru", {
               }
             </div>
         
-          <button onClick={()=>{navigate('/texts/add-text')}} 
-          className={cn("add__text__sumbit_btn", { ["add__text__sumbit_btn__Disabled"]: showNotAuth })}
-          type='submit'>{langEn? "Publish new Text" : "Опубликовать новый текст"}</button>
+        
         </div>
       </div>
             <em >{langEn ? singleText.author_en : singleText.author_ru }</em>
       
       <div className='single__text__top__lower' >
         <div className='single__text__top__lower__timestamps'>
-         <em>{langEn ? "Published" : "Опубликовал"} </em>
+          <span>{langEn ? "Published" : "Опубликовал"} </span>
           <div>
             <span>{ publisheInfo.publisher_name} </span>
             <img src={publisheInfo.publisher_avatar} width='20px' height='20px'/>

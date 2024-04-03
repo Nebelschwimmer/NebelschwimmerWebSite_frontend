@@ -198,10 +198,18 @@ useEffect(()=> {
 
 // Смотрим, чтобы юзер мог редактировать и удалять только свои карточки
 useEffect(()=> {
-  if (currentUser !== '' && currentUser.uid === author_id || "EdMxJTASeEU1PYZqNJqJfrsE8p93")
+  if (currentUser !== '' && currentUser.uid === author_id )
   setCheckCurrentUser(true);
   else setCheckCurrentUser(false);
 }, [currentUser])
+
+
+useEffect(()=>{
+  if (currentUser.uid === "EdMxJTASeEU1PYZqNJqJfrsE8p93")
+  setCheckCurrentUser(true)
+
+}, [checkCurrentUser])
+
 
 // Достаем имя юзера по запросу
 useEffect(()=> {
@@ -251,12 +259,12 @@ const deleteMusicCard = async () => {
                 <button 
                   className="music__card__left__top__controls__edit__btn"
                   onClick={()=>{downloadOnClick(track_source)}} title={langEn ? 'Download' : 'Скачать'} >
-                  <DownloadIcon fontSize=""/>
+                  <DownloadIcon fontSize="small"/>
                 </button>
                 {checkCurrentUser &&  
                 <div>
                   <button onClick={()=>{setShowModalEdit(true)}} className="music__card__left__top__controls__edit__btn"
-                    title={langEn ? 'Edit' : 'Редактировать'}><EditIcon fontSize=""/>
+                    title={langEn ? 'Edit' : 'Редактировать'}><EditIcon fontSize="small"/>
                   </button>
                   
                   {showModalEdit && (
@@ -270,7 +278,7 @@ const deleteMusicCard = async () => {
                   )}
                   
                     <span className="music__card__left__top__controls__delete__icon"
-                      onClick={()=>{setShowModalDelete(true)}} title="Delete"><DeleteOutlineIcon fontSize=""/>
+                      onClick={()=>{setShowModalDelete(true)}} title="Delete"><DeleteOutlineIcon fontSize="small"/>
                     </span>
                   
                     {showModalDelete &&
@@ -306,15 +314,7 @@ const deleteMusicCard = async () => {
 
 
             <div  className="music__card__left__player">
-              {!isPlaying ? (
-                <button  className="music__card__left__player__btn" onClick={()=>{playingButton()}}>
-                    <PlayArrowIcon fontSize=""/>
-                </button>
-              ) : (
-                <button  className="music__card__left__player__btn" onClick={()=>{playingButton()}}>
-                    <PauseIcon fontSize=""/>
-                </button>
-              )}
+              
 
             <div className="music__card__left__player__running__wrapper">
               <div className="music__card__left__player__running__time">
@@ -329,16 +329,27 @@ const deleteMusicCard = async () => {
                     {time.min}:{time.sec}
                   </span>
               </div>
-              <input
-                type="range"
-                min="0"
-                max={duration / 1000}
-                default="0"
-                value={seconds}
-                className="music_page_player_range_timeline"
-                onChange={(e) => {
-                  sound.seek([e.target.value]);
-                }}/>
+              <div className="music__card__left__player__btn__input">
+                {!isPlaying ? (
+                  <button  className="music__card__left__player__btn" onClick={()=>{playingButton()}}>
+                      <PlayArrowIcon fontSize=""/>
+                  </button>
+                ) : (
+                  <button  className="music__card__left__player__btn" onClick={()=>{playingButton()}}>
+                      <PauseIcon fontSize=""/>
+                  </button>
+                )}
+                <input
+                  type="range"
+                  min="0"
+                  max={duration / 1000}
+                  default="0"
+                  value={seconds}
+                  className="music_page_player_range_timeline"
+                  onChange={(e) => {
+                    sound.seek([e.target.value]);
+                  }}/>
+              </div>
           </div>
         </div> 
       </div>

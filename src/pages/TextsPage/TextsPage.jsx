@@ -20,6 +20,8 @@ const [pagesNumber, setPagesNumber] = useState();
 const [sortWay, setSortWay] = useState('desc');
 const [activeSort, setActiveSort] = useState(true);
 const [disButton, setDisButton] = useState(false)
+const [showPagination, setShowPagination] = useState(false)
+
 
 const navigate = useNavigate();
 
@@ -32,7 +34,12 @@ const navigate = useNavigate();
       navigate(`/texts?page=${pageQuery}`)
       })
     }
-  }, [searchQuery, pageQuery])
+    else { 
+      navigate(`/texts?search=${searchQuery}`)
+      setShowPagination(false)
+    }
+    
+      }, [searchQuery, pageQuery])
 
 useEffect(()=>{
   if (sortWay === 'desc')
@@ -54,7 +61,8 @@ const handleSearchInput = async (e) => {
 
   if(e.key === 'Enter' && searchQuery !== undefined) {
     await searchText(searchQuery).then((res)=>{
-    setTexts(res)
+    setTexts(res);
+    navigate
     })
   }
 }
@@ -66,7 +74,8 @@ const handleSearchInputChange = (event) => {
 const onSearchClick = async () => {
   if (searchQuery !== '')
   await searchText(searchQuery).then((res)=>{
-    setTexts(res)
+    setTexts(res);
+    navigate(`/texts?search=${searchQuery}`)
     });
   else  {
     document.getElementById('search_input').focus()
@@ -124,6 +133,12 @@ useEffect(()=>{
   else setDisButton(false)
 }, [currentUser])
 
+useEffect(()=>{
+  if (!searchQuery && pagesNumber > 1)
+  setShowPagination(true);
+  else setShowPagination(false)
+}, [searchQuery, showPagination])
+
 
 
   return (
@@ -172,10 +187,10 @@ useEffect(()=>{
       :
       <span className='texts__page__not__found'>{langEn ? "Sorry, no texts found" : "К сожалению, ничего не найдено"}</span>
     }
-    {pagesNumber > 1 && !searchQuery ?
+    {showPagination ?
     <div className='texts__page__pagination__container'>
       <div className='texts__page__pagination__card' onClick={()=>{handleBackArrowClick()}}><ArrowBackIosIcon fontSize=''/></div>
-      {pages.map((currentPage, i)=>{
+      {pages?.map((currentPage, i)=>{
 
         return (<PaginationBoard
         currentPage={currentPage}

@@ -54,7 +54,7 @@ export const AboutPage = ({langEn}) => {
       <div className="about__page__techincal__info__grid">
         <div className="about__page__techincal__info__wrapper">
           <h3>Фронтенд</h3>
-          <p>Фронтенд был создан в <b>React JS v18</b> и собран с помощью Create-React-App</p>
+          <p>Фронтенд был создан в <b>React JS v18</b> и собран с помощью Create-React-App. Дизайн был разработан создателем сайта.</p>
           <ul>Были использованы следующие дополнительные пакеты и библиотеки:
             <li>React-Router-DOM</li>
             <li>React Hook Form</li>
@@ -101,18 +101,8 @@ export const AboutPage = ({langEn}) => {
         <div className='home_page_biography_block'>
           <p>I am 33 years old, from Russia, Vologda</p>
           <p>My major at university was French and English, but now I would like to change my job to become a professional web-developer.</p>
-          <p>This website shows my current skills in that field.</p>
+          <p>This project demonstrates my current front-end skills: HTML, CSS and JS based on the React JS library, as well as working with the backend in the Node JS environment.</p>
       </div> 
-      <p>In general, I'm into a lot of other things, apart from web-development:</p> 
-      <ul className='home_page_hobbies_list'>
-        <li>music (composing, playing the flute, the piano)</li>
-        <li>3d graphics (3ds max)</li>
-        <li>linguistics (European languages)</li>
-        <li>literature (I write surrealistic short stories)</li>
-        <li>science (Biology, Chemistry, Physics, Astronomy, medicine)</li>
-        <li>cooking (all kinds of!)</li>
-        <li>fitness</li>
-      </ul>
       
       <p>Contacts: </p>
       <ul className="about__page__contacts__container">
@@ -127,26 +117,17 @@ export const AboutPage = ({langEn}) => {
 <section>
 <h1>О создателе проекта</h1>
  
-    <span>Привет! Меня зовут Андрей Дьяков</span>
+    <span>Меня зовут Андрей Дьяков.</span>
     <img  className='about__page__img' src={MyPhoto}/>
  
 
         <div className='home_page_biography_block'>
-          <p>Мне 33 года, я живу в Вологде, РФ</p>
-          <p>Мое основное образование - лингвистика (французский и английский языки), но в данный момент я бы хотел сменить работу и стать профессиональным веб-разработчиком</p>
-          <p>Данный проект демонстрирует мои навыки в данной области на данный момент.</p>
+          <p>Мое основное образование - лингвистика (французский и английский языки), но в данный момент я бы хотел сменить работу и стать профессиональным веб-разработчиком.</p>
+          <p>Данный проект демонстрирует мои текущие навыки во фронтенде: HTML, CSS и JS на базе библиотеки React JS, - а также работы с бэкендом в среде Node JS.</p>
       </div> 
-      <p>В целом, кроме веб-разработки, я увлекаюсь многим:</p> 
-      <ul className='home_page_hobbies_list'>
-      <li>3d графика(3ds max)</li>
-        <li>лингвистика (европейские языки)</li>
-        <li>литература (пишу сюрреалистические рассказы)</li>
-        <li>естествознание (биология, химия, физика, астрономия, медицина)</li>
-        <li>кулинария (все виды!)</li>
-        <li>фитнес</li>
-      </ul>
       
-      <p>Контакты: </p>
+      
+      <p>Связаться со мной: </p>
       <ul className="about__page__contacts__container">
         <li>
           <Link to='https://t.me/nebelschwimmer'>Telegram<TelegramIcon/></Link>
