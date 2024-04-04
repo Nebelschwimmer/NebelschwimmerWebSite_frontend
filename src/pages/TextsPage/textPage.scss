@@ -10,7 +10,7 @@
   padding-left: clamp(0.5rem, -0.857rem + 5.714vw, 6rem);
   padding-bottom: 2rem;
   padding-right: clamp(0.5rem, -0.857rem + 5.714vw, 6rem);;
-
+  min-height: 68vh;
   &__pagination__container {
     display: flex;
     justify-content: center;
@@ -57,9 +57,10 @@
       display: flex;
       gap: 5px;
       width: 100%;
+      align-items: center;
       span {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
       }
     }
     
@@ -132,7 +133,7 @@
       } 
     }
       &::placeholder {
-        font-size: clamp(0.75rem, 0.688rem + 0.26vw, 1rem);
+        // font-size: clamp(0.75rem, 0.688rem + 0.26vw, 1rem);
         padding-left: 10px;
       }
       &__search__icon {
@@ -177,6 +178,10 @@
 }
 
 @media screen and (max-width: 480px) {
+  .texts__page {
+    min-height: 100vh;
+    border-radius: 0;
+  }
   .texts__page__input__container {
     width: calc(100%/2);
   }

@@ -67,7 +67,7 @@
       color: darkorange;
       width: 100%;
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap:2rem;
         div {
           width: fit-content;
@@ -108,14 +108,14 @@
     &__lower {
       display: flex;
       justify-content: space-between;
-      width: 98.5%;
-      padding: 0 10px 0 10px;
+      width: 96.5%;
       border-radius: 10px;
       align-items: center;
       gap:15px;
       box-shadow: var(--box-shadow-gl);
-      padding-bottom: 1rem;
-      padding-top: 1rem;
+      padding: 10px;
+      
+
       &__timestamps{
         display: flex;
         gap:10px;
@@ -134,27 +134,36 @@
         display: flex;
         align-items: center;
         justify-content: space-around;
-        gap:1rem;
+        gap:10px;
         }
         &__wrapper {
           display: flex;
           align-items: center;
-          gap:10px
+          gap:5px;
+          font-size: small;
+          span {
+            display: flex;
+            align-items: center;
+          }
         }
       }
       
       &__ctrl__btn__container {
         display: flex;
         justify-content: space-between;
-        gap:5px;
+        gap:10px;
+        
         }
       &__ctrl__btn {
         background-color: transparent;
+        display: flex;
+        align-items: flex-end;
         color: white;
         border: none;
         opacity: 0.5;
         cursor: pointer;
-        padding: 3px;
+        padding: 0;
+        font-size: medium;
         transition: 0.2s ease-in-out;  
           &:hover {
             color: darkorange;
@@ -169,11 +178,15 @@
         border: none;
         opacity: 1;
         cursor: pointer;
-        padding: 3px;
-        transition: 0.2s ease-in-out;  
+        padding: 0;
+        transition: 0.2s ease-in-out;
+        display: flex;
+        align-items: flex-end;  
       }
       &__like__btn__Active {
         color: darkorange;
+        display: flex;
+        align-items: flex-end;
       }
       }
     }
@@ -319,7 +332,7 @@
   .single__text__main__container {
     padding: 10px;
     border-radius: 0;
-    // height: 80vh;
+    width: 95%;
   }
   .single__text__comments__section {
     width: 90%;
@@ -338,7 +351,8 @@
     font-size: 8px;
   }
   .single__text__top__lower__timestamps {
-    flex-direction: column;
+    
+    width: 100%;
     gap:5px;
   }
   .single__text__top__titile__container {
@@ -347,7 +361,7 @@
     align-items: flex-start;
   }
   .single__text__top__lower {
-    width: fit-content;
+    width: 95%;
     flex-direction: column;
     align-items: flex-start;
   }

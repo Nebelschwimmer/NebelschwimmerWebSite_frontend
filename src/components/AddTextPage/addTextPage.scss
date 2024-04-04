@@ -64,6 +64,7 @@
     display: inline-block;
     width: 100%;
     text-align: center;
+    text-decoration: underline;
     margin-top: 5rem;
     color: darkorange;
     cursor: pointer;
@@ -76,9 +77,9 @@
   }
   &__sumbit_btn{
     background-color: var(--btn-color);
-    padding: 9px;
+    padding: 11px;
     border-radius: 5px;
-    font-size: clamp(0.875rem, 0.793rem + 0.272vw, 1.125rem);
+    // font-size: clamp(0.75rem, 1.25rem + -0.417vw, 1.125rem);
     text-align: center;
     width: auto;
     border: none;
@@ -89,7 +90,7 @@
         box-shadow: var(--box-shadow-gl);
     }
       &__Disabled {
-        background-color: rgb(34, 34, 34);
+        background-color: rgb(38, 23, 39);
         &:hover{
           color: white;
           box-shadow: none;
@@ -111,7 +112,14 @@ small {
 }
 
 @media screen and (max-width: 480px) {
+  .add__text {
+    min-height: 100vh;
+  }
   .add__text__input {
     width: 80%;
+    font-size: 14px;
+  }
+  .add__text__sumbit_btn {
+    padding: 9px;
   }
 }

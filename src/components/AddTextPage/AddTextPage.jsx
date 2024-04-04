@@ -6,11 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Backbutton } from '../BackButton/BackButton';
 
-export const AddTextPage = ({langEn, setPageQuery, currentUser, texts, setTexts}) => {
+export const AddTextPage = ({langEn, pagesNumber, pageQuery, setPageQuery, currentUser, texts, setTexts}) => {
 const navigate = useNavigate()
 const [printAdded, setPrintAdded] = useState(false)
 const [checked, setChecked] = useState(false);
 const [showSecondTextarea, setShowSecondTextarea] = useState(true);
+
+
+
 
 const {
   register,
@@ -25,7 +28,6 @@ const author_id = currentUser.uid
         .then(res => {
           setTexts([...texts, res]);
           setPrintAdded(true)
-          console.log(res)
         }
       )
     }
@@ -43,7 +45,7 @@ const author_id = currentUser.uid
   },[checked, showSecondTextarea])
 
   const nameEnRegister = register("name_en", {
-    required: 'Text\'s name required!',
+
     maxLength: {
       value:50,
       message:
@@ -52,7 +54,7 @@ const author_id = currentUser.uid
     }
   );
   const authorEnRegister = register("author_en", {
-    required: 'Author\'s name required!',
+ 
     maxLength: {
       value:50,
       message:
@@ -62,7 +64,7 @@ const author_id = currentUser.uid
   );
 
   const authorRuRegister = register("author_ru", {
-    required: 'Укажите имя автора!',
+  
     maxLength: {
       value:50,
       message:
@@ -72,7 +74,7 @@ const author_id = currentUser.uid
   );
 
   const nameRuRegister = register("name_ru", {
-    required: 'Название текста обязательно!',
+    
     maxLength: {
       value:50,
       message:
@@ -80,14 +82,16 @@ const author_id = currentUser.uid
       }
     }
   );
-  
+
+
   useEffect(()=>{
     if (printAdded)
     setTimeout(()=>{
-      setPageQuery(1)
-      navigate('/texts?page=1')
+     setPrintAdded(true);
+     navigate('/texts?page=1')
     }, 2000)
-  }, [printAdded])
+  }, [printAdded, texts, pagesNumber, pageQuery])
+
 
   return (
     <div className='add__text'>
@@ -97,7 +101,7 @@ const author_id = currentUser.uid
         {currentUser!== '' ?
         <form className='add__text__container' onSubmit={handleSubmit(SendNewText)}>
           <h1>{langEn ? 'Add Text' : 'Добавить текст'}</h1>
-          <span>{langEn ? 'Your text must not violate copyright.' : 'Файл не должен нарушать авторских прав.'}</span>
+          <span>{langEn ? 'Your text must not violate copyright and exceed 20 000 characters' : 'Текст не должен нарушать авторских прав и не превышать 20 000 символов'}</span>
           <label className='add__text__label'>{langEn ? '2 languages' : '2 языка'}
               <input type='checkbox' checked={checked} onChange={handleCheckChange}></input>
             </label>
@@ -108,7 +112,7 @@ const author_id = currentUser.uid
               {...nameEnRegister}
               placeholder={langEn ? 'Text Name (English)' : 'Название текста (англ.)'}
             />
-            { errors?.name_en  &&
+            { errors?.name_ru  &&
               <small >{errors.name_en?.message}</small>
               }
             <input
@@ -117,17 +121,19 @@ const author_id = currentUser.uid
               {...authorEnRegister}
               placeholder={langEn ? 'Author (English)' : 'Автор (англ.)'}
             />
-              {errors?.author_en  &&
+              {errors?.author_ru  &&
               <small >{errors.author_en?.message}</small>}
           </div>
         
             <div className='add__text__textarea__wrapper'> 
-              <TextareaAutosize 
-              placeholder={langEn ? 'Place your English text here' : 'Разместите текст на английском здесь'}
-              className='add__text__textarea'
-              {...register("content_en")}
-              >
-              </TextareaAutosize>
+                <TextareaAutosize
+                  placeholder={langEn ? 'Place your Russian text here' : 'Разместите текст на русском здесь'}
+                  className='add__text__textarea'
+                  {...register("content_ru")}
+                  >
+                  </TextareaAutosize>
+              
+            
             </div>
             { showSecondTextarea &&
               <div className='add__text__textarea__wrapper'>
@@ -138,7 +144,7 @@ const author_id = currentUser.uid
                     {...nameRuRegister}
                     placeholder={langEn ? 'Text Name (Russian)' : 'Название текста (русс.)'}
                   />
-                    {errors?.name_ru  &&
+                    {errors?.name_en  &&
                       <small >{errors.name_ru?.message}</small>}
               
               
@@ -149,14 +155,14 @@ const author_id = currentUser.uid
                     placeholder={langEn ? 'Author (Russian)' : 'Автор (русс.)'}
                   />
                       {errors?.author_ru  &&
-                        <small >{errors.author_ru?.message}</small>}
-      </div>
-                  <TextareaAutosize
-                  placeholder={langEn ? 'Place your Russian text here' : 'Разместите текст на русском здесь'}
-                  className='add__text__textarea'
-                  {...register("content_ru")}
-                  >
-                  </TextareaAutosize>
+                        <small >{errors.author_en?.message}</small>}
+              </div>
+              <TextareaAutosize 
+              placeholder={langEn ? 'Place your English text here' : 'Разместите текст на английском здесь'}
+              className='add__text__textarea'
+              {...register("content_en")}
+              >
+              </TextareaAutosize>
               </div>
           }
           

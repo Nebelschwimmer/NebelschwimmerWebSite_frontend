@@ -1,3 +1,8 @@
+.about__main {
+  height: fit-content;
+}
+
+
 .about__page{
   &__techincal__info__grid {
     display: grid;
@@ -5,10 +10,10 @@
 
   }
   &__img {
-    width: 250px;
-    height: 420px;
+    width: 150px;
+    height: 250px;
     object-fit: cover;
-    border-radius: 10px;
+    
     float: left;
     padding-right:2rem;
     padding-bottom: 2rem;
@@ -53,6 +58,8 @@ h2 {
       width: 140px;
       height: 260px;
       object-fit: cover;
+      padding-right: 10px;
+      padding-bottom: 10px;
     }
     &__greeting {
       display: flex;

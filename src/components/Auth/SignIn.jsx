@@ -169,14 +169,16 @@ const sendSignInData = async (data) => {
               {/* Кнопка отправки */}
               <div className='auth_sign_btn_wrapper'>
                 <button type="submit" className='auth_sign_btn'>{langEn ? 'Sign In' : "Войти"}</button>
-                {showSpinner &&
-                  <span className='spinner_container'><Spinner/></span>
-                  }
               </div>
             </form> 
           {/* Кнопки "Войти с гугл" и "Сброс пароля" */}
-          <button className='auth_sign_btn' onClick={()=>{onSignInWithGoogle()}}>{langEn ? 'Sign in with Google Account' : "Войти с аккаунта Google" } <GoogleIcon fontSize='medium'/></button>
+          <button className='auth_sign_btn' onClick={()=>{onSignInWithGoogle()}}>{langEn ? 'Continue with Google ' : "Войти с Google" } <GoogleIcon fontSize='medium'/></button>
           <button onClick={()=>{navigate('/password-reset')}} className='auth_sign_btn'>{langEn ? 'Forgot My Password' : "Забыли пароль?" }</button>
+          <div className='spinner_container'>
+          {showSpinner &&
+                      <span><Spinner/></span>
+                    }
+        </div>
         </div>
     
       </div>

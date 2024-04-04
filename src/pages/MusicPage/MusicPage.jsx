@@ -65,7 +65,7 @@ useEffect(()=>{
       navigate(`/music?page=${pageQuery}`)
     })
   }
-}, [searchMusicQuery, pageQuery])
+}, [searchMusicQuery, pageQuery, pagesNumber])
 
 const handleBackArrowClick = () => {
   if (pageQuery > 1)
@@ -113,7 +113,13 @@ useEffect(()=>{
   if (!searchMusicQuery && pagesNumber > 1)
   setShowPagination(true);
   else setShowPagination(false)
-}, [searchMusicQuery, showPagination])
+}, [searchMusicQuery, pagesNumber])
+
+// useEffect(()=>{
+//   if (trackList.length > 5)
+//   setShowPagination(true);
+// else setShowPagination(false)
+// }, [trackList])
 
 
   return (
@@ -128,7 +134,7 @@ useEffect(()=>{
         {langEn ? 'Add New Track ' : "Добавить музыку "} </button> 
       
       </div>
-      
+      {trackList.length !== 0 &&
       <div className='texts__page__input__container'>
               <input 
               id='search_input'
@@ -141,12 +147,16 @@ useEffect(()=>{
               </input>
               <span onClick={()=>{onSearchClick()}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon/></span>
             </div>
+      }
             
       {trackList.length !== 0 ? 
       < MusicList user_id={user_id}  showModal={showModal} setShowModal={setShowModal} trackList={trackList} 
         setTrackList={setTrackList} langEn={langEn}  currentUser={currentUser}/>
       :
-      <span className='music__page__empty'>{langEn ? 'Tracklist not found' : 'Треки не найдены'}</span>
+      <div className='not__found'>
+        <span className='music__page__empty'>{langEn ? 'Tracklist not found' : 'Треки не найдены'}</span>
+        <img width='200px' height='200px' src="https://cdn0.iconfinder.com/data/icons/file-and-document-41/100/file_document_doc-23-512.png"/>
+      </div>
       }
       {showPagination ?
         <div className='texts__page__pagination__container'>

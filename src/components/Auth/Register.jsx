@@ -236,15 +236,17 @@ const sendSignUpData = async (data) => {
               <div className='auth_sign_btn_wrapper'>
                 {/* Кнопка для отправки данных */}
                   <button type="submit" className='auth_sign_btn'>{langEn ? 'Create Account' : 'Создать аккаунт'}</button>
-                  {showSpinner &&
-                    <span className='spinner_container'><Spinner/></span>
-                  }
               </div>
           </form> 
         
           {/* Кнопка для входа по аккаунту Гугл */}
           <button className='auth_sign_btn' onClick={()=>{onSignInWithGoogle()}}>{langEn ? 'Sign in with Google' : 'Войти с Google'}<GoogleIcon fontSize='medium'/></button>
           
+        <div className='spinner_container'>
+          {showSpinner &&
+                      <span><Spinner/></span>
+                    }
+        </div>
         </div>
       </div>
     </div>

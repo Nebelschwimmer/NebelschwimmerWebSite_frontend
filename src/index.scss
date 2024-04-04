@@ -36,6 +36,7 @@ font-size: clamp(0.875rem, 0.834rem + 0.136vw, 1rem);
 padding-left: clamp(0.313rem, -0.425rem + 3.688vw, 4rem);
 margin: 0 auto;
 min-height: 68vh;
+
 margin-top: 2rem;
 padding-top: 2rem;  
 border-radius: 30px;
@@ -46,7 +47,7 @@ h1, h2, h3, h4 {
   font-weight: 700; 
   text-align: center;
   
-  font-size: clamp(1.25rem, 1.087rem + 0.544vw, 1.75rem);
+  // font-size: clamp(1.25rem, 1.087rem + 0.544vw, 1.75rem);
 }
 
 

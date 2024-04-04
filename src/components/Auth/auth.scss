@@ -4,11 +4,11 @@
   flex-direction: column;
   align-items: center;
   padding:clamp(12px, 1vw, 42px);
-  width: clamp(346px, 36vw, 900px);
+  // width: clamp(346px, 36vw, 900px);
   min-width: 40%;
   margin-top: 20px;
   border-radius: 15px;
-
+  
   box-shadow: 0 0 12px 10px rgba(14, 0, 14, 0.3);
 }
 .auth_backbtn {
@@ -48,9 +48,9 @@
   color: white;
 }
 .auth_sign_btn{
-  max-width: 50%;
-  min-width: 30%;
-  width: 50%;
+
+  width: 55%;
+  
   margin-top: 20px;
   height: clamp(2rem, 1.753rem + 1.039vw, 3rem);
   display: flex;
@@ -61,16 +61,16 @@
   border-radius: 10px;
   font-weight: 600;
   transition: 0.2s ease-in-out;
-  box-shadow: black 1px 1px 1px 1px;
+  
   border: none;
   background-color: var(--btn-color);
   color: white;
-  font-size: clamp(0.625rem, 0.532rem + 0.39vw, 1rem);
+ font-size: 14px;
  
 }
 .auth_sign_btn:hover{
 color: darkorange;
-
+box-shadow: black 1px 1px 1px 1px;
 }
 .auth_top{
   display: flex;
@@ -109,17 +109,13 @@ color: darkorange;
   padding:clamp(12px, 1.5vw, 42px);
   margin-bottom: 20px;
   justify-content: space-around;
-  box-shadow: 0 0 12px 10px rgba(14, 0, 14, 0.3);
   border-radius: 10px;
-  width: 70%;
-
 }
 .auth_user_avatar{
-  width: clamp(70px, 10vw, 197px);
-  height: clamp(70px, 10vw, 197px);
-  min-height: 20px;
+  width: 160px;
+  height: 160px;
   float: left;
-  border-radius: 10px;
+  border-radius: 100%;
   object-fit: cover;
 }
 
@@ -228,11 +224,13 @@ h2 {margin: 0;
 
 }
 
-.spinner_container{
-  position: absolute;
-  right:35%;
-  bottom:34.5%;
-  
+
+.spinner_container {
+  height: 75px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .inputs__container{
@@ -247,7 +245,7 @@ h2 {margin: 0;
 }
 label{
   width: clamp(6.25rem, 5.633rem + 2.597vw, 8.75rem);
-  font-size: clamp(0.625rem, 0.532rem + 0.39vw, 1rem);
+  font-size: clamp(0.625rem, 0.563rem + 0.26vw, 0.875rem);
 }
 
 .single__input__wrapper {
@@ -341,18 +339,23 @@ label{
     width: fit-content;
     height: fit-content
   }
-  .errors__container {
-    height: 10px;
-  }
+  // .errors__container {
+  //   height: 20px;
+  // }
   .auth_user_info {
     width: 90%;
   }
 
-  .spinner_container{
-    height: 70%;
-    width: fit-content; 
-      right:15%;
-      bottom:-36%;
-    
+  .auth_sign_btn{
+  width: 70%;
+  font-size: 12px;
+  }
+
+  .auth_user_avatar {
+    width: 120px;
+    height: 120px;
+  }
+  .auth_container{
+    height: 100vh;
   }
 }

@@ -12,11 +12,11 @@ import cn from 'classnames'
 
 
 
-export const TextsPage = ({langEn, pageQuery, setPageQuery, currentUser, texts, setTexts}) => {
+export const TextsPage = ({langEn, pageQuery, pagesNumber, setPagesNumber, setPageQuery, currentUser, texts, setTexts}) => {
 
 const [searchQuery, setSearchQuery] = useState(undefined);
 const [pages, setPages] = useState([]);
-const [pagesNumber, setPagesNumber] = useState();
+
 const [sortWay, setSortWay] = useState('desc');
 const [activeSort, setActiveSort] = useState(true);
 const [disButton, setDisButton] = useState(false)
@@ -139,7 +139,7 @@ useEffect(()=>{
   else setShowPagination(false)
 }, [searchQuery, showPagination])
 
-
+// console.log(texts)
 
   return (
     <div className='texts__page'>
@@ -185,7 +185,10 @@ useEffect(()=>{
         
       </div>
       :
-      <span className='texts__page__not__found'>{langEn ? "Sorry, no texts found" : "К сожалению, ничего не найдено"}</span>
+      <div className='not__found'>
+      <span className='music__page__empty'>{langEn ? 'Sorry, nothing found' : 'К сожалению, ничего не найдено'}</span>
+      <img width='200px' height='200px' src="https://cdn0.iconfinder.com/data/icons/file-and-document-41/100/file_document_doc-23-512.png"/>
+    </div>
     }
     {showPagination ?
     <div className='texts__page__pagination__container'>

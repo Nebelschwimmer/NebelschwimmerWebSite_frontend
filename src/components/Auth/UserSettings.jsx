@@ -154,9 +154,9 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
               {/* Отображаем блок с инфо о пользователе и кнопками только если введено имя */}
               {showProfileInfo && 
               <div className='auth_user_info'>
-                <div>
+                
                   <img className='auth_user_avatar' src={avatar}/>
-                </div>
+                
                 <div className='auth_user_info_name_wrapper'>
                   <div className='auth_user_info_name_top'>
                     <span className='auth_user_info_name'>{currentUser.displayName}</span>
@@ -255,11 +255,12 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
                 {/* Кнопка "Отправить" + спиннер */}
                 <div className='auth_sign_btn_wrapper'>
                   <button type="submit" className='auth_sign_btn'>{ langEn ? "Send" : 'Отправить'}</button>
-                  {/* Спиннер */}
-                  {showSpinner &&
-                    <span className='spinner_container'><Spinner/></span>
-                  }
                 </div> 
+                  <div className='spinner_container'>
+                    {showSpinner &&
+                      <span><Spinner/></span>
+                    }
+                  </div>
             </form> 
           </div>
       </div>

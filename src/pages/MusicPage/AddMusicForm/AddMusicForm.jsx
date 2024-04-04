@@ -73,7 +73,7 @@ const onSubmitData = async (data) => {
 
   try {
     await addNewTrack(formData).then((newTrackList)=> {
-      setTrackList(newTrackList);
+      setTrackList(()=>([...newTrackList]));
       setShowSpinner(true)
     })
   }
@@ -110,7 +110,7 @@ const audioFileRegister = register("file__audio", {
                   <span>
                     {langEn ? 'Choose audio file ' : 'Выберите аудио файл'}<span className='auth_req'> *</span></span>
                   <span>{langEn ? 'Your file must be in .mp3 extension, must not exceed 20 MB and violate copyright.' 
-                  : 'Ваш файл должен быть в формате mp3 и не превышать размером 20 Мб и не нарушать авторские права.'}</span>
+                  : 'Ваш файл должен быть в формате mp3, не превышать размером 20 Мб и не нарушать авторские права.'}</span>
                   <span>{langEn ? 'Please, make sure your file contains the author\'s name' : 'Убедитесь, что ваш файл содержит информацию об авторе.'}</span>
                 </div>
                 <div className="add__music__file__input__bottom">

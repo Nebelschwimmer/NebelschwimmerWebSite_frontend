@@ -83,8 +83,8 @@ export const ResetPassword = ({langEn}) => {
                       <small className='auth_small'>{errors.email?.message}</small>
                     }
                 <div style={{textAlign: 'center'}}>
-                  <span>{langEn ? 'A reset link will be sent to your e-mail box.' : 'Письмо со ссылкой для сброса пароля будет отправлено на указанный электронный ящик. ' }</span>
-                  <span>{langEn ? 'Check it, then sign in with the new password' : 'Проверьте его, затем войдите с новым паролем' }</span>
+                  <p style={{fontSize:'12px'}}>{langEn ? 'A reset link will be sent to your e-mail box.' : 'Письмо для сброса пароля будет отправлено на указанный электронный ящик. ' }</p>
+                  <p style={{fontSize:'12px'}}>{langEn ? 'Check it, then sign in with the new password' : 'Проверьте его, затем войдите с новым паролем' }</p>
                   
                 </div>
                 

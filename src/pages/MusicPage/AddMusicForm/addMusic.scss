@@ -1,10 +1,10 @@
 .add__music {
-  width: 80%;
+  
   margin: 0 auto;
 
   &__container {
     font-size: clamp(10px, 1.5vw, 16px);
-    width: 100%;
+    
     
   }
   &__file__input  {
@@ -14,7 +14,7 @@
       display: flex;
       flex-direction: column;
       box-shadow: var(--box-shadow-gl);
-      width: 100%;
+      
       margin: 0 auto;
     }
     &__hidden{
@@ -41,7 +41,7 @@
 
     &__top {
       display: flex;
-      width: 50%;
+      
       flex-direction: column;
       padding: 1rem;
       gap:10px;
@@ -161,5 +161,8 @@
 @media screen and (max-width: 480px) {
   .add__music__container {
     width: 90%;
+  }
+  .add__music__file__input__bottom__file__info__wrapper {
+    gap:0;
   }
 }

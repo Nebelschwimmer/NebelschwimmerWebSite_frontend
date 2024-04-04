@@ -7,7 +7,7 @@ import { addTextToFavourites } from '../../../utils/api_texts';
 import { removeTextFromFavourites } from '../../../utils/api_texts';
 import { Spinner } from '../../../components/Spinner/Spinner';
 
-export const SingleTextPage = ({langEn, setLangEn, showModal, setShowModal, currentUser}) => {
+export const SingleTextPage = ({langEn, texts, pagesNumber, setTexts, setPageQuery, setLangEn, showModal, setShowModal, currentUser}) => {
 
 const [singleText, setSingleText] = useState(undefined) 
 const id = useParams()
@@ -51,8 +51,12 @@ const handleTextLike = async (textID, user_id) =>{
           singleText={singleText}
           setLangEn={setLangEn}
           key={textID}
+          setTexts={setTexts}
           setSingleText={setSingleText}
           langEn={langEn}
+          pagesNumber={pagesNumber}
+          texts={texts}
+          setPageQuery={setPageQuery}
           showModal={showModal}
           setShowModal={setShowModal}
           currentUser={currentUser}

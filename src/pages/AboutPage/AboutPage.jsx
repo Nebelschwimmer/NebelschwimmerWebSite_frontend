@@ -7,7 +7,7 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 export const AboutPage = ({langEn}) => {
 
  return (
-  <>
+  <div className="about__main">
   {langEn ? 
   <section className="about__page">
     
@@ -26,8 +26,6 @@ export const AboutPage = ({langEn}) => {
             <li>SASS</li>
             
           </ul>
-          <p>You can see the full code of the Frontend in my Github repository <Link style={{color: 'darkorange'}}
-              target="blank" to="https://github.com/Nebelschwimmer/NebelschwimmerWebSite_frontend">here</Link> </p>
         </div>
         
         <div className="about__page__techincal__info__wrapper">
@@ -40,10 +38,7 @@ export const AboutPage = ({langEn}) => {
             <li>Mongoose</li>
             <li>Nodemon</li>
             <li>Firebase Admin SDK</li>
-        
           </ul>
-          <p>You can see the full code of the Backend in my Github repository <Link style={{color: 'darkorange'}}
-              target="blank" to="https://github.com/Nebelschwimmer/NebelschwimmerWebSite_backend">here</Link> </p>
         </div>
       </div>
   </section>
@@ -64,8 +59,6 @@ export const AboutPage = ({langEn}) => {
             <li>SASS</li>
             
           </ul>
-          <p>Вы можете посмотреть полный код фронтенда в репозитории Github <Link style={{color: 'darkorange', textDecoration:'none'}}
-              target="blank" to="https://github.com/Nebelschwimmer/NebelschwimmerWebSite_frontend">здесь</Link> </p>
         </div>
         
         <div className="about__page__techincal__info__wrapper">
@@ -80,8 +73,6 @@ export const AboutPage = ({langEn}) => {
             <li>Firebase Admin SDK</li>
         
           </ul>
-          <p>Вы можете посмотреть полный код бэкенда в репозитории Github <Link style={{color: 'darkorange', textDecoration:'none'}}
-              target="blank" to="https://github.com/Nebelschwimmer/NebelschwimmerWebSite_backend">здесь</Link> </p>
         </div>
       </div>
   </section>
@@ -136,6 +127,6 @@ export const AboutPage = ({langEn}) => {
       </ul>
 </section> 
 }
-  </>
+  </div>
  ) 
 }

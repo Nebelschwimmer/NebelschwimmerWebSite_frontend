@@ -31,7 +31,7 @@ function App() {
   const [texts, setTexts] = useState([]);
 
   const [trackList, setTrackList] = useState([]);
-
+  const [pagesNumber, setPagesNumber] = useState();
   
 const [pageQuery, setPageQuery] = useState(1)
 
@@ -82,13 +82,13 @@ return (
 
       <Routes>
         <Route path='/' element={<HomePage langEn={langEn} currentUser={currentUser} setLangEn={setLangEn} />}></Route> 
-        <Route path='/texts/:textID' element={<SingleTextPage pageQuery={pageQuery}  currentUser={currentUser} 
-          setLangEn={setLangEn} showModal={showModal} setShowModal={setShowModal} texts={texts} setTexts={setTexts} langEn={langEn} />}> </Route> 
+        <Route path='/texts/:textID' element={<SingleTextPage setTexts={setTexts} pageQuery={pageQuery} setPageQuery={setPageQuery} pagesNumber={pagesNumber}  currentUser={currentUser} 
+          setLangEn={setLangEn} showModal={showModal} setShowModal={setShowModal} texts={texts}  langEn={langEn} />}> </Route> 
         <Route path='/music' element={<MusicPage showModal={showModal} setShowModal={setShowModal} trackList={trackList} setTrackList={setTrackList}  
         langEn={langEn} currentUser={currentUser}/>}></Route>
-        <Route path='/texts' element={<TextsPage currentUser={currentUser} pageQuery={pageQuery} setPageQuery={setPageQuery} showModal={showModal} 
+        <Route path='/texts' element={<TextsPage pagesNumber={pagesNumber} setPagesNumber={setPagesNumber} currentUser={currentUser} pageQuery={pageQuery} setPageQuery={setPageQuery} showModal={showModal} 
         setShowModal={setShowModal} langEn={langEn} texts={texts} setTexts={setTexts}/>}></Route>
-        <Route path='/texts/add-text' element={<AddTextPage currentUser={currentUser} texts={texts} setTexts={setTexts} langEn={langEn} showModal={showModal} setShowModal={setShowModal}/>}></Route> 
+        <Route path='/texts/add-text' element={<AddTextPage pageQuery={pageQuery} pagesNumber={pagesNumber} currentUser={currentUser} texts={texts} setTexts={setTexts} langEn={langEn} setPageQuery={setPageQuery} showModal={showModal} setShowModal={setShowModal}/>}></Route> 
         <Route path='/register' element={<Register langEn={langEn} currentUser={currentUser} setCurrentUser={setCurrentUser} signInWithGoogle={signInWithGoogle}/>}></Route>
         <Route path='/user-settings' element={<UserSettings langEn={langEn} showModal={showModal} setShowModal={setShowModal} onSignOut={onSignOut}  currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
         <Route path='/sign-in' element={<SignIn langEn={langEn} signInWithGoogle={signInWithGoogle}/>}></Route>

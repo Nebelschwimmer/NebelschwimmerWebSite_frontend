@@ -4,10 +4,10 @@ const onResponse = (res) => {
     : Promise.reject('Error');
 };
 
-const baseURL = '185.180.230.199:3020'
+const baseURL = 'surland.ru:3020'
 
 export const getTextsList = async (pageQuery) => {
-  return fetch(`http://${baseURL}/texts?page=${pageQuery}`, {
+  return fetch(`https://${baseURL}/texts?page=${pageQuery}`, {
     headers: {
     "Content-Type": "application/json"
     }
@@ -15,7 +15,7 @@ export const getTextsList = async (pageQuery) => {
   ).then((res) => onResponse(res));
 }
 export const searchText = async (searchQuery) => {
-  return fetch(`http://${baseURL}/texts?search=${searchQuery}`, {
+  return fetch(`https://${baseURL}/texts?search=${searchQuery}`, {
     headers: {
     "Content-Type": "application/json"
     }
@@ -23,7 +23,7 @@ export const searchText = async (searchQuery) => {
   ).then((res) => onResponse(res));
 }
 export const getTextByID = async (textID) => {
-  return fetch(`http://${baseURL}/texts/${textID}`, {
+  return fetch(`https://${baseURL}/texts/${textID}`, {
     headers: {
     "Content-Type": "application/json"
     }
@@ -31,8 +31,8 @@ export const getTextByID = async (textID) => {
   ).then((res) => onResponse(res));
 }
 export const addNewText = async (body, user_displayName, author_id) => {
-  console.log(author_id)
-  return fetch(`http://${baseURL}/texts/add`, {
+  
+  return fetch(`https://${baseURL}/texts/add`, {
     headers: {
     "Content-Type": "application/json"
     },
@@ -42,7 +42,7 @@ export const addNewText = async (body, user_displayName, author_id) => {
   ).then((res) => onResponse(res));
 }
 export const deleteTextFromItsPage = async (textID) => {
-  return fetch(`http://${baseURL}/texts/delete/${textID}`, {
+  return fetch(`https://${baseURL}/texts/delete/${textID}`, {
     headers: {
     "Content-Type": "application/json"
     },
@@ -51,7 +51,7 @@ export const deleteTextFromItsPage = async (textID) => {
   ).then((res) => onResponse(res));
 }
 export const updateEnTextById = async (textID, content) => {
-  return fetch(`http://${baseURL}/texts/update/en/${textID}`, {
+  return fetch(`https://${baseURL}/texts/update/en/${textID}`, {
     headers: {
     "Content-Type": "application/json"
     },
@@ -61,7 +61,7 @@ export const updateEnTextById = async (textID, content) => {
   ).then((res) => onResponse(res));
 }
 export const updateRuTextById = async (textID, content) => {
-    return fetch(`http://${baseURL}/texts/update/ru/${textID}`, {
+    return fetch(`https://${baseURL}/texts/update/ru/${textID}`, {
       headers: {
       "Content-Type": "application/json"
       },
@@ -81,7 +81,7 @@ export const updateTextNameEn = async (textID, name) => {
   ).then((res) => onResponse(res));
 }
 export const updateTextNameRu = async (textID, name) => {
-  return fetch(`http://${baseURL}/texts/update/name_ru/${textID}`, {
+  return fetch(`https://${baseURL}/texts/update/name_ru/${textID}`, {
     headers: {
     "Content-Type": "application/json"
     },
@@ -91,7 +91,7 @@ export const updateTextNameRu = async (textID, name) => {
   ).then((res) => onResponse(res));
 }
 export const addTextToFavourites =  (textID, user_id) => {
-  return fetch(`http://${baseURL}/texts/likes/add/${textID}`, {
+  return fetch(`https://${baseURL}/texts/likes/add/${textID}`, {
     headers: {
     "Content-Type": "application/json"
     },
@@ -101,7 +101,7 @@ export const addTextToFavourites =  (textID, user_id) => {
   ).then((res) => onResponse(res));
 }
 export const removeTextFromFavourites =  (textID, user_id) => {
-  return fetch(`http://${baseURL}/texts/likes/delete/${textID}`, {
+  return fetch(`https://${baseURL}/texts/likes/delete/${textID}`, {
     headers: {
     "Content-Type": "application/json"
     },
@@ -111,7 +111,7 @@ export const removeTextFromFavourites =  (textID, user_id) => {
   ).then((res) => onResponse(res));
 }
 export const addCommentToText =  (textID, userID, user_displayName, user_photoURL, comment_body) => {
-  return fetch(`http://${baseURL}/texts/comments/${textID}`, {
+  return fetch(`https://${baseURL}/texts/comments/${textID}`, {
     headers: {
     "Content-Type": "application/json"
     },
@@ -129,7 +129,7 @@ export const addCommentToText =  (textID, userID, user_displayName, user_photoUR
   ).then((res) => onResponse(res));
 }
 export const removeCommentFromTextByCommentId =  (textID, commentID) => {
-  return fetch(`http://${baseURL}/texts/comments/${textID}`, {
+  return fetch(`https://${baseURL}/texts/comments/${textID}`, {
     headers: {
     "Content-Type": "application/json"
     },
@@ -140,7 +140,7 @@ export const removeCommentFromTextByCommentId =  (textID, commentID) => {
 }
 
 export const getCommentAuthorInfoByID = (commentAuthorID) => {
-  return fetch(`http://${baseURL}/texts/comments/getAuthorName`, {
+  return fetch(`https://${baseURL}/texts/comments/getAuthorName`, {
     headers: {
       "Content-Type": "application/json"
     },
@@ -151,7 +151,7 @@ export const getCommentAuthorInfoByID = (commentAuthorID) => {
 }
 
 export const getPublisherInfoByID = (publisherID) => {
-  return fetch(`http://${baseURL}/texts/getPublisherInfo`, {
+  return fetch(`https://${baseURL}/texts/getPublisherInfo`, {
     headers: {
       "Content-Type": "application/json"
     },

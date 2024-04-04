@@ -20,7 +20,7 @@ import { updateTextNameEn } from '../../utils/api_texts';
 import { updateTextNameRu } from '../../utils/api_texts';
 import { getPublisherInfoByID } from '../../utils/api_texts';
 
-export const SingleText = ({singleText, langEn, pageQuery, setSingleText, showModal, setLangEn, setShowModal, currentUser, handleTextLike}) => {
+export const SingleText = ({singleText, langEn, setTexts, texts, pagesNumber, pageQuery, setSingleText, showModal, setLangEn, setShowModal, setPageQuery, currentUser, handleTextLike}) => {
 
 const navigate = useNavigate(); 
 
@@ -93,16 +93,20 @@ useEffect(()=>{
   }, [singleText, favText]);
 
 
+
 const onTextDelete = async (textID) => {
   try {
-  await deleteTextFromItsPage(textID);
-  navigate(`/texts?query=1`);
-  setShowModal(false)
+  await deleteTextFromItsPage(textID).then((newTexts)=>{
+    setTexts(()=>([...newTexts]));
+    setShowModal(false);
+    navigate(`/texts?page=1`)
+  });
   }
   catch(err) {
     console.log(err)
   }
 }
+
 
 useEffect(()=>{
   if (!langEn && contentRu === '')
@@ -360,7 +364,7 @@ const nameRuRegister = register("name_ru", {
               
               
               {showDeleteIcon && 
-              <div className='single__text__top__icons__wrapper'> {editName && <small onClick={()=>{setEditName(false)}}><CloseIcon fontSize=''/></small>}
+              <div className='single__text__top__icons__wrapper'> {editName && <span onClick={()=>{setEditName(false)}}><CloseIcon/></span>}
                 {!editName &&
                 <span title={langEn ? "Edit Name" : "Редактировать название"}
                   onClick={()=>{handleNameEditClick()}}><EditIcon fontSize='' />
@@ -392,14 +396,14 @@ const nameRuRegister = register("name_ru", {
               <span >Sign in to add text to favorites and comment it</span> : 
               <span>Войдите, чтобы ставить лайки и комментировать</span>}
             </Link>}
-            <button className={cn("single__text__top__lower__like__btn", { ["single__text__top__lower__like__btn__Active"]: favText })} onClick={()=> onTextLike()}>
-              <FavoriteIcon fontSize=''/>
+            <button title={langEn ? 'Add to favorites' : 'Мне нравится'} className={cn("single__text__top__lower__like__btn", { ["single__text__top__lower__like__btn__Active"]: favText })} onClick={()=> onTextLike()}>
+              <FavoriteIcon fontSize='small'/>
             </button>
             <span title={langEn ? 'Like it' : 'Нравится'}>{singleText.likes.length}</span>
           </div>
           <div className='single__text__top__lower__middle__wrapper'>
-            <span onClick={() => scrollRef.current.scrollIntoView() }>
-              <CommentIcon className='single__text__top__lower__like__btn' fontSize=''/>
+            <span title={langEn ? 'See comments' : 'Посмотреть комментарии'}  onClick={() => scrollRef.current.scrollIntoView() }>
+              <CommentIcon className='single__text__top__lower__like__btn' fontSize='small'/>
             </span>
             <span title={langEn ? 'Comments' : 'Комментарии'}>{singleText.comments.length}</span>
           </div>

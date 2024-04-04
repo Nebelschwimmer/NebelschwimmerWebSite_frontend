@@ -2,6 +2,7 @@
   background-color: var(--main-bg-color-op-main);
   border-radius:10px;
   padding: clamp(0.5rem, -0.117rem + 2.597vw, 3rem);
+  min-height: 68vh;
 }
 .music_page_title{
   color: darkorange;
@@ -51,9 +52,18 @@
   }
 }
 
+.not__found{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap:3rem;
+}
+
 @media screen and (max-width: 480px) {
   .music_page_container {
-    height: auto;
+    height: 100vh;
+    border-radius: 0;
     padding-bottom: 2rem;
   }
   .music_page_container_title_btn_wrapper {
