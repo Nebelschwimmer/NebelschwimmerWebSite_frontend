@@ -94,18 +94,18 @@ useEffect(()=>{
 
 
 
-const onTextDelete = async (textID) => {
-  try {
-  await deleteTextFromItsPage(textID).then((newTexts)=>{
-    setTexts(()=>([...newTexts]));
-    setShowModal(false);
-    navigate(`/texts?page=1`)
-  });
-  }
-  catch(err) {
-    console.log(err)
-  }
-}
+// const onTextDelete = async (textID) => {
+//   try {
+//   await deleteTextFromItsPage(textID).then((newTexts)=>{
+//     setTexts(()=>([...newTexts]));
+//     setShowModal(false);
+//     navigate(`/texts?page=1`)
+//   });
+//   }
+//   catch(err) {
+//     console.log(err)
+//   }
+// }
 
 
 useEffect(()=>{
@@ -411,8 +411,8 @@ const nameRuRegister = register("name_ru", {
         
         {showDeleteIcon &&
           <div className='single__text__top__lower__ctrl__btn__container'>
-            <button className='single__text__top__lower__ctrl__btn' title={langEn ? "Delete" : "Удалить"}  
-            onClick={()=>{setShowModal(true)}}> <DeleteForeverIcon fontSize='' /> </button>
+            {/* <button className='single__text__top__lower__ctrl__btn' title={langEn ? "Delete" : "Удалить"}  
+            onClick={()=>{setShowModal(true)}}> <DeleteForeverIcon fontSize='' /> </button> */}
             <button className='single__text__top__lower__ctrl__btn' title={langEn ? "Edit" : "Редактировать"}  
             onClick={()=>{setEditMode(true)}}><EditIcon fontSize='' /> </button>
           </div>

@@ -115,12 +115,8 @@ useEffect(()=>{
   else setShowPagination(false)
 }, [searchMusicQuery, pagesNumber])
 
-// useEffect(()=>{
-//   if (trackList.length > 5)
-//   setShowPagination(true);
-// else setShowPagination(false)
-// }, [trackList])
 
+console.log(pagesNumber)
 
   return (
     <div className='music_page_container'>

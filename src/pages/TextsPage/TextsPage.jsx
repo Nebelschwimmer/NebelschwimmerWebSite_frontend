@@ -137,9 +137,9 @@ useEffect(()=>{
   if (!searchQuery && pagesNumber > 1)
   setShowPagination(true);
   else setShowPagination(false)
-}, [searchQuery, showPagination])
+}, [searchQuery, pagesNumber])
 
-// console.log(texts)
+
 
   return (
     <div className='texts__page'>

@@ -3,7 +3,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
 import { useState, useEffect } from 'react';
 import { getPublisherInfoByID } from '../../utils/api_texts';
-
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 export const TextLink = ({link, langEn}) => {
 
   const options = { 
@@ -16,6 +16,9 @@ export const TextLink = ({link, langEn}) => {
     const [userInfo, setUserInfo] = useState({});
     const publisherID = link.publisher_id
   
+
+
+    
   useEffect(()=>{
     getPublisherInfoByID(publisherID).then(res => {
     if (res.message === 'Success')
@@ -29,9 +32,12 @@ export const TextLink = ({link, langEn}) => {
       <Link to={`/texts/${link._id}`} className='texts__page__text__info__container'>
                   
                   <div className='texts__page__text__main__info__wrapper'>
-                    <h4>{langEn ? link.name_en : link.name_ru}</h4>
+                    <div className='texts__page__text__main__info__top__wrapper'>
+                      <h4>{langEn ? link.name_en : link.name_ru}</h4>
+                      <button className='single__text__top__lower__ctrl__btn' title={langEn ? "Delete" : "Удалить"}
+                      onClick={()=>{setShowModal(true)}}> <DeleteForeverIcon fontSize='' /> </button>
+                    </div>
                     <div>
-                      {/* <em>{langEn ? 'Author' : "Автор"}</em> */}
                       <em>{langEn ? link.author_en : link.author_ru}</em>
                     </div>
                   </div>
