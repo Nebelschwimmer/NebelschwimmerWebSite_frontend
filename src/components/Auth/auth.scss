@@ -53,24 +53,25 @@
   
   margin-top: 20px;
   height: clamp(2rem, 1.753rem + 1.039vw, 3rem);
+  // background-color: var(--btn-color);
+  background: linear-gradient(25deg, rgba(255, 4, 255, 0.02) 0%, rgba(255, 0, 255, 0.1) 100%);
+  background-size: 500%;
+  padding: 11px;
+  border-radius: 5px;
+  background-clip: padding-box;
+  animation: blinking_btn 7s ease-in-out infinite alternate  ;
+  font-size: 14px;
+  gap:10px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  cursor: pointer;
-  gap: 10px;
-  border-radius: 10px;
-  font-weight: 600;
-  transition: 0.2s ease-in-out;
-  
+  align-items: center;
   border: none;
-  background-color: var(--btn-color);
   color: white;
- font-size: 14px;
- 
-}
-.auth_sign_btn:hover{
-color: darkorange;
-box-shadow: black 1px 1px 1px 1px;
+  cursor: pointer;
+    &:hover {
+      color:darkorange;
+      box-shadow: var(--box-shadow-gl);
+  }
 }
 .auth_top{
   display: flex;
