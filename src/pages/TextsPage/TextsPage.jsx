@@ -19,12 +19,12 @@ const [searchQuery, setSearchQuery] = useState(undefined);
 const [pages, setPages] = useState([]);
 const [disButton, setDisButton] = useState(false)
 const [showPagination, setShowPagination] = useState(false)
-
+const [searchRes, setSearchRes] = useState(false)
 
 const navigate = useNavigate();
 
 useEffect(()=>{ 
-  if (searchQuery === "" || searchQuery === undefined) {
+  if (searchQuery === "" || searchQuery === undefined || searchRes) {
   
     getTextsList(pageQuery).then((res) => {
     setTexts(()=>([...res.texts]));
@@ -32,18 +32,18 @@ useEffect(()=>{
     navigate(`/texts?page=${pageQuery}`)
     })
   }
-  // else { 
-  //   navigate(`/texts?search=${searchQuery}`)
-  //   setShowPagination(false)
-  // }
+  else { 
+    navigate(`/texts?search=${searchQuery}`)
+    setShowPagination(false)
+  }
   
-    }, [searchQuery, pageQuery, showPagination])
+    }, [searchQuery, pageQuery])
 
 
-      console.log(searchQuery === "" || searchQuery === undefined)
+
 
 useEffect(()=>{
- if (searchQuery === "" || searchQuery === undefined)
+ if (!searchQuery)
  setShowPagination(false)
 }, [searchQuery])
 
@@ -56,9 +56,10 @@ setPageQuery(st => st - 1)
 
 const handleSearchInput = async (e) => {
 
-  if(e.key === 'Enter' && searchQuery !== undefined) {
+  if(e.key === 'Enter' || searchQuery !== undefined) {
     await searchText(searchQuery).then((res)=>{
     setTexts(res);
+    setSearchRes(true)
     // navigate(`/texts?search=${searchQuery}`)
     })
   }
@@ -70,10 +71,14 @@ const handleSearchInputChange = (event) => {
 }
 
 const onSearchClick = async () => {
-  if (searchQuery !== '')
+  if (!searchQuery)
   await searchText(searchQuery).then((res)=>{
     setTexts(res);
-    // navigate(`/texts?search=${searchQuery}`)
+    if (res.length === 0) {
+      setSearchRes(true)
+    }
+    else setSearchRes(false);
+    navigate(`/texts?search=${searchQuery}`)
     });
   else  {
     document.getElementById('search_input').focus()
@@ -139,23 +144,21 @@ useEffect(()=>{
   else setDisButton(false)
 }, [currentUser])
 
+// useEffect(()=>{
+//   if (texts.length === 0 && searchQuery!== '')
+//   setShowPagination(false);
+//   else if (pagesNumber > 1 && searchQuery === '')
+//   setShowPagination(true);
+//   else  setShowPagination(false);
+// }, [ texts, searchQuery])
+
+
+
 useEffect(()=>{
-  if (texts.length === 0 && searchQuery!== '')
-  setShowPagination(false);
-  else if (pagesNumber > 1 && searchQuery === '')
+  if (!searchQuery && pagesNumber > 1)
   setShowPagination(true);
-  else  setShowPagination(false);
-}, [ texts, searchQuery])
-
-console.log(searchQuery)
-// const handleEmtpySearch = () => {
-//     // getTextsList(pageQuery).then((res) => {
-//     // setTexts(()=>([...res.texts]));
-//     // setPagesNumber(res.totalPages);
-//     navigate(`/texts?page=1`)
-// }
-
-
+  else setShowPagination(false)
+}, [searchQuery, pagesNumber])
 
 
 
@@ -204,10 +207,15 @@ console.log(searchQuery)
       </div>
       :
       <div className='not__found'>
-        <Spinner/>
-      {/* <span className='music__page__empty'>{langEn ? 'Sorry, nothing found' : 'К сожалению, ничего не найдено'}</span>
-      <img width='200px' height='200px' src="https://cdn0.iconfinder.com/data/icons/file-and-document-41/100/file_document_doc-23-512.png"/>
-      <button onClick={()=> handleEmtpySearch()} className="add__text__sumbit_btn">{langEn ? 'Get back to texts' : 'Вернуться к текстам'}</button> */}
+          {!searchRes ?
+          <Spinner/>
+            
+          :
+        <div className='not__found'>
+          <span className='music__page__empty'>{langEn ? 'Sorry, nothing found' : 'К сожалению, ничего не найдено'}</span>
+          <img width='200px' height='200px' src="https://cdn0.iconfinder.com/data/icons/file-and-document-41/100/file_document_doc-23-512.png"/>
+        </div>
+      }
     </div>
     }
     {showPagination ?

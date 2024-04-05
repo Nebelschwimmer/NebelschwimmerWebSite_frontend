@@ -20,7 +20,7 @@ export const MusicPage = ({langEn, trackList, pageMusicQuery, setPageMusicQuery,
 
   const [disButton, setDisButton] = useState(false)
 
-
+  const [searchRes, setSearchRes] = useState(false)
 
   const navigate = useNavigate()
 
@@ -38,9 +38,13 @@ const handleSearchMusicInputChange = (event) => {
   setSearchMusicQuery(event.target.value);
 }
 const handleSearchMusicInputKeyDown = async (e) => {
-  if(e.key === 'Enter' && searchMusicQuery !== undefined) {
+  if(e.key === 'Enter' || searchMusicQuery !== undefined) {
     await searchMusic(searchMusicQuery).then((res)=>{
-      setTrackList(res)
+      setTrackList(res);
+      if (res.length === 0) {
+        setSearchRes(true)
+      }
+      else setSearchRes(false);
     })
   } 
 }
@@ -154,9 +158,15 @@ useEffect(()=>{
         />
       :
       <div className='not__found'>
-        {/* <span className='music__page__empty'>{langEn ? 'Tracklist not found' : 'Треки не найдены'}</span>
-        <img width='200px' height='200px' src="https://cdn0.iconfinder.com/data/icons/file-and-document-41/100/file_document_doc-23-512.png"/> */}
-        <Spinner/>
+      {!searchRes ?
+      <Spinner/>
+        
+      :
+    <div className='not__found'>
+      <span className='music__page__empty'>{langEn ? 'Sorry, nothing found' : 'К сожалению, ничего не найдено'}</span>
+      <img width='200px' height='200px' src="https://cdn0.iconfinder.com/data/icons/file-and-document-41/100/file_document_doc-23-512.png"/>
+    </div>
+  }
       </div>
       }
       {showPagination ?

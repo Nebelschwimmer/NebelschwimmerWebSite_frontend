@@ -188,7 +188,7 @@ const navigate = useNavigate()
           <div className='header_controls_block_nav_btns_wrapper'>
             <Link className='header_controls_block_single_btn_link' to="/">
               <button className='header_controls_block_single_btn' ><HomeIcon fontSize='small'/>Ноme</button></Link>
-            <Link className='header_controls_block_single_btn_link' to="/music">
+            <Link className='header_controls_block_single_btn_link' to="/music?page=1">
               <button className='header_controls_block_single_btn'><LibraryMusicIcon fontSize='small'/>Music</button></Link>
             <Link className='header_controls_block_single_btn_link' to="/texts?page=1">
               <button className='header_controls_block_single_btn'><LibraryBooksIcon fontSize='small'/>Texts</button></Link>
@@ -227,9 +227,9 @@ const navigate = useNavigate()
           <div className='header_controls_block_nav_btns_wrapper'>
             <Link className='header_controls_block_single_btn_link' to="/">
               <button className='header_controls_block_single_btn'><HomeIcon fontSize='small'/>Главная</button></Link>
-            <Link className='header_controls_block_single_btn_link' to="/music">
+            <Link className='header_controls_block_single_btn_link' to="/music?page=1">
               <button className='header_controls_block_single_btn'><LibraryMusicIcon fontSize='small'/>Музыка</button></Link>
-            <Link className='header_controls_block_single_btn_link' to="/texts">
+            <Link className='header_controls_block_single_btn_link' to="/texts?page=1">
               <button className='header_controls_block_single_btn'><LibraryBooksIcon fontSize='small'/>Тексты</button></Link>
             <Link className='header_controls_block_single_btn_link' to="/pictures">
               <button className='header_controls_block_single_btn'><InsertPhotoOutlinedIcon fontSize='small'/>Картинки</button></Link>
