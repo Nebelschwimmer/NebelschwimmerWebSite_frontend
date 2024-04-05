@@ -1,10 +1,10 @@
 import {MusicCard} from '../MusicCard/MusicCard'
 import { Spinner } from '../Spinner/Spinner';
 import './music_track_list.scss'
-import { useState, createRef, useCallback, useRef } from 'react';
-import useSound from "use-sound";
+import { useState} from 'react';
 
-export const MusicList = ({user_id, setTrackList, currentUser, trackList, langEn}) => {
+
+export const MusicList = ({user_id, setTrackList, pagesMusicNumber, setPageMusicQuery, pageMusicQuery, currentUser, trackList, langEn}) => {
   
   const [checkPlaying, setCheckPlaying] = useState('')
 
@@ -23,6 +23,9 @@ export const MusicList = ({user_id, setTrackList, currentUser, trackList, langEn
           return (
             <MusicCard
               {...el}
+              pagesMusicNumber={pagesMusicNumber}
+              setPageMusicQuery={setPageMusicQuery}
+              pageMusicQuery={pageMusicQuery}
               track={el}
               key={el._id}
               langEn={langEn}

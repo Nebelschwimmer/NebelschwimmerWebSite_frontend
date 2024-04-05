@@ -205,7 +205,7 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
               <small className={cn("auth_updated", { ["auth_updated_Active"]: printChanged })}>{ langEn ? "Profile updated!" : 'Профиль изменен'}</small>
             </div>  
              {/* Форма */}
-            <form onSubmit={handleSubmit(sendUpdateData)}>
+             <form onSubmit={handleSubmit(sendUpdateData)}>
                 {/* Блок с инпутами. При фокусировке отображаются кнопки очистки ввода. При расфокусировке они исчезают */}
                 <div className='inputs__container__profile'>
                         <div className='single__input__wrapper'

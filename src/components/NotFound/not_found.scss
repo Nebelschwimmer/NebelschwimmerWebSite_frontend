@@ -1,0 +1,15 @@
+.not_found_page {
+  display: flex;
+  flex-direction: column;
+  gap:5rem;
+  align-items: center;
+  span {
+    font-size: 22px;
+    color: darkorange;
+  }
+  img {
+    width: 200px;
+    height: 200px;
+    
+  }
+}

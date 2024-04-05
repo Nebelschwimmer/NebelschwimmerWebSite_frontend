@@ -43,20 +43,24 @@
       display: flex;
       
       flex-direction: column;
-      padding: 1rem;
+      padding: 1rem;  
       gap:10px;
-      & span {
-        font-weight: 600;
-        font-size: clamp(0.75rem, 0.669rem + 0.38vw, 1.125rem);
-        &:last-child{
-          font-weight: 300;
-          font-size: clamp(0.75rem, 0.723rem + 0.127vw, 0.875rem);
-        }
+      
+      b{
+        font-size: 18px;
       }
+      p {
+        margin: 0;
+        font-size: 14px; 
+      }
+      span {
+        font-size: 14px;   
+      }
+      
     }
     &__label {
-      background-color: var(--btn-color);
-      padding: 5px;
+      background: var(--btn-gradient);
+      padding: 10px;
       height: fit-content;
       width: clamp(5rem, 1.429rem + 9.524vw, 10rem);
       border-radius: 5px;
@@ -134,9 +138,9 @@
 
 
   &__submit__btn {
-      background-color: var(--btn-color);
+    background: var(--btn-gradient);
       color: white;
-      width: 30%;
+      width: 40%;
       border: none;
       font-size: clamp(12px, 1.5vw, 16px);
       margin-top: 2rem;
@@ -160,9 +164,21 @@
 
 @media screen and (max-width: 480px) {
   .add__music__container {
-    width: 90%;
+    // width: 90%;
   }
-  .add__music__file__input__bottom__file__info__wrapper {
+  .add__music__file__input__bottom__file__info__wrapper small {
     gap:0;
+    font-size: 12px;
+  }
+  .add__music__file__input__top {
+    gap:20px
+  }
+  .add__music__file__input__label {
+    width: 70%;
+    font-size: 14px;
+    padding: 10px;
+  }
+  .add__music__file__input__container {
+    width: 90%;
   }
 }

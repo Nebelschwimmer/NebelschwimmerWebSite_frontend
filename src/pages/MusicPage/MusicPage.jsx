@@ -1,23 +1,21 @@
-import { ModalWindow } from '../../components/ModalWindow/ModalWindow';
 import {MusicList} from '../../components/MusicList/MusicList'
 import './musicPage.scss'
-import { AddMusicForm } from './AddMusicForm/AddMusicForm';
 import { useState, useEffect } from 'react';
 import { getMusicList, searchMusic } from '../../utils/api_music';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
-import { PaginationBoard } from '../TextsPage/PaginationBoard';
+import { PaginationMusicBoard } from './PaginatioMusicBoard';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import cn from 'classnames'
+import { Spinner } from '../../components/Spinner/Spinner';
 
 
-export const MusicPage = ({langEn, trackList, setTrackList, showModal, setShowModal, currentUser}) => {
+export const MusicPage = ({langEn, trackList, pageMusicQuery, setPageMusicQuery, pagesMusicNumber, setPagesMusicNumber, setTrackList, showModal, setShowModal, currentUser}) => {
 
   const [searchMusicQuery, setSearchMusicQuery] = useState('')
   const [pages, setPages] = useState([]);
-  const [pagesNumber, setPagesNumber] = useState();
-  const [pageQuery, setPageQuery] = useState(1);
+
   const [showPagination, setShowPagination] = useState(false)
 
   const [disButton, setDisButton] = useState(false)
@@ -59,64 +57,69 @@ const onSearchClick = async () => {
 
 useEffect(()=>{ 
   if (searchMusicQuery === "" || searchMusicQuery === undefined) {
-    getMusicList(pageQuery).then((res) => {
+    getMusicList(pageMusicQuery).then((res) => {
       setTrackList(()=>([...res.tracks]));
-      setPagesNumber(res.totalPages);
-      navigate(`/music?page=${pageQuery}`)
+      setPagesMusicNumber(res.totalPages);
+      navigate(`/music?page=${pageMusicQuery}`)
     })
   }
-}, [searchMusicQuery, pageQuery, pagesNumber])
+}, [searchMusicQuery, pageMusicQuery, pagesMusicNumber])
 
 const handleBackArrowClick = () => {
   if (pageQuery > 1)
-  setPageQuery(
+  setPageMusicQuery(
   st => st - 1
   )
 }
 const handleForwardArrowClick = () => {
-  if (pageQuery < pagesNumber)
-  setPageQuery(
+  if (pageMusicQuery < pagesMusicNumber)
+  setPageMusicQuery(
   st => st + 1
   )
 }
 
 useEffect(()=>{ 
-  const paginationArr = [...Array(pagesNumber).keys()].map(e => (e + 1));
+  const paginationArr = [...Array(pagesMusicNumber).keys()].map(e => (e + 1));
   const limitArr = []
   for (let i = 0; i < 5; i++) {
     limitArr.push((i * 5) + 5)
   }
   limitArr.forEach((el, ind, arr) => {
-    if (pageQuery > 5) {
-      const slicedPaginationArray = paginationArr.slice(5, pagesNumber)  
-      console.log(slicedPaginationArray)
+    if (pageMusicQuery > 5) {
+      const slicedPaginationArray = paginationArr.slice(5, pagesMusicNumber)  
+      
       setPages(slicedPaginationArray)
     }
     else 
     setPages(()=>(paginationArr.slice(0, 5))); 
     }
   )
-}, [pageQuery, trackList])
+}, [pageMusicQuery, trackList])
 
 useEffect(()=>{
-  if (trackList.length === 0 && pagesNumber >= 1)
-  navigate(-1)
-  }, [trackList, pagesNumber])
+  if (trackList.length === 0 && pagesMusicNumber >= 1)
+  setPageMusicQuery(st => st - 1)
+  }, [trackList, pagesMusicNumber])
+
+
+
 
 const handlePublishClick = () => {
   if (!disButton)
-  setShowModal(true);
+  navigate('/add-track')
   else navigate('/sign-in')
 }
 
 useEffect(()=>{
-  if (!searchMusicQuery && pagesNumber > 1)
+  if (trackList.length === 0 && searchMusicQuery!== '')
+  setShowPagination(false);
+  else if (pagesMusicNumber > 1 && searchMusicQuery === '')
   setShowPagination(true);
-  else setShowPagination(false)
-}, [searchMusicQuery, pagesNumber])
+  else  setShowPagination(false);
+}, [ trackList, searchMusicQuery])
 
 
-console.log(pagesNumber)
+
 
   return (
     <div className='music_page_container'>
@@ -130,7 +133,6 @@ console.log(pagesNumber)
         {langEn ? 'Add New Track ' : "Добавить музыку "} </button> 
       
       </div>
-      {trackList.length !== 0 &&
       <div className='texts__page__input__container'>
               <input 
               id='search_input'
@@ -143,26 +145,30 @@ console.log(pagesNumber)
               </input>
               <span onClick={()=>{onSearchClick()}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon/></span>
             </div>
-      }
+      
             
       {trackList.length !== 0 ? 
       < MusicList user_id={user_id}  showModal={showModal} setShowModal={setShowModal} trackList={trackList} 
-        setTrackList={setTrackList} langEn={langEn}  currentUser={currentUser}/>
+        setTrackList={setTrackList} langEn={langEn}  currentUser={currentUser} pageMusicQuery={pageMusicQuery} setPageMusicQuery={setPageMusicQuery}
+        pagesMusicNumber={pagesMusicNumber}
+        />
       :
       <div className='not__found'>
-        <span className='music__page__empty'>{langEn ? 'Tracklist not found' : 'Треки не найдены'}</span>
-        <img width='200px' height='200px' src="https://cdn0.iconfinder.com/data/icons/file-and-document-41/100/file_document_doc-23-512.png"/>
+        {/* <span className='music__page__empty'>{langEn ? 'Tracklist not found' : 'Треки не найдены'}</span>
+        <img width='200px' height='200px' src="https://cdn0.iconfinder.com/data/icons/file-and-document-41/100/file_document_doc-23-512.png"/> */}
+        <Spinner/>
       </div>
       }
       {showPagination ?
         <div className='texts__page__pagination__container'>
           <div className='texts__page__pagination__card' onClick={()=>{handleBackArrowClick()}}><ArrowBackIosIcon fontSize=''/></div>
-          {pages.map((currentPage, i)=>{
+          {pages.map((currentMusicPage, i)=>{
 
-            return (<PaginationBoard
-            currentPage={currentPage}
-            pageQuery={pageQuery}
-            setPageQuery={setPageQuery}
+            return (
+            <PaginationMusicBoard
+            currentMusicPage={currentMusicPage}
+            pageMusicQuery={pageMusicQuery}
+            setPageMusicQuery={setPageMusicQuery}
             key={i}
             />)
           })}
@@ -176,10 +182,6 @@ console.log(pagesNumber)
         <div></div> 
       }
 
-
-      <ModalWindow showModal={showModal} setShowModal={setShowModal}>
-        <AddMusicForm langEn={langEn} setShowModal={setShowModal} currentUser={currentUser} trackList={trackList} setTrackList={setTrackList}/>
-      </ModalWindow>
     </div>
   )
 }

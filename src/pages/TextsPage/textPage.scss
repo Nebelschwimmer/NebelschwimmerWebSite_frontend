@@ -11,8 +11,9 @@
 
 
 .texts__page {
-  background-color: var(--main-bg-color-op-main);
+  background: var(--main-bg-gradient);
   border-radius:10px;
+  
   padding-top: 2rem;
   padding-left: clamp(0.5rem, -0.857rem + 5.714vw, 6rem);
   padding-bottom: 2rem;
@@ -34,8 +35,13 @@
     color: inherit;
     padding: clamp(0.2rem, -0.244rem + 1.87vw, 2rem);
     background: radial-gradient(ellipse farthest-corner at center , rgb(63, 9, 38) 0%, rgba(82, 1, 48, 0.0) 100%);
+    background-size: 400%;
     width: 70%;
-
+    transition: 0.5s ease-in-out;
+    &:hover {
+      background-position: -50%;
+      background-size: 300%;
+    }
 
   }
   &__text__main__info__wrapper{
@@ -122,7 +128,7 @@
   &__input__container {
     height: fit-content;
     display: flex;
-    width: calc(100% / 3)
+    width: calc(100% / 2.5)
     }
   &__input{
       border-radius: 10px;
@@ -193,11 +199,15 @@
     border-radius: 0;
   }
   .texts__page__input__container {
-    width: calc(100%/2);
+    width: calc(100%/1.25);
   }
   .texts__page__text__info__container{
     width: 95%;
     padding: 10px;
+}
+.texts__page__search__wrapper {
+  flex-direction: column;
+  gap:1rem
 }
 
 }

@@ -33,7 +33,7 @@ export const CommentsForm = ({textID, setShowComments, setSingleText, currentUse
       <textarea {...register("comment_body")}
       placeholder={langEn ? 'Add comment here' : 'Оставьте комментарий'}>
       </textarea>
-      <button className='add__text__sumbit_btn' type="submit">{langEn ? "Send" : "Отправить"}</button>
+      <button className='add__text__sumbit_btn comment_btn' type="submit">{langEn ? "Send" : "Отправить"}</button>
     </form>
     </>
   )

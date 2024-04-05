@@ -16,11 +16,11 @@ import PauseIcon from '@mui/icons-material/Pause';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "../Spinner/Spinner";
+import { getMusicList } from "../../utils/api_music";
+import defaultPicture from '../../pictures/def_thumb.png'
 
 
-
-
-export const MusicCard = ({track_name, track, langEn, setTrackList, 
+export const MusicCard = ({track_name, track, pagesMusicNumber, setPageMusicQuery, pageMusicQuery, langEn, setTrackList, 
   currentUser, track_image, track_source, user_id, checkPlaying, checkTrackPlaying}) => {
   
   //-------------СТЕЙТЫ-----------
@@ -62,14 +62,16 @@ const handleMusicLike = async (track_id, user_id) =>{
   console.log(trackIsLiked)
   try {
   if (trackIsLiked) {
-      await  deleteMusicLikeById(track_id, user_id )
-      .then((newTrackList)=>
-      setTrackList(newTrackList));
+      await  deleteMusicLikeById(track_id, user_id );
+      await getMusicList(pageMusicQuery).then((res) => 
+      setTrackList(()=>([...res.tracks]))
+      )
       }
     else {
-      await addLikeById(track_id, user_id)
-      .then((newTrackList)=>
-      setTrackList(newTrackList));
+      await addLikeById(track_id, user_id);
+      await getMusicList(pageMusicQuery).then((res) => 
+      setTrackList(()=>([...res.tracks]))
+      )
       }
     }
     catch(err) {
@@ -224,13 +226,21 @@ useEffect(()=> {
 
 // Для удаления карточки
 const deleteMusicCard = async () => {
-  await deleteTrackByID(track_id, track_source).then((newTrackList)=>{
-    setTrackList(newTrackList);
+  await deleteTrackByID(track_id, track_source);
+
     setIsPlaying(false);
-    navigate('/music?page=1') 
-  })
-  
-}
+    setShowModalDelete(false);
+    await getMusicList(pageMusicQuery).then((res) => 
+    setTrackList(()=>([...res.tracks]))
+    )
+  }
+
+const [thumbnail, seThumbnail] = useState()
+useEffect(()=> {
+  if (track_image === 'https://img.freepik.com/premium-photo/neon-flat-musical-note-icon-3d-rendering-ui-ux-interface-element-dark-glowing-symbol_187882-2481.jpg?size=626&ext=jpg')
+  seThumbnail(defaultPicture)
+else seThumbnail(track_image)
+}, [])
 
 
   return (
@@ -241,11 +251,11 @@ const deleteMusicCard = async () => {
         <div className="music__card__img__wrapper">
           <img 
             alt='Thumbnail' 
-            src={track_image}
+            src={thumbnail}
             onError={(e) => {
             if (e.target.onerror === null) {
               e.target.src =
-                "https://img.freepik.com/premium-photo/neon-flat-musical-note-icon-3d-rendering-ui-ux-interface-element-dark-glowing-symbol_187882-2481.jpg?size=626&ext=jpg"
+                "../../pictures/def_track_thumb.jpg"
                 }
               }
             }
@@ -272,17 +282,17 @@ const deleteMusicCard = async () => {
                       
                       <div className={cn("modal_content", { ["active"]: showModalEdit })}  onClick={(e) => e.stopPropagation()}>
                       <span className='modal__close' onClick={()=>{setShowModalEdit(false)}}><CloseIcon/></span>
-                        <MusicEditForm track={track} track_id={track_id} setTrackList={setTrackList} langEn={langEn} setShowModalEdit={setShowModalEdit}/>
+                        <MusicEditForm thumbnail={thumbnail}  pageMusicQuery={pageMusicQuery} getMusicList={getMusicList} track={track} track_id={track_id} setTrackList={setTrackList} langEn={langEn} setShowModalEdit={setShowModalEdit}/>
                       </div>
                     </div>
                   )}
                   
                     <span className="music__card__left__top__controls__delete__icon"
-                      onClick={()=>{setShowModalDelete(true)}} title="Delete"><DeleteOutlineIcon fontSize="small"/>
+                      onClick={()=>{setShowModalDelete(true)}} title={langEn ? "Delete" : "Удалить"}><DeleteOutlineIcon fontSize="small"/>
                     </span>
                   
                     {showModalDelete &&
-                      <MusicDeleteModal showModalDelete={showModalDelete} track_id={track_id} deleteMusicCard={deleteMusicCard} setShowModalDelete={setShowModalDelete}/>
+                      <MusicDeleteModal langEn={langEn} showModalDelete={showModalDelete} track_id={track_id} deleteMusicCard={deleteMusicCard} setShowModalDelete={setShowModalDelete}/>
                     }
                 </div>
                 }

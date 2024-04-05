@@ -17,7 +17,6 @@ export const TextLink = ({link, langEn}) => {
     const publisherID = link.publisher_id
   
 
-
     
   useEffect(()=>{
     getPublisherInfoByID(publisherID).then(res => {
@@ -34,8 +33,7 @@ export const TextLink = ({link, langEn}) => {
                   <div className='texts__page__text__main__info__wrapper'>
                     <div className='texts__page__text__main__info__top__wrapper'>
                       <h4>{langEn ? link.name_en : link.name_ru}</h4>
-                      <button className='single__text__top__lower__ctrl__btn' title={langEn ? "Delete" : "Удалить"}
-                      onClick={()=>{setShowModal(true)}}> <DeleteForeverIcon fontSize='' /> </button>
+                
                     </div>
                     <div>
                       <em>{langEn ? link.author_en : link.author_ru}</em>

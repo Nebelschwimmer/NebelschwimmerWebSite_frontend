@@ -9,6 +9,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { PaginationBoard } from './PaginationBoard'
 import { TextLink } from './TextLink'
 import cn from 'classnames'
+import { Spinner } from '../../components/Spinner/Spinner';
 
 
 
@@ -16,43 +17,39 @@ export const TextsPage = ({langEn, pageQuery, pagesNumber, setPagesNumber, setPa
 
 const [searchQuery, setSearchQuery] = useState(undefined);
 const [pages, setPages] = useState([]);
-
-const [sortWay, setSortWay] = useState('desc');
-const [activeSort, setActiveSort] = useState(true);
 const [disButton, setDisButton] = useState(false)
 const [showPagination, setShowPagination] = useState(false)
 
 
 const navigate = useNavigate();
 
-  useEffect(()=>{ 
-    if (searchQuery === "" || searchQuery === undefined) {
-    
-      getTextsList(pageQuery).then((res) => {
-      setTexts(()=>([...res.texts]));
-      setPagesNumber(res.totalPages);
-      navigate(`/texts?page=${pageQuery}`)
-      })
-    }
-    else { 
-      navigate(`/texts?search=${searchQuery}`)
-      setShowPagination(false)
-    }
-    
-      }, [searchQuery, pageQuery])
+useEffect(()=>{ 
+  if (searchQuery === "" || searchQuery === undefined) {
+  
+    getTextsList(pageQuery).then((res) => {
+    setTexts(()=>([...res.texts]));
+    setPagesNumber(res.totalPages);
+    navigate(`/texts?page=${pageQuery}`)
+    })
+  }
+  // else { 
+  //   navigate(`/texts?search=${searchQuery}`)
+  //   setShowPagination(false)
+  // }
+  
+    }, [searchQuery, pageQuery, showPagination])
+
+
+      console.log(searchQuery === "" || searchQuery === undefined)
 
 useEffect(()=>{
-  if (sortWay === 'desc')
-  setActiveSort(true)
-else setActiveSort(false)
-}, [sortWay])
-
-
-
+ if (searchQuery === "" || searchQuery === undefined)
+ setShowPagination(false)
+}, [searchQuery])
 
 useEffect(()=>{
 if (texts.length === 0 && pagesNumber >= 1)
-navigate(-1)
+setPageQuery(st => st - 1)
 }, [texts, pagesNumber])
 
 
@@ -62,10 +59,11 @@ const handleSearchInput = async (e) => {
   if(e.key === 'Enter' && searchQuery !== undefined) {
     await searchText(searchQuery).then((res)=>{
     setTexts(res);
-    navigate
+    // navigate(`/texts?search=${searchQuery}`)
     })
   }
-}
+  
+} 
 
 const handleSearchInputChange = (event) => { 
   setSearchQuery(event.target.value);
@@ -75,12 +73,20 @@ const onSearchClick = async () => {
   if (searchQuery !== '')
   await searchText(searchQuery).then((res)=>{
     setTexts(res);
-    navigate(`/texts?search=${searchQuery}`)
+    // navigate(`/texts?search=${searchQuery}`)
     });
   else  {
     document.getElementById('search_input').focus()
   }
 }
+
+useEffect(()=> {
+  if(searchQuery === '' || undefined) {
+  setShowPagination(false);
+//  navigate(`/texts?page=${pageQuery}`)
+  }
+}, [searchQuery])
+
 
 
 
@@ -134,10 +140,22 @@ useEffect(()=>{
 }, [currentUser])
 
 useEffect(()=>{
-  if (!searchQuery && pagesNumber > 1)
+  if (texts.length === 0 && searchQuery!== '')
+  setShowPagination(false);
+  else if (pagesNumber > 1 && searchQuery === '')
   setShowPagination(true);
-  else setShowPagination(false)
-}, [searchQuery, pagesNumber])
+  else  setShowPagination(false);
+}, [ texts, searchQuery])
+
+console.log(searchQuery)
+// const handleEmtpySearch = () => {
+//     // getTextsList(pageQuery).then((res) => {
+//     // setTexts(()=>([...res.texts]));
+//     // setPagesNumber(res.totalPages);
+//     navigate(`/texts?page=1`)
+// }
+
+
 
 
 
@@ -186,8 +204,10 @@ useEffect(()=>{
       </div>
       :
       <div className='not__found'>
-      <span className='music__page__empty'>{langEn ? 'Sorry, nothing found' : 'К сожалению, ничего не найдено'}</span>
+        <Spinner/>
+      {/* <span className='music__page__empty'>{langEn ? 'Sorry, nothing found' : 'К сожалению, ничего не найдено'}</span>
       <img width='200px' height='200px' src="https://cdn0.iconfinder.com/data/icons/file-and-document-41/100/file_document_doc-23-512.png"/>
+      <button onClick={()=> handleEmtpySearch()} className="add__text__sumbit_btn">{langEn ? 'Get back to texts' : 'Вернуться к текстам'}</button> */}
     </div>
     }
     {showPagination ?

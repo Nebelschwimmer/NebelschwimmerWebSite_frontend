@@ -200,8 +200,8 @@ const navigate = useNavigate()
         <nav className='header_controls_block'>
           <div className='header_aut_nav'>
           {currentUser ? (
-          <div className='header_aut_nav_wrapper'>
-            <img onClick={()=>{navigate('/user-settings')}}  className='header_aut_nav_img' src={avatarURL}/>
+          <div className='header_aut_nav_wrapper' onClick={()=>{navigate('/user-settings')}}>
+            <img  className='header_aut_nav_img' src={avatarURL}/>
             <span>{userName}</span>
             <button className='header_controls_block_single_btn_signin' title='Выйти' onClick={()=>{setShowPopover(true)}}> <LogoutIcon fontSize='small'/></button>
             {!!showPopOver &&

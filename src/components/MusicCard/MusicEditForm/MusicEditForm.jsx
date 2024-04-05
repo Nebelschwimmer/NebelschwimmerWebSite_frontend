@@ -2,12 +2,10 @@ import { useForm } from "react-hook-form";
 import './music_edit.scss'
 import { updateTrack} from "../../../utils/api_music";
 import { useState, useEffect } from "react";
-import { useId } from 'react';
-import cn from "classnames";
 import { Spinner } from "../../Spinner/Spinner";
 
 
-export const MusicEditForm = ({langEn, track, track_id, setTrackList, setShowModalEdit, trackList}) => {
+export const MusicEditForm = ({langEn, thumbnail, track, track_id, setTrackList, pageMusicQuery, getMusicList, setShowModalEdit, trackList}) => {
 
   const [showSpinner, setShowSpinner] = useState(false)
   const [preview, setPreview] = useState('')
@@ -35,11 +33,12 @@ const onSubmitData = async (data) => {
 
   console.log(formData)
 try {
-    await updateTrack(track_id, formData)
-    .then((newTrackList)=> {
-      setTrackList(newTrackList);
-      setShowModalEdit(false)
-    })
+    await updateTrack(track_id, formData);
+    
+      await getMusicList(pageMusicQuery).then((res) => 
+    setTrackList(()=>([...res.tracks]))
+    )
+    setShowModalEdit(false)
   }
   catch (err) {console.log(err)}
   
@@ -75,7 +74,7 @@ const onImgFileAdding = (e) => {
               placeholder={langEn ? 'Change Track Name' : 'Изменить название трека'}
             />  
             <div className="edit__music__image__input">
-                <label className="edit__music__image__input__label">
+                <label className="add__music__file__input__label">
                   {langEn ? 'Change image file' : 'Изменить картинку' }
                   <input
                     type="file"
@@ -84,7 +83,7 @@ const onImgFileAdding = (e) => {
                     onInput={onImgFileAdding}
                     accept="image/*"/>
                 </label>
-                <img className="add__music__file__input__preview__image" src={preview || track.track_image }/>
+                <img className="add__music__file__input__preview__image" src={preview || thumbnail }/>
             </div>
 
             <div className="edit__music__submit__btn__wrapper">

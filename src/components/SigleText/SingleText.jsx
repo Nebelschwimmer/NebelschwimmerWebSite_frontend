@@ -41,11 +41,11 @@ const [checkTextLength, setCheckTextLength] = useState(false);
 const [truncated, setTruncated] = useState(true);
 const [publisheInfo, setPublisherInfo] = useState({})
 
+
+
+
+
 const scrollRef = useRef(null)
-
-
-
-
 const user_id = currentUser.uid;
 const publisher_id = singleText.publisher_id
 const textID = singleText._id;
@@ -92,20 +92,32 @@ useEffect(()=>{
   else setFavText(false)
   }, [singleText, favText]);
 
+  
 
 
-// const onTextDelete = async (textID) => {
-//   try {
-//   await deleteTextFromItsPage(textID).then((newTexts)=>{
-//     setTexts(()=>([...newTexts]));
-//     setShowModal(false);
-//     navigate(`/texts?page=1`)
-//   });
-//   }
-//   catch(err) {
-//     console.log(err)
-//   }
-// }
+
+  const onTextDelete = async (textID) => {
+    try {
+      await deleteTextFromItsPage(textID).then((newTexts)=>{
+        
+        const newTextslength = newTexts.length - 1;
+        setTexts(()=>([...newTexts]));
+        setShowModal(false);
+        if (newTextslength === 5 * (pagesNumber - 1)) {
+        
+          setPageQuery(st => st - 1);
+          navigate(`/texts?page=${pageQuery}`)
+        }
+        else navigate(`/texts?page=${pageQuery}`)
+        
+  });
+  }
+  catch(err) {
+    console.log(err)
+  }
+}
+
+
 
 
 useEffect(()=>{
@@ -411,8 +423,8 @@ const nameRuRegister = register("name_ru", {
         
         {showDeleteIcon &&
           <div className='single__text__top__lower__ctrl__btn__container'>
-            {/* <button className='single__text__top__lower__ctrl__btn' title={langEn ? "Delete" : "Удалить"}  
-            onClick={()=>{setShowModal(true)}}> <DeleteForeverIcon fontSize='' /> </button> */}
+            <button className='single__text__top__lower__ctrl__btn' title={langEn ? "Delete" : "Удалить"}  
+            onClick={()=>{setShowModal(true)}}> <DeleteForeverIcon fontSize='' /> </button>
             <button className='single__text__top__lower__ctrl__btn' title={langEn ? "Edit" : "Редактировать"}  
             onClick={()=>{setEditMode(true)}}><EditIcon fontSize='' /> </button>
           </div>

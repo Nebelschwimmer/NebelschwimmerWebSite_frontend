@@ -7,7 +7,7 @@
   &__main__container {
   // padding: 0 clamp(0.625rem, -0.85rem + 7.375vw, 8rem) 0 clamp(0.625rem, -0.85rem + 7.375vw, 8rem);
   margin: 0 auto;
-  background-color: var(--main-bg-color-op-main);
+  background: linear-gradient(165deg, rgba(156, 59, 3, 0.1) 0%, rgba(66, 6, 66, 0.1) 40%);
   padding: 6rem;
   border-radius: 10px;
   }
@@ -108,7 +108,7 @@
     &__lower {
       display: flex;
       justify-content: space-between;
-      width: 96.5%;
+      width: calc(100% - 1vw);
       border-radius: 10px;
       align-items: center;
       gap:15px;
@@ -281,7 +281,7 @@
     &__array {
       display: flex;
       flex-direction: column;
-      background-color: var(--dark-orange-op);
+      background: radial-gradient(ellipse farthest-corner at center, rgb(63, 9, 38) 0%, rgba(82, 1, 48, 0) 100%);
       padding: 1rem;
       border-radius: 10px;
       gap: 1rem;

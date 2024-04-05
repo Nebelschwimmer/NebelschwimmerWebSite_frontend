@@ -17,6 +17,8 @@ import { AddTextPage } from '../AddTextPage/AddTextPage.jsx';
 import { SingleTextPage } from '../../pages/TextsPage/SingleTextPage/SingleTextPage.jsx';
 import { AboutPage } from '../../pages/AboutPage/AboutPage.jsx';
 import { PicturesPage } from '../../pages/PicturesPage/PicturesPage.jsx';
+import { NotFound } from '../NotFound/NotFound.jsx';
+import { AddMusicForm } from '../../pages/MusicPage/AddMusicForm/AddMusicForm.jsx';
 
 
 function App() {
@@ -31,9 +33,14 @@ function App() {
   const [texts, setTexts] = useState([]);
 
   const [trackList, setTrackList] = useState([]);
+  
   const [pagesNumber, setPagesNumber] = useState();
   
-const [pageQuery, setPageQuery] = useState(1)
+  const [pageQuery, setPageQuery] = useState(1)
+
+ const [pageMusicQuery, setPageMusicQuery] = useState(1);
+
+ const [pagesMusicNumber, setPagesMusicNumber] = useState();
 
   // Функция для навигации
   const navigate = useNavigate()
@@ -84,8 +91,9 @@ return (
         <Route path='/' element={<HomePage langEn={langEn} currentUser={currentUser} setLangEn={setLangEn} />}></Route> 
         <Route path='/texts/:textID' element={<SingleTextPage setTexts={setTexts} pageQuery={pageQuery} setPageQuery={setPageQuery} pagesNumber={pagesNumber}  currentUser={currentUser} 
           setLangEn={setLangEn} showModal={showModal} setShowModal={setShowModal} texts={texts}  langEn={langEn} />}> </Route> 
-        <Route path='/music' element={<MusicPage showModal={showModal} setShowModal={setShowModal} trackList={trackList} setTrackList={setTrackList}  
-        langEn={langEn} currentUser={currentUser}/>}></Route>
+        <Route path='/music' element={<MusicPage setPagesMusicNumber={setPagesMusicNumber} pagesMusicNumber={pagesMusicNumber} pageMusicQuery={pageMusicQuery} setPageMusicQuery={setPageMusicQuery} 
+        showModal={showModal} setShowModal={setShowModal} trackList={trackList} setTrackList={setTrackList}  langEn={langEn} currentUser={currentUser}/>}>
+        </Route>
         <Route path='/texts' element={<TextsPage pagesNumber={pagesNumber} setPagesNumber={setPagesNumber} currentUser={currentUser} pageQuery={pageQuery} setPageQuery={setPageQuery} showModal={showModal} 
         setShowModal={setShowModal} langEn={langEn} texts={texts} setTexts={setTexts}/>}></Route>
         <Route path='/texts/add-text' element={<AddTextPage pageQuery={pageQuery} pagesNumber={pagesNumber} currentUser={currentUser} texts={texts} setTexts={setTexts} langEn={langEn} setPageQuery={setPageQuery} showModal={showModal} setShowModal={setShowModal}/>}></Route> 
@@ -96,7 +104,9 @@ return (
         <Route path='/about' element={<AboutPage langEn={langEn}/>}></Route>
         <Route path='/privacy-policy' element={<Privacy langEn={langEn}/>}></Route>
         <Route path='/pictures' element={<PicturesPage showModal={showModal} setShowModal={setShowModal} langEn={langEn}/>}></Route>
-      
+        <Route path='*' element={<NotFound langEn={langEn}/>}></Route>
+        <Route path='/add-track' element={<AddMusicForm  pagesMusicNumber={pagesMusicNumber} currentUser={currentUser} trackList={trackList} setTrackList={setTrackList}
+        setPageMusicQuery={setPageMusicQuery}setPagesMusicNumber={setPagesMusicNumber} langEn={langEn}/>}></Route>
       </Routes>
     </main>
     <Footer lanEn={langEn}/>

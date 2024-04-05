@@ -5,12 +5,13 @@ import { useState, useEffect } from "react";
 import { useId } from 'react';
 import cn from "classnames";
 import { Spinner } from "../../../components/Spinner/Spinner";
+import { useNavigate } from "react-router-dom";
 
 
 
-export const AddMusicForm = ({langEn, setShowModal, currentUser, trackList, setTrackList}) => {
+export const AddMusicForm = ({langEn, setShowModal, pagesMusicNumber, setPageMusicQuery, setPagesMusicNumber, setShowPagination, pageMusicQuery, currentUser, trackList, setTrackList}) => {
 
-
+const navigate = useNavigate()
 // Стейты для показа информации о файле
 const [showFileName, setShowFileName] = useState('');
 const [showFileSize, setShowFileSize] = useState('');
@@ -74,7 +75,8 @@ const onSubmitData = async (data) => {
   try {
     await addNewTrack(formData).then((newTrackList)=> {
       setTrackList(()=>([...newTrackList]));
-      setShowSpinner(true)
+      setShowSpinner(true);
+      setPageMusicQuery(1)
     })
   }
   catch (err) {
@@ -87,10 +89,11 @@ const onSubmitData = async (data) => {
 
 useEffect(()=>{
   if (showSpinner)
-  setTimeout(()=>{
-    setShowModal(false);
-    setShowSpinner(false)
-  }, 2000)
+    setTimeout(()=>{
+    setShowSpinner(false);
+    navigate(`/music?page=1`);
+    
+  }, 1000)
 }, [showSpinner])
 
 
@@ -107,10 +110,25 @@ const audioFileRegister = register("file__audio", {
         <form onSubmit={handleSubmit(onSubmitData)}>
           <section className="add__music__file__input__container">
                 <div className="add__music__file__input__top">
-                  <span>
+                  {/* <span>
                     {langEn ? 'Choose audio file ' : 'Выберите аудио файл'}<span className='auth_req'> *</span></span>
                   <span>{langEn ? 'Your file must be in .mp3 extension, must not exceed 20 MB and violate copyright.' 
                   : 'Ваш файл должен быть в формате mp3, не превышать размером 20 Мб и не нарушать авторские права.'}</span>
+                  <span>{langEn ? '' : ''}</span> */}
+                  {langEn ?
+                  <div>
+                    <b>Choose audio file<span className='auth_req'> *</span></b>
+                    <p>Your file must be in .mp3 extension,</p>
+                    <p>must not exceed 20 MB and violate copyright.</p>
+                  </div>
+                  :
+                  <div>
+                    <b>Выберите аудио файл<span className='auth_req'> *</span></b>
+                    <p>Ваш файл должен быть в формате mp3,</p>
+                    <p>не превышать размером 20 Мб</p>
+                    <p>и не нарушать авторские права</p>
+                  </div>
+                  }
                   <span>{langEn ? 'Please, make sure your file contains the author\'s name' : 'Убедитесь, что ваш файл содержит информацию об авторе.'}</span>
                 </div>
                 <div className="add__music__file__input__bottom">
@@ -162,7 +180,7 @@ const audioFileRegister = register("file__audio", {
                       >{langEn ? 'Send' : "Отправить"}
                     </button>
                     :
-                      <span><Spinner/></span>
+                    <small>{langEn ? "Track successfully published" : 'Трек успешно опубликован'}</small>
                     }
                   </div>
                 

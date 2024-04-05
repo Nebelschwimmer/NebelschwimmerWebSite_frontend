@@ -19,22 +19,19 @@
   padding: 3rem;
   background: radial-gradient(ellipse farthest-corner at center , rgb(65, 15, 42) 0%, rgba(122, 7, 107, 0.1)100%);
   border-radius: 20px;
-  box-shadow: var(--btn-color);
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  
   
 }
 
 .modal.active {
   opacity: 1;
   pointer-events: all;
-
 }
 
 .modal_content.active {
   transform: scale3d(1, 1, 1);
-
 }
 
 .modal_top{
@@ -60,16 +57,16 @@
   font-size: 14px;
   cursor: pointer;
   gap: 20px;
-  background-color: var(--main-bg-op);
+  background-color: var(--btn-gradient);
   color: white;
   border-radius: 10px;
   font-weight: 600;
   transition: 0.2s ease-in-out;
-  box-shadow: black 1px 1px 1px 1px;
+  box-shadow: var(--box-shadow-gl);
   border: none;    
 }
 .modal_btn:hover{
-  background-color: rgb(49, 10, 87);
+  
   color: darkorange;
 }
 .modal_btn_warn{
@@ -82,17 +79,17 @@
   font-size: 14px;
   cursor: pointer;
   gap: 20px;
-  background-color: var(--btn-color);
+  background-color: var(--btn-gradient);
   color: white;
   border-radius: 10px;
   font-weight: 600;
   transition: 0.2s ease-in-out;
-  box-shadow: black 1px 1px 1px 1px;
+  box-shadow: var(--box-shadow-gl);
   border: none;     
 }
 .modal_btn_warn:hover{
   color: red;
-  background-color: rgb(49, 10, 87);
+  
 }
 
 .modal__close__container{

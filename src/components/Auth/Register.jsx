@@ -148,7 +148,10 @@ const sendSignUpData = async (data) => {
           <div onClick={()=>navigate(-1)} className="auth_backbtn"><Backbutton/></div>
           <div className='auth_top'>
           <h1>{langEn ? 'SIGN UP' : 'РЕГИСТРАЦИЯ'}</h1>
-          <span >{langEn ? 'Existing user?' : 'Уже зарегистировались?'} <Link style={{color: 'violet'}} to='/sign-in'>{langEn ? 'SIGN IN' : 'ВОЙДИТЕ В АККАУНТ'}</Link></span>
+          <div className='sign-in-label'>
+            <span >{langEn ? 'Existing user?' : 'Уже зарегистировались?'}</span>
+            <Link style={{color: 'violet'}} to='/sign-in'>{langEn ? 'SIGN IN' : 'ВОЙДИТЕ В АККАУНТ'}</Link>
+          </div>
           </div>
           {/* Форма */}
           <form onSubmit={handleSubmit(sendSignUpData)}>

@@ -1,5 +1,5 @@
 .music_page_container {
-  background-color: var(--main-bg-color-op-main);
+  background: var(--main-bg-gradient);
   border-radius:10px;
   padding: clamp(0.5rem, -0.117rem + 2.597vw, 3rem);
   min-height: 68vh;
@@ -62,7 +62,7 @@
 
 @media screen and (max-width: 480px) {
   .music_page_container {
-    height: 100vh;
+    // height: 100vh;
     border-radius: 0;
     padding-bottom: 2rem;
   }

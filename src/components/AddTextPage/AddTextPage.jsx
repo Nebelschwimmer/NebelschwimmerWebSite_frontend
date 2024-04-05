@@ -87,10 +87,10 @@ const author_id = currentUser.uid
   useEffect(()=>{
     if (printAdded)
     setTimeout(()=>{
-     setPrintAdded(true);
-     navigate('/texts?page=1')
+    setPrintAdded(true);
+    navigate('/texts?page=1')
     }, 2000)
-  }, [printAdded, texts, pagesNumber, pageQuery])
+  }, [printAdded])
 
 
   return (
@@ -101,7 +101,7 @@ const author_id = currentUser.uid
         {currentUser!== '' ?
         <form className='add__text__container' onSubmit={handleSubmit(SendNewText)}>
           <h1>{langEn ? 'Add Text' : 'Добавить текст'}</h1>
-          <span>{langEn ? 'Your text must not violate copyright and exceed 20 000 characters' : 'Текст не должен нарушать авторских прав и не превышать 20 000 символов'}</span>
+          <span>{langEn ? 'Your text must not violate copyright and exceed 20 000 characters' : 'Текст не должен нарушать авторских прав и превышать 20 000 символов'}</span>
           <label className='add__text__label'>{langEn ? '2 languages' : '2 языка'}
               <input type='checkbox' checked={checked} onChange={handleCheckChange}></input>
             </label>
@@ -110,7 +110,7 @@ const author_id = currentUser.uid
               className='add__text__input'
               type="text"
               {...nameEnRegister}
-              placeholder={langEn ? 'Text Name (English)' : 'Название текста (англ.)'}
+              placeholder={langEn ? 'Text Name (Russian)' : 'Название текста (русс.)'}
             />
             { errors?.name_ru  &&
               <small >{errors.name_en?.message}</small>
@@ -119,7 +119,7 @@ const author_id = currentUser.uid
               className='add__text__input'
               type="text"
               {...authorEnRegister}
-              placeholder={langEn ? 'Author (English)' : 'Автор (англ.)'}
+              placeholder={langEn ? 'Author (Russian)' : 'Автор (русс.)'}
             />
               {errors?.author_ru  &&
               <small >{errors.author_en?.message}</small>}
@@ -142,7 +142,7 @@ const author_id = currentUser.uid
                     className='add__text__input'
                     type="text"
                     {...nameRuRegister}
-                    placeholder={langEn ? 'Text Name (Russian)' : 'Название текста (русс.)'}
+                    placeholder={langEn ? 'Text Name (English)' : 'Название текста (англ.)'}
                   />
                     {errors?.name_en  &&
                       <small >{errors.name_ru?.message}</small>}
@@ -152,7 +152,7 @@ const author_id = currentUser.uid
                     className='add__text__input'
                     type="text"
                     {...authorRuRegister}
-                    placeholder={langEn ? 'Author (Russian)' : 'Автор (русс.)'}
+                    placeholder={langEn ? 'Author (English)' : 'Автор (англ.)'}
                   />
                       {errors?.author_ru  &&
                         <small >{errors.author_en?.message}</small>}
