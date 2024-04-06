@@ -109,7 +109,7 @@ const author_id = currentUser.uid
             <input
               className='add__text__input'
               type="text"
-              {...nameEnRegister}
+              {...nameRuRegister}
               placeholder={langEn ? 'Text Name (Russian)' : 'Название текста (русс.)'}
             />
             { errors?.name_ru  &&
@@ -118,7 +118,7 @@ const author_id = currentUser.uid
             <input
               className='add__text__input'
               type="text"
-              {...authorEnRegister}
+              {...authorRuRegister}
               placeholder={langEn ? 'Author (Russian)' : 'Автор (русс.)'}
             />
               {errors?.author_ru  &&
@@ -141,7 +141,7 @@ const author_id = currentUser.uid
                   <input
                     className='add__text__input'
                     type="text"
-                    {...nameRuRegister}
+                    {...nameEnRegister}
                     placeholder={langEn ? 'Text Name (English)' : 'Название текста (англ.)'}
                   />
                     {errors?.name_en  &&
@@ -151,7 +151,7 @@ const author_id = currentUser.uid
                   <input
                     className='add__text__input'
                     type="text"
-                    {...authorRuRegister}
+                    {...authorEnRegister}
                     placeholder={langEn ? 'Author (English)' : 'Автор (англ.)'}
                   />
                       {errors?.author_ru  &&
