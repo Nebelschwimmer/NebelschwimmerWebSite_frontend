@@ -38,7 +38,7 @@ const handleSearchMusicInputChange = (event) => {
   setSearchMusicQuery(event.target.value);
 }
 const handleSearchMusicInputKeyDown = async (e) => {
-  if(e.key === 'Enter' || searchMusicQuery !== undefined) {
+  if(e.key === 'Enter' && searchMusicQuery !== undefined) {
     await searchMusic(searchMusicQuery).then((res)=>{
       setTrackList(res);
       if (res.length === 0) {

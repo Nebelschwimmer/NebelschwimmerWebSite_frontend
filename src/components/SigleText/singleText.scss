@@ -230,9 +230,10 @@
 
   .textarea_auto {
     white-space: break-spaces;
-    background-color: transparent;
+    
     border: 1px dashed white;
-    background-color: rgb(65, 47, 61);
+    background: linear-gradient(45deg, rgb(63, 9, 38, 0.3) 0%, rgba(82, 1, 48, 0.0) 100%);
+border: 1px rgba(255, 255, 255, 0.2) dashed;
     padding: 1rem;
     width: 100%;
     resize: none;

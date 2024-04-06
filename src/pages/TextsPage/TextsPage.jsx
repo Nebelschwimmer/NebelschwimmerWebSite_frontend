@@ -56,7 +56,7 @@ setPageQuery(st => st - 1)
 
 const handleSearchInput = async (e) => {
 
-  if(e.key === 'Enter' || searchQuery !== undefined) {
+  if(e.key === 'Enter' && searchQuery !== undefined) {
     await searchText(searchQuery).then((res)=>{
     setTexts(res);
     setSearchRes(true)

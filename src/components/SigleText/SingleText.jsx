@@ -103,6 +103,7 @@ useEffect(()=>{
         const newTextslength = newTexts.length - 1;
         setTexts(()=>([...newTexts]));
         setShowModal(false);
+        
         if (newTextslength === 5 * (pagesNumber - 1)) {
         
           setPageQuery(st => st - 1);
@@ -194,7 +195,6 @@ useEffect (()=>{
           </div>
         )
       })
-      
       setContentRu(newRuContent);
       setTruncated(true)
       
@@ -476,15 +476,17 @@ const nameRuRegister = register("name_ru", {
           {langEn ?
             <form onSubmit={handleSubmit(sendUpdatedEnText)}>
               <textarea className='textarea_auto' defaultValue={singleText.content_en} {...register("content_en")}></textarea>
-              <button className='add__text__sumbit_btn' type='submit'>{langEn? "Send" : "Отправить"}</button>
+              <div style={{width:'30%'}}><button className='add__text__sumbit_btn' type='submit'>{langEn? "Send" : "Отправить"}</button></div>
             </form>
             :
             <form onSubmit={handleSubmit(sendUpdatedRuText)}>
               <textarea className='textarea_auto' defaultValue={singleText.content_ru} {...register("content_ru")}></textarea>
-              <button 
-                className='add__text__sumbit_btn'
-                type='submit'>{langEn? "Send" : "Отправить"}
-              </button>
+              <div style={{width:'30%'}}>
+                <button
+                  className='add__text__sumbit_btn'
+                  type='submit'>{langEn? "Send" : "Отправить"}
+                </button>
+              </div>
             </form>
           }    
         </div>
