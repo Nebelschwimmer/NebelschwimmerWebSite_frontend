@@ -323,6 +323,11 @@ const nameRuRegister = register("name_ru", {
   }
 );
 
+useEffect(()=>{
+  if (noContent)
+  setCheckTextLength(false)
+}, [noContent, checkTextLength])
+
 
 
   return (
