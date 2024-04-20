@@ -10,10 +10,17 @@ export const PaginationBoard = ({pageQuery, setPageQuery, currentPage}) => {
         if (pageQuery == currentPage)
         setActivePage(true)
         else setActivePage(false)
-        }, [pageQuery, currentPage])
+        }, [pageQuery, currentPage]);
+        
+
   return (
     <>
-          <div onClick={()=>{setPageQuery(currentPage)}} 
+          <div onClick={()=>{
+            currentPage !== '...' ?
+            setPageQuery(currentPage)
+            :
+            setPageQuery(pageQuery + 1 )
+          }} 
           className={cn("texts__page__pagination__card", { ["texts__page__pagination__card__Active"]: activePage })} 
           >
             {currentPage}

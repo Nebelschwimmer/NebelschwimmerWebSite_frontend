@@ -15,7 +15,7 @@ import { Spinner } from '../../components/Spinner/Spinner';
 
 export const TextsPage = ({langEn, pageQuery, pagesNumber, setPagesNumber, setPageQuery, currentUser, texts, setTexts}) => {
 
-const [searchQuery, setSearchQuery] = useState(undefined);
+const [searchQuery, setSearchQuery] = useState('');
 const [pages, setPages] = useState([]);
 const [disButton, setDisButton] = useState(false)
 const [showPagination, setShowPagination] = useState(false)
@@ -23,100 +23,62 @@ const [searchRes, setSearchRes] = useState(false)
 
 const navigate = useNavigate();
 
+
+
+
+
+
+
 useEffect(()=>{ 
-  if (searchQuery === "" || searchQuery === undefined || searchRes) {
-  
+  if (searchQuery === "") {
+    console.log(pageQuery)
     getTextsList(pageQuery).then((res) => {
     setTexts(()=>([...res.texts]));
     setPagesNumber(res.totalPages);
+    setSearchRes(false); 
     navigate(`/texts?page=${pageQuery}`)
     })
   }
   else { 
-    navigate(`/texts?search=${searchQuery}`)
-    setShowPagination(false)
+    console.log(pageQuery)
+      searchText(searchQuery).then((res)=>{
+      setTexts(()=>([...res]));
+      if (res.length === 0) { 
+      setSearchRes(true);
+      setShowPagination(false);
+      }
+      setShowPagination(false);
+    
+      })
+      
   }
   
     }, [searchQuery, pageQuery])
 
 
-
-
-useEffect(()=>{
- if (!searchQuery)
- setShowPagination(false)
-}, [searchQuery])
-
-useEffect(()=>{
-if (texts.length === 0 && pagesNumber >= 1)
-setPageQuery(st => st - 1)
-}, [texts, pagesNumber])
-
-
-
-const handleSearchInput = async (e) => {
-
-  if(e.key === 'Enter' && searchQuery !== undefined) {
-    await searchText(searchQuery).then((res)=>{
-    setTexts(res);
-    setSearchRes(true)
-    // navigate(`/texts?search=${searchQuery}`)
-    })
-  }
-  
-} 
-
 const handleSearchInputChange = (event) => { 
   setSearchQuery(event.target.value);
 }
 
-const onSearchClick = async () => {
-  if (!searchQuery)
-  await searchText(searchQuery).then((res)=>{
-    setTexts(res);
-    if (res.length === 0) {
-      setSearchRes(true)
-    }
-    else setSearchRes(false);
-    navigate(`/texts?search=${searchQuery}`)
-    });
-  else  {
-    document.getElementById('search_input').focus()
+
+useEffect(() => {
+  const paginationArr = [...Array(pagesNumber).keys()].map((e) => e + 1);
+
+  let start = Math.max(1, pageQuery - 2); 
+  let end = Math.min(pagesNumber, start + 4); 
+  if (end === pagesNumber) {
+    start = Math.max(1, end - 4);
   }
-}
 
-useEffect(()=> {
-  if(searchQuery === '' || undefined) {
-  setShowPagination(false);
-//  navigate(`/texts?page=${pageQuery}`)
+
+  if (end < pagesNumber) {
+    end--; 
+    setPages([...paginationArr.slice(start - 1, end), '...']);
+  } else {
+    setPages(paginationArr.slice(start - 1, end));
   }
-}, [searchQuery])
+}, [pageQuery, pagesNumber]);
 
-
-
-
-useEffect(()=>{ 
-  const paginationArr = [...Array(pagesNumber).keys()].map(e => (e + 1));
-  const limitArr = []
-  for (let i = 0; i < 5; i++) {
-    limitArr.push((i * 5) + 5)
-  }
-  limitArr.forEach((el, ind, arr) => {
-    if (pageQuery > 5) {
-      // Проблема: нужно сделать так, чтобы на каждой итерации лимитируещего
-      // массива рендерился обрезанный массив из номеров страниц, т.е.
-      // если страниц 11, то выводились сначала числа 1-5, затем 6-10, а потом только 11.
-      // Попытки записать все массивы в стейты не удались, так как в результате
-      // рендерилось только число 11, хотя консоль показывала числа 6-9 при 2-й итерации
-      const slicedPaginationArray = paginationArr.slice(5, pagesNumber)  
-      console.log(slicedPaginationArray)
-      setPages(slicedPaginationArray)
-    }
-    else 
-    setPages(()=>(paginationArr.slice(0, 5))); 
-    }
-  )
-}, [pageQuery, texts])
 
 const handleBackArrowClick = () => {
   if (pageQuery > 1)
@@ -144,18 +106,10 @@ useEffect(()=>{
   else setDisButton(false)
 }, [currentUser])
 
-// useEffect(()=>{
-//   if (texts.length === 0 && searchQuery!== '')
-//   setShowPagination(false);
-//   else if (pagesNumber > 1 && searchQuery === '')
-//   setShowPagination(true);
-//   else  setShowPagination(false);
-// }, [ texts, searchQuery])
-
 
 
 useEffect(()=>{
-  if (!searchQuery && pagesNumber > 1)
+  if (searchQuery === '' && pagesNumber > 1)
   setShowPagination(true);
   else setShowPagination(false)
 }, [searchQuery, pagesNumber])
@@ -175,10 +129,10 @@ useEffect(()=>{
               placeholder={langEn ? 'Search texts' : 'Искать тексты'}
               value={searchQuery ?? ''}
               onChange={handleSearchInputChange}
-              onKeyDown={handleSearchInput}
+              // onKeyDown={handleSearchInput}
               >  
               </input>
-              <span onClick={()=>{onSearchClick()}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon fontSize='medium'/></span>
+              <span title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon fontSize='medium'/></span>
             </div>
         <button 
         className={cn("add__text__sumbit_btn", { ["add__text__sumbit_btn__Disabled"]: disButton })}
@@ -218,17 +172,20 @@ useEffect(()=>{
       }
     </div>
     }
-    {showPagination ?
+    {showPagination &&
     <div className='texts__page__pagination__container'>
       <div className='texts__page__pagination__card' onClick={()=>{handleBackArrowClick()}}><ArrowBackIosIcon fontSize=''/></div>
       {pages?.map((currentPage, i)=>{
 
-        return (<PaginationBoard
-        currentPage={currentPage}
-        pageQuery={pageQuery}
-        setPageQuery={setPageQuery}
-        key={i}
-        />)
+        return (
+        <PaginationBoard
+          pagesNumber={pagesNumber}
+          currentPage={currentPage}
+          pageQuery={pageQuery}
+          setPageQuery={setPageQuery}
+          key={i}
+        />
+      )
       })}
     
     <div 
@@ -236,8 +193,6 @@ useEffect(()=>{
       onClick={()=>{handleForwardArrowClick()}}
       ><ArrowForwardIosIcon fontSize=''/></div>
     </div>
-    :
-    <div></div> 
     }
     </div>
   )

@@ -4,7 +4,7 @@ import './music_track_list.scss'
 import { useState} from 'react';
 
 
-export const MusicList = ({user_id, setTrackList, pagesMusicNumber, setPageMusicQuery, pageMusicQuery, currentUser, trackList, langEn}) => {
+export const MusicList = ({user_id, setTrackList, setShowPagination, pagesMusicNumber, setPageMusicQuery, pageMusicQuery, currentUser, trackList, langEn}) => {
   
   const [checkPlaying, setCheckPlaying] = useState('')
 
@@ -35,6 +35,7 @@ export const MusicList = ({user_id, setTrackList, pagesMusicNumber, setPageMusic
               user_id={user_id}
               checkTrackPlaying={checkTrackPlaying}
               checkPlaying={checkPlaying}
+              setShowPagination={setShowPagination}
               
             />
           );

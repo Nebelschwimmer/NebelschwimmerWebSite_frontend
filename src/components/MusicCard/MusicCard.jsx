@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"; 
+import { useEffect, useState } from "react"; 
 import useSound from "use-sound";
 import './music_card.scss';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -6,7 +6,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import cn from 'classnames'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { checkIfTrackFileExists, deleteTrackByID, getAuthorNameByID } from "../../utils/api_music";
+import { deleteTrackByID, getAuthorNameByID } from "../../utils/api_music";
 import { MusicEditForm } from "./MusicEditForm/MusicEditForm";
 import { MusicDeleteModal } from "./MusicDeleteModal/MusicDeleteModal";
 import { deleteMusicLikeById } from "../../utils/api_music";
@@ -18,10 +18,10 @@ import { useNavigate } from "react-router-dom";
 import { Spinner } from "../Spinner/Spinner";
 import { getMusicList } from "../../utils/api_music";
 import defaultPicture from '../../pictures/def_thumb.png'
+import { useLocation } from "react-router-dom";
 
-
-export const MusicCard = ({track_name, track, pagesMusicNumber, setPageMusicQuery, pageMusicQuery, langEn, setTrackList, 
-  currentUser, track_image, track_source, user_id, checkPlaying, checkTrackPlaying}) => {
+export const MusicCard = ({track_name, track, pageMusicQuery, langEn, setTrackList, 
+  currentUser, track_image, track_source, user_id, setShowPagination, pagesMusicNumber , setPageMusicQuery,  checkPlaying, checkTrackPlaying}) => {
   
   //-------------СТЕЙТЫ-----------
     // для лайков
@@ -38,102 +38,112 @@ export const MusicCard = ({track_name, track, pagesMusicNumber, setPageMusicQuer
   const [checkCurrentUser, setCheckCurrentUser] = useState(false);
   // отображаем имя пользователя по запросу
   const [authorName, setAuthorName] = useState('');
-
   const [missingFile, setMissingFile] = useState(false)
-// Служебные переменные
-const navigate = useNavigate()
-
-const track_id = track._id
-const track_likes = track?.track_likes
-const author_id = track?.track_author_id
-
-const options = { 
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-  timeZone: "Europe/Moscow",
-  }
-
-const createdAtDateEn = new Date (track.createdAt).toLocaleString("en-US", options);
-const createdAtDateRu = new Date (track.createdAt).toLocaleString("ru-RU", options);
-// Функция для лайков
-const handleMusicLike = async (track_id, user_id) =>{
-  const trackIsLiked = track_likes.some((s) => s === user_id);
-  console.log(trackIsLiked)
-  try {
-  if (trackIsLiked) {
-      await  deleteMusicLikeById(track_id, user_id );
-      await getMusicList(pageMusicQuery).then((res) => 
-      setTrackList(()=>([...res.tracks]))
-      )
+  // Служебные переменные
+  const navigate = useNavigate()
+  
+  // const location = useLocation()
+  // useEffect(() => {
+    //   if (isPlaying && location.pathname !== '/music') {
+      //     setIsPlaying(false);
+      //     navigate(0 , { replace: true });
+      //   }
+      // }, [location]);
+      
+      
+      
+      const track_id = track._id
+      const track_likes = track?.track_likes
+      const author_id = track?.track_author_id
+      
+      const options = { 
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        timeZone: "Europe/Moscow",
       }
-    else {
-      await addLikeById(track_id, user_id);
-      await getMusicList(pageMusicQuery).then((res) => 
-      setTrackList(()=>([...res.tracks]))
-      )
+      
+      const createdAtDateEn = new Date (track.createdAt).toLocaleString("en-US", options);
+      const createdAtDateRu = new Date (track.createdAt).toLocaleString("ru-RU", options);
+      // Функция для лайков
+      const handleMusicLike = async (track_id, user_id) =>{
+        const trackIsLiked = track_likes.some((s) => s === user_id);
+        console.log(trackIsLiked)
+        try {
+          if (trackIsLiked) {
+            await  deleteMusicLikeById(track_id, user_id );
+            await getMusicList(pageMusicQuery).then((res) => 
+            setTrackList(()=>([...res.tracks]))
+          )
+        }
+        else {
+          await addLikeById(track_id, user_id);
+          await getMusicList(pageMusicQuery).then((res) => 
+          setTrackList(()=>([...res.tracks]))
+        )
       }
     }
     catch(err) {
       console.log(err)
     }
   }
-
+  
   // Чтобы отлайканные актуальный юзером карточки меняли цвет лайка на оранжевый, а при снятии лайка - обратно становились белыми  
   useEffect(()=> {
     if (track_likes?.some((s) => s === currentUser.uid))
-      setMusicIsLiked(true);
-    else setMusicIsLiked(false);
-  }, [track_likes, currentUser])
-  
+    setMusicIsLiked(true);
+  else setMusicIsLiked(false);
+}, [track_likes, currentUser])
+
 
 // Кнопка при нажатии на лайк
 const handleLikeClick = () => {
   if (currentUser !== '') {
     handleMusicLike(track_id, user_id);
     setShowPopoverNotAuth(false)
-    }
+  }
   else setShowPopoverNotAuth(true)
-  } 
+} 
 
 
 // Функция для скачивания
 
-  const downloadTrack = (blob, fileName = track_name) => {
-    const href = URL.createObjectURL(blob);
-    const a = Object.assign(document.createElement("a"), {
-      href,
-      style: "display: none",
-      download: `${fileName}.mp3`,
-      type:'audio/mpeg'
+const downloadTrack = (blob, fileName = track_name) => {
+  const href = URL.createObjectURL(blob);
+  const a = Object.assign(document.createElement("a"), {
+    href,
+    style: "display: none",
+    download: `${fileName}.mp3`,
+    type:'audio/mpeg'
     
-    });
-    document.body.appendChild(a);
-    a.click();
-    URL.revokeObjectURL(href);
-    a.remove();
-  }
+  });
+  document.body.appendChild(a);
+  a.click();
+  URL.revokeObjectURL(href);
+  a.remove();
+}
 
 
 // // Фетч для скачивания
-  const downloadOnClick = (track_source) => {
+const downloadOnClick = (track_source) => {
   fetch(track_source,  {
     headers: {
-    "Content-Type": "audio/mpeg",
-    "Content-Disposition": "attachment"},
-  })
-  .then((res) => res.blob())
-  .then((blob) => {
-    downloadTrack(blob)
-  });
-}
-//--------------ЛОГИКА ДЛЯ ПЛЕЕРА------------
-// Стейты
-const [isPlaying, setIsPlaying] = useState(false)  
-// UseSound
-const [play, { pause, duration, stop,  sound}] = useSound(track_source, {interrupt: false, onend : () => setIsPlaying(false)});
-
-// Кнопка для воспроизведения и паузы
+      "Content-Type": "audio/mpeg",
+      "Content-Disposition": "attachment"},
+    })
+    .then((res) => res.blob())
+    .then((blob) => {
+      downloadTrack(blob)
+    });
+  }
+  //--------------ЛОГИКА ДЛЯ ПЛЕЕРА------------
+  // Стейты
+  
+  // UseSound
+  const [play, { pause, duration, stop,  sound}] = useSound(track_source, {interrupt: false, onend : () => setIsPlaying(false)});
+  const [isPlaying, setIsPlaying] = useState(false)  
+  
+  // Кнопка для воспроизведения и паузы
   const playingButton = () => {
     if (isPlaying) {
       pause();
@@ -224,16 +234,39 @@ useEffect(()=> {
     ) 
 }, [])
 
-// Для удаления карточки
-const deleteMusicCard = async () => {
-  await deleteTrackByID(track_id, track_source);
 
-    setIsPlaying(false);
-    setShowModalDelete(false);
-    await getMusicList(pageMusicQuery).then((res) => 
-    setTrackList(()=>([...res.tracks]))
-    )
+
+  const deleteMusicCard = async (textID) => {
+    try {
+      await deleteTrackByID(track_id, track_source).then((newTracks)=>{
+        
+        const newTracklength = newTracks.length - 1;
+        
+        setTrackList(()=>([...newTracks]))
+        setShowModalDelete(false);
+        console.log(newTracklength)
+        if (newTracklength === 4 * (pagesMusicNumber - 1)) {
+          setPageMusicQuery(st => st - 1);
+          navigate(`/music?page=${pageMusicQuery}`)
+          setShowPagination(false)
+        }
+        else {
+          navigate(`/texts?page=${pageMusicQuery}`)
+        
+        }
+        
+  });
   }
+  catch(err) {
+    console.log(err)
+  }
+}
+
+
+
+
+
+
 
 const [thumbnail, seThumbnail] = useState()
 useEffect(()=> {

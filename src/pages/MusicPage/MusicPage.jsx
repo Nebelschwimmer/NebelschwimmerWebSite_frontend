@@ -11,7 +11,7 @@ import cn from 'classnames'
 import { Spinner } from '../../components/Spinner/Spinner';
 
 
-export const MusicPage = ({langEn, trackList, pageMusicQuery, setPageMusicQuery, pagesMusicNumber, setPagesMusicNumber, setTrackList, showModal, setShowModal, currentUser}) => {
+export const MusicPage = ({langEn, trackList, pageMusicQuery, isPlaying, setIsPlaying, setPageMusicQuery, pagesMusicNumber, setPagesMusicNumber, setTrackList, showModal, setShowModal, currentUser}) => {
 
   const [searchMusicQuery, setSearchMusicQuery] = useState('')
   const [pages, setPages] = useState([]);
@@ -24,6 +24,80 @@ export const MusicPage = ({langEn, trackList, pageMusicQuery, setPageMusicQuery,
 
   const navigate = useNavigate()
 
+
+
+  
+  useEffect(()=>{ 
+    if (searchMusicQuery === "") {
+      
+      getMusicList(pageMusicQuery).then((res) => {
+      setTrackList(()=>([...res.tracks]));
+      setPagesMusicNumber(res.totalPages);
+      setSearchRes(false); 
+      navigate(`/music?page=${pageMusicQuery}`)
+      })
+    }
+    else { 
+      
+      searchMusic(searchMusicQuery).then((res)=>{
+        setTrackList(()=>([...res]));
+        if (res.length === 0) { 
+        setSearchRes(true);
+        setShowPagination(false);
+        }
+        setShowPagination(false);
+      
+        })
+        
+    }
+    
+      }, [searchMusicQuery, pageMusicQuery])
+  
+  
+  const handleSearchMusicInputChange = (event) => { 
+    setSearchMusicQuery(event.target.value);
+  }
+  
+  
+  useEffect(() => {
+    const paginationArr = [...Array(pagesMusicNumber).keys()].map((e) => e + 1);
+  
+    let start = Math.max(1, pageMusicQuery - 2); 
+    let end = Math.min(pagesMusicNumber, start + 4); 
+    if (end === pagesMusicNumber) {
+      start = Math.max(1, end - 4);
+    }
+  
+  
+    if (end < pagesMusicNumber) {
+      end--; 
+      setPages([...paginationArr.slice(start - 1, end), '...']);
+    } else {
+      setPages(paginationArr.slice(start - 1, end));
+    }
+  }, [pageMusicQuery, pagesMusicNumber]);
+  
+  
+  const handleBackArrowClick = () => {
+    if (pageMusicQuery > 1)
+    setPageMusicQuery(
+    st => st - 1
+    )
+  }
+  const handleForwardArrowClick = () => {
+    if (pageMusicQuery < pagesMusicNumber)
+    setPageMusicQuery(
+    st => st + 1
+    )
+  }
+  
+
+  const handlePublishClick = () => {
+    if (!disButton)
+    navigate('/add-track')
+    else navigate('/sign-in')
+  }
+  
   useEffect(()=>{
     if (!currentUser) {
       setDisButton(true);
@@ -32,100 +106,21 @@ export const MusicPage = ({langEn, trackList, pageMusicQuery, setPageMusicQuery,
   }, [currentUser])
   
   
+  
+  useEffect(()=>{
+    if (searchMusicQuery === '' && pagesMusicNumber > 1)
+    setShowPagination(true);
+    else setShowPagination(false)
+  }, [searchMusicQuery, pagesMusicNumber])
+
+
+  
   const user_id = currentUser.uid
 
-const handleSearchMusicInputChange = (event) => {
-  setSearchMusicQuery(event.target.value);
-}
-const handleSearchMusicInputKeyDown = async (e) => {
-  if(e.key === 'Enter' && searchMusicQuery !== undefined) {
-    await searchMusic(searchMusicQuery).then((res)=>{
-      setTrackList(res);
-      if (res.length === 0) {
-        setSearchRes(true)
-      }
-      else setSearchRes(false);
-    })
-  } 
-}
-
-const onSearchClick = async () => {
-  if (searchMusicQuery !== '')
-  await searchMusic(searchMusicQuery).then((res)=>{
-    setTrackList(res)
-    });
-  else  {
-    document.getElementById('search_input').focus()
-  }
-}
-
-useEffect(()=>{ 
-  if (searchMusicQuery === "" || searchMusicQuery === undefined) {
-    getMusicList(pageMusicQuery).then((res) => {
-      setTrackList(()=>([...res.tracks]));
-      setPagesMusicNumber(res.totalPages);
-      navigate(`/music?page=${pageMusicQuery}`)
-    })
-  }
-}, [searchMusicQuery, pageMusicQuery, pagesMusicNumber])
-
-const handleBackArrowClick = () => {
-  if (pageQuery > 1)
-  setPageMusicQuery(
-  st => st - 1
-  )
-}
-const handleForwardArrowClick = () => {
-  if (pageMusicQuery < pagesMusicNumber)
-  setPageMusicQuery(
-  st => st + 1
-  )
-}
-
-useEffect(()=>{ 
-  const paginationArr = [...Array(pagesMusicNumber).keys()].map(e => (e + 1));
-  const limitArr = []
-  for (let i = 0; i < 5; i++) {
-    limitArr.push((i * 5) + 5)
-  }
-  limitArr.forEach((el, ind, arr) => {
-    if (pageMusicQuery > 5) {
-      const slicedPaginationArray = paginationArr.slice(5, pagesMusicNumber)  
-      
-      setPages(slicedPaginationArray)
-    }
-    else 
-    setPages(()=>(paginationArr.slice(0, 5))); 
-    }
-  )
-}, [pageMusicQuery, trackList])
-
-useEffect(()=>{
-  if (trackList.length === 0 && pagesMusicNumber >= 1)
-  setPageMusicQuery(st => st - 1)
-  }, [trackList, pagesMusicNumber])
 
 
-
-
-const handlePublishClick = () => {
-  if (!disButton)
-  navigate('/add-track')
-  else navigate('/sign-in')
-}
-
-useEffect(()=>{
-  if (trackList.length === 0 && searchMusicQuery!== '')
-  setShowPagination(false);
-  else if (pagesMusicNumber > 1 && searchMusicQuery === '')
-  setShowPagination(true);
-  else  setShowPagination(false);
-}, [ trackList, searchMusicQuery])
-
-
-
-
-  return (
+  
+return (
     <div className='music_page_container'>
 
       <div  className='music_page_container_title_btn_wrapper'>
@@ -144,18 +139,28 @@ useEffect(()=>{
               placeholder={langEn ? 'Search tracks' : 'Искать треки'}
               value={searchMusicQuery ?? ''}
               onChange={handleSearchMusicInputChange}
-              onKeyDown={handleSearchMusicInputKeyDown}
               >  
               </input>
-              <span onClick={()=>{onSearchClick()}} title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon/></span>
+              <span title={langEn ? 'Search' : "Искать"} className='texts__page__input__search__icon'><SearchIcon/></span>
             </div>
       
             
       {trackList.length !== 0 ? 
-      < MusicList user_id={user_id}  showModal={showModal} setShowModal={setShowModal} trackList={trackList} 
-        setTrackList={setTrackList} langEn={langEn}  currentUser={currentUser} pageMusicQuery={pageMusicQuery} setPageMusicQuery={setPageMusicQuery}
+      < MusicList 
+        isPlaying={isPlaying}
+        setIsPlaying={setIsPlaying}
+        user_id={user_id}
+        howModal={showModal} 
+        setShowModal={setShowModal} 
+        trackList={trackList} 
+        setTrackList={setTrackList} 
+        langEn={langEn}  
+        currentUser={currentUser} 
+        pageMusicQuery={pageMusicQuery} 
+        setPageMusicQuery={setPageMusicQuery}
         pagesMusicNumber={pagesMusicNumber}
-        />
+        setShowPagination={setShowPagination}
+      />
       :
       <div className='not__found'>
       {!searchRes ?
@@ -169,27 +174,26 @@ useEffect(()=>{
   }
       </div>
       }
-      {showPagination ?
+      {showPagination &&
         <div className='texts__page__pagination__container'>
           <div className='texts__page__pagination__card' onClick={()=>{handleBackArrowClick()}}><ArrowBackIosIcon fontSize=''/></div>
           {pages.map((currentMusicPage, i)=>{
 
             return (
             <PaginationMusicBoard
-            currentMusicPage={currentMusicPage}
-            pageMusicQuery={pageMusicQuery}
-            setPageMusicQuery={setPageMusicQuery}
-            key={i}
+              currentMusicPage={currentMusicPage}
+              pageMusicQuery={pageMusicQuery}
+              setPageMusicQuery={setPageMusicQuery}
+              key={i}
             />)
           })}
         
         <div 
           className='texts__page__pagination__card'
           onClick={()=>{handleForwardArrowClick()}}
-          ><ArrowForwardIosIcon fontSize=''/></div>
+          ><ArrowForwardIosIcon fontSize=''/>
         </div>
-        :
-        <div></div> 
+        </div>
       }
 
     </div>

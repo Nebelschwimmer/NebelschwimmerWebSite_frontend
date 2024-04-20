@@ -104,7 +104,7 @@ useEffect(()=>{
         setTexts(()=>([...newTexts]));
         setShowModal(false);
         
-        if (newTextslength === 5 * (pagesNumber - 1)) {
+        if (newTextslength === 4 * (pagesNumber - 1)) {
         
           setPageQuery(st => st - 1);
           navigate(`/texts?page=${pageQuery}`)
