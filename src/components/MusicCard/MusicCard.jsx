@@ -289,7 +289,7 @@ useEffect(()=> {
   if (track_image === 'https://img.freepik.com/premium-photo/neon-flat-musical-note-icon-3d-rendering-ui-ux-interface-element-dark-glowing-symbol_187882-2481.jpg?size=626&ext=jpg')
   seThumbnail(defaultPicture)
 else seThumbnail(track_image)
-}, [])
+}, [track_image])
 
 
   return (
