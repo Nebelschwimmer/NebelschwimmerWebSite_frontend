@@ -42,6 +42,9 @@ function App() {
 
  const [pagesMusicNumber, setPagesMusicNumber] = useState();
 
+
+
+
   // Функция для навигации
   const navigate = useNavigate()
 
@@ -83,8 +86,6 @@ function App() {
   
 
 
-
-
 return (
   <>
     <Header showModal={showModal} setShowModal={setShowModal} langEn={langEn} setLangEn={setLangEn} currentUser={currentUser} user={user} onSignOut={onSignOut} />
@@ -94,7 +95,7 @@ return (
         <Route path='/' element={<HomePage langEn={langEn} currentUser={currentUser} setLangEn={setLangEn} />}></Route> 
         <Route path='/texts/:textID' element={<SingleTextPage setTexts={setTexts} pageQuery={pageQuery} setPageQuery={setPageQuery} pagesNumber={pagesNumber}  currentUser={currentUser} 
           setLangEn={setLangEn} showModal={showModal} setShowModal={setShowModal} texts={texts}  langEn={langEn} />}> </Route> 
-        <Route path='/music' element={<MusicPage setPagesMusicNumber={setPagesMusicNumber} pagesMusicNumber={pagesMusicNumber} pageMusicQuery={pageMusicQuery} setPageMusicQuery={setPageMusicQuery} 
+        <Route path='/music' element={<MusicPage  setPagesMusicNumber={setPagesMusicNumber} pagesMusicNumber={pagesMusicNumber} pageMusicQuery={pageMusicQuery} setPageMusicQuery={setPageMusicQuery} 
         showModal={showModal} setShowModal={setShowModal} trackList={trackList} setTrackList={setTrackList}  langEn={langEn} currentUser={currentUser}/>}>
         </Route>
         <Route path='/texts' element={<TextsPage pagesNumber={pagesNumber} setPagesNumber={setPagesNumber} currentUser={currentUser} pageQuery={pageQuery} setPageQuery={setPageQuery} showModal={showModal} 

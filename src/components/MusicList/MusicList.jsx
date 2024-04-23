@@ -1,7 +1,7 @@
 import {MusicCard} from '../MusicCard/MusicCard'
 import { Spinner } from '../Spinner/Spinner';
 import './music_track_list.scss'
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 
 
 export const MusicList = ({user_id, setTrackList, setShowPagination, pagesMusicNumber, setPageMusicQuery, pageMusicQuery, currentUser, trackList, langEn}) => {
@@ -14,6 +14,8 @@ export const MusicList = ({user_id, setTrackList, setShowPagination, pagesMusicN
     setCheckPlaying(check)
   }
 
+
+
   return (
 <div className='track__list'>
 
@@ -23,10 +25,12 @@ export const MusicList = ({user_id, setTrackList, setShowPagination, pagesMusicN
           return (
             <MusicCard
               {...el}
+            
               pagesMusicNumber={pagesMusicNumber}
               setPageMusicQuery={setPageMusicQuery}
               pageMusicQuery={pageMusicQuery}
               track={el}
+             
               key={el._id}
               langEn={langEn}
               currentUser={currentUser}

@@ -5,3 +5,16 @@ export const scrollToTop = () => {
     behavior: "smooth",
   });
 }
+
+export const useDebounce = (searchQuery, delay = 500) => {
+  const [debounceValue, setDebounceValue] = useState(searchQuery);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebounceValue(searchQuery);
+    }, delay);
+
+    return () => clearTimeout(timeout);
+  }, [searchQuery]);
+  return debounceValue;
+};

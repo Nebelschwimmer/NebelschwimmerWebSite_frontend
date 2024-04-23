@@ -1,7 +1,6 @@
 .music__card {
   width: 100%;
   box-shadow: var(--box-shadow-gl);
-  // background-color: var(--main-bg-color-op-main);
   background: radial-gradient(ellipse farthest-corner at center , rgb(63, 9, 38) 0%, rgba(82, 1, 48, 0.0) 100%);
   border-radius: 10px;
   &__loading{
@@ -24,7 +23,6 @@
     padding-right: 30px;
     padding-left: 10px;
     padding-top: 10px;
-    // width: clamp(18.75rem, -4.911rem + 63.095vw, 51.875rem);
   }
   &__img__wrapper {
 

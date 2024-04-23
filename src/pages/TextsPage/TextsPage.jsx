@@ -25,13 +25,8 @@ const navigate = useNavigate();
 
 
 
-
-
-
-
 useEffect(()=>{ 
   if (searchQuery === "") {
-    console.log(pageQuery)
     getTextsList(pageQuery).then((res) => {
     setTexts(()=>([...res.texts]));
     setPagesNumber(res.totalPages);
@@ -40,15 +35,13 @@ useEffect(()=>{
     })
   }
   else { 
-    console.log(pageQuery)
       searchText(searchQuery).then((res)=>{
       setTexts(()=>([...res]));
       if (res.length === 0) { 
-      setSearchRes(true);
+        setSearchRes(true);
+        setShowPagination(false);
+        }
       setShowPagination(false);
-      }
-      setShowPagination(false);
-    
       })
       
   }

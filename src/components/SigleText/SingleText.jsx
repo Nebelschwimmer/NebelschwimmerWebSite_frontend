@@ -20,7 +20,8 @@ import { updateTextNameEn } from '../../utils/api_texts';
 import { updateTextNameRu } from '../../utils/api_texts';
 import { getPublisherInfoByID } from '../../utils/api_texts';
 
-export const SingleText = ({singleText, langEn, setTexts, texts, pagesNumber, pageQuery, setSingleText, showModal, setLangEn, setShowModal, setPageQuery, currentUser, handleTextLike}) => {
+export const SingleText = ({singleText, langEn, setTexts, pagesNumber, pageQuery, setSingleText, 
+  showModal, setLangEn, setShowModal, setPageQuery, currentUser, handleTextLike}) => {
 
 const navigate = useNavigate(); 
 
@@ -413,7 +414,10 @@ useEffect(()=>{
               <span >Sign in to add text to favorites and comment it</span> : 
               <span>Войдите, чтобы ставить лайки и комментировать</span>}
             </Link>}
-            <button title={langEn ? 'Add to favorites' : 'Мне нравится'} className={cn("single__text__top__lower__like__btn", { ["single__text__top__lower__like__btn__Active"]: favText })} onClick={()=> onTextLike()}>
+            <button 
+            title={langEn ? 'Add to favorites' : 'Мне нравится'} 
+            className={cn("single__text__top__lower__like__btn", { ["single__text__top__lower__like__btn__Active"]: favText })} 
+            onClick={()=> onTextLike()}>
               <FavoriteIcon fontSize='small'/>
             </button>
             <span title={langEn ? 'Like it' : 'Нравится'}>{singleText.likes.length}</span>

@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { Spinner } from "../Spinner/Spinner";
 import { getMusicList } from "../../utils/api_music";
 import defaultPicture from '../../pictures/def_thumb.png'
-import { useLocation } from "react-router-dom";
+
 
 export const MusicCard = ({track_name, track, pageMusicQuery, langEn, setTrackList, 
   currentUser, track_image, track_source, user_id, setShowPagination, pagesMusicNumber , setPageMusicQuery,  checkPlaying, checkTrackPlaying}) => {
@@ -39,17 +39,15 @@ export const MusicCard = ({track_name, track, pageMusicQuery, langEn, setTrackLi
   // отображаем имя пользователя по запросу
   const [authorName, setAuthorName] = useState('');
   const [missingFile, setMissingFile] = useState(false)
+
+
+
+
+
+
   // Служебные переменные
   const navigate = useNavigate()
   
-  // const location = useLocation()
-  // useEffect(() => {
-    //   if (isPlaying && location.pathname !== '/music') {
-      //     setIsPlaying(false);
-      //     navigate(0 , { replace: true });
-      //   }
-      // }, [location]);
-      
       
       
       const track_id = track._id
@@ -137,36 +135,59 @@ const downloadOnClick = (track_source) => {
     });
   }
   //--------------ЛОГИКА ДЛЯ ПЛЕЕРА------------
-  // Стейты
-  
-  // UseSound
-  const [play, { pause, duration, stop,  sound}] = useSound(track_source, {interrupt: false, onend : () => setIsPlaying(false)});
+
+
+
+  const getItem = localStorage.getItem('playingTrack');
+
+  const [play, { pause, duration, stop,  sound}] = useSound(track_source, { format: 'mp3', interrupt: false, onend : () => setIsPlaying(false)});
+
   const [isPlaying, setIsPlaying] = useState(false)  
   
-  // Кнопка для воспроизведения и паузы
+
   const playingButton = () => {
+      
+
+
+
     if (isPlaying) {
       pause();
       setIsPlaying(false);
-      
     } 
     else {
+      
       play();
       setIsPlaying(!isPlaying);
-      checkTrackPlaying(track_id)
+      checkTrackPlaying(track_id);
     }
   };
 
-  
+
+
   useEffect(()=>{
-    if (checkPlaying !== track_id) {
+    
+    if (checkPlaying !== track_id ) {
       setIsPlaying(false);
       stop();
     }
       
     }, [checkPlaying])
+    
+    
+  useEffect(() => {
+    return () => {
+      if (sound) {
+        sound.stop();
+      }
+    };
+  }, [sound]);
+    
+    
+    
     // Время
-const [currentTime, setCurrentTime] = useState({
+
+
+    const [currentTime, setCurrentTime] = useState({
   min: "",
   sec: "",
 });
@@ -236,28 +257,23 @@ useEffect(()=> {
 
 
 
-  const deleteMusicCard = async (textID) => {
+  const deleteMusicCard = async () => {
     try {
       await deleteTrackByID(track_id, track_source).then((newTracks)=>{
-        
         const newTracklength = newTracks.length - 1;
-        
         setTrackList(()=>([...newTracks]))
         setShowModalDelete(false);
-        console.log(newTracklength)
         if (newTracklength === 4 * (pagesMusicNumber - 1)) {
           setPageMusicQuery(st => st - 1);
           navigate(`/music?page=${pageMusicQuery}`)
           setShowPagination(false)
         }
         else {
-          navigate(`/texts?page=${pageMusicQuery}`)
-        
+          navigate(`/music?page=${pageMusicQuery}`)
         }
-        
-  });
-  }
-  catch(err) {
+      });
+    }
+    catch(err) {
     console.log(err)
   }
 }
@@ -357,7 +373,6 @@ else seThumbnail(track_image)
 
 
             <div  className="music__card__left__player">
-              
 
             <div className="music__card__left__player__running__wrapper">
               <div className="music__card__left__player__running__time">

@@ -11,7 +11,7 @@ import cn from 'classnames'
 import { Spinner } from '../../components/Spinner/Spinner';
 
 
-export const MusicPage = ({langEn, trackList, pageMusicQuery, isPlaying, setIsPlaying, setPageMusicQuery, pagesMusicNumber, setPagesMusicNumber, setTrackList, showModal, setShowModal, currentUser}) => {
+export const MusicPage = ({langEn, stopPlaying, trackList, pageMusicQuery, isPlaying, setIsPlaying, setPageMusicQuery, pagesMusicNumber, setPagesMusicNumber, setTrackList, showModal, setShowModal, currentUser}) => {
 
   const [searchMusicQuery, setSearchMusicQuery] = useState('')
   const [pages, setPages] = useState([]);
@@ -23,6 +23,14 @@ export const MusicPage = ({langEn, trackList, pageMusicQuery, isPlaying, setIsPl
   const [searchRes, setSearchRes] = useState(false)
 
   const navigate = useNavigate()
+
+
+  // useEffect(() => {
+  //   // Stop playback when component unmounts or user navigates away from the music page
+  //   return () => {
+  //     setIsPlaying(false);
+  //   };
+  // }, []);
 
 
 
@@ -147,11 +155,7 @@ return (
             
       {trackList.length !== 0 ? 
       < MusicList 
-        isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
         user_id={user_id}
-        howModal={showModal} 
-        setShowModal={setShowModal} 
         trackList={trackList} 
         setTrackList={setTrackList} 
         langEn={langEn}  
