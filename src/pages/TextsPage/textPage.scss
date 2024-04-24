@@ -191,6 +191,15 @@
   text-align: center;
 }
 
+.spinner__container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 35vh;
+}
+
+
 @media screen and (max-width: 480px) {
   .texts__page {
     min-height: 100vh;

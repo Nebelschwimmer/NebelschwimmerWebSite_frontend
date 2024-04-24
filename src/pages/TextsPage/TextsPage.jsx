@@ -108,6 +108,11 @@ useEffect(()=>{
 }, [searchQuery, pagesNumber])
 
 
+useEffect(()=>{
+if (texts.length < 5)
+setShowPagination(false)
+}, [texts])
+
 
   return (
     <div className='texts__page'>
@@ -155,7 +160,7 @@ useEffect(()=>{
       :
       <div className='not__found'>
           {!searchRes ?
-          <Spinner/>
+          <div className='spinner__container'><Spinner/></div>
             
           :
         <div className='not__found'>

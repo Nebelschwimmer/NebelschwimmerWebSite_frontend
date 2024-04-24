@@ -168,7 +168,7 @@ return (
       :
       <div className='not__found'>
       {!searchRes ?
-      <Spinner/>
+      <div className='spinner__container'><Spinner/></div>
         
       :
     <div className='not__found'>

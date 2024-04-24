@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "dotenv": "^16.4.5",
     "file-loader": "^6.2.0",
     "react-scripts": "^5.0.1"
   }

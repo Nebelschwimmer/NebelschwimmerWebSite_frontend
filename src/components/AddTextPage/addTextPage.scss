@@ -132,7 +132,11 @@ small {
 @media screen and (max-width: 480px) {
   .add__text {
     min-height: 100vh;
+    padding: 10px;
+    margin: 0;
+    width: 100%;
   }
+
   .add__text__input {
     width: 80%;
     font-size: 14px;
