@@ -10,7 +10,7 @@ import cn from 'classnames'
 import { Spinner } from '../../components/Spinner/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchMusic, searchAndFetchMusic } from '../../redux/slices/music_slice'
-
+import { searchMusic } from '../../utils/api_music';
 
 
 export const MusicPage = ({ pageMusicQuery, setPageMusicQuery, pagesMusicNumber, setPagesMusicNumber, setTrackList, currentUser}) => {
@@ -43,14 +43,15 @@ export const MusicPage = ({ pageMusicQuery, setPageMusicQuery, pagesMusicNumber,
     }
     else { 
       
-        dispatch(searchAndFetchMusic(searchMusicQuery))
-        if (res.length === 0) { 
+      dispatch(searchAndFetchMusic(searchMusicQuery));
+        if (trackList.length === 0) { 
         setSearchRes(true);
         setShowPagination(false);
         }
         setShowPagination(false);
       
-        }
+        
+      }
 
       }, [searchMusicQuery, totalPages, pageMusicQuery])
   
@@ -59,7 +60,7 @@ export const MusicPage = ({ pageMusicQuery, setPageMusicQuery, pagesMusicNumber,
     setSearchMusicQuery(event.target.value);
   }
   
-  
+  console.log(searchMusicQuery)
   useEffect(() => {
     const paginationArr = [...Array(pagesMusicNumber).keys()].map((e) => e + 1);
   

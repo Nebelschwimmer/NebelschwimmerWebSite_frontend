@@ -46,7 +46,7 @@ const musicSlice = createSlice({
     })
     .addCase(searchAndFetchMusic.fulfilled, (state, action) => {
       state.loading = false;
-      state.tracks = action.payload;
+      state.trackList = action.payload;
     })
     },
 });

@@ -38,7 +38,7 @@ useEffect(()=>{
   
   else { 
     dispatch(searchAndFetchTexts(searchQuery));
-      if (res.length === 0) { 
+      if (texts.length === 0) { 
         setSearchRes(true);
         setShowPagination(false);
         }

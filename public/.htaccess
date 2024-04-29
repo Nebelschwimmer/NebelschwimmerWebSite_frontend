@@ -12,3 +12,4 @@ Options -MultiViews
   RewriteCond %{REQUEST_FILENAME} !-l
   RewriteRule . /index.html [L]
 </IfModule>
+

@@ -111,7 +111,7 @@ return (
 
       <Routes>
         <Route path='/' element={<HomePage  currentUser={currentUser} />}></Route> 
-        <Route path='/user/:userID' element={<UserPage wsData={wsData}/>}></Route> 
+        {/* <Route path='/user/:userID' element={<UserPage wsData={wsData}/>}></Route>  */}
         <Route path='/texts/:textID' element={<SingleTextPage pageQuery={pageQuery} setPageQuery={setPageQuery} pagesNumber={pagesNumber}  currentUser={currentUser} 
         showModal={showModal} setShowModal={setShowModal}  />}> </Route> 
         <Route path='/music' element={<MusicPage  setPagesMusicNumber={setPagesMusicNumber} pagesMusicNumber={pagesMusicNumber} pageMusicQuery={pageMusicQuery} setPageMusicQuery={setPageMusicQuery} 

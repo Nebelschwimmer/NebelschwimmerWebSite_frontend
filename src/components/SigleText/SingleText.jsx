@@ -403,7 +403,8 @@ useEffect(()=>{
           <span>{langEn ? "Published" : "Опубликовал"} </span>
           <div>
           
-            <Link style={{textDecoration: 'none', color: 'white'}} to={`/user/${publisher_id}`}>{publisheInfo.publisher_name}</Link>
+            {/* <Link style={{textDecoration: 'none', color: 'white'}} to={`/user/${publisher_id}`}>{publisheInfo.publisher_name}</Link> */}
+            <span>{publisheInfo.publisher_name}</span>
             <img src={publisheInfo.publisher_avatar} width='20px' height='20px'/>
           </div>
           <span>{createdAtDate}</span>
