@@ -2,9 +2,11 @@ import { Link } from "react-router-dom"
 import MyPhoto from '../../pictures/MyPhoto.jpg'
 import './aboutPage.scss'
 import TelegramIcon from '@mui/icons-material/Telegram';
+import { useSelector } from 'react-redux';
 
+export const AboutPage = () => {
 
-export const AboutPage = ({langEn}) => {
+  const langEn = useSelector((state) => state.langEn);
 
  return (
   <div className="about__main">
@@ -24,13 +26,13 @@ export const AboutPage = ({langEn}) => {
             <li>Use-Sound hook</li>
             <li>Firebase Authentication</li>
             <li>SASS</li>
-            
+            <li>Redux Toolkit</li>
           </ul>
         </div>
         
         <div className="about__page__techincal__info__wrapper">
           <h3>Backend</h3>
-          <p>The project's Backend was created in <b>Express JS</b> with the use of <b>MONGO DB</b> as database.</p>
+          <p>The project's Backend was created in <b>Express JS</b> with the use of <b>MONGO DB</b> as the database for music and texts and PostgreSQL for pictures</p>
           <ul>There I used the following additional packages:
             <li>Body-parser</li>
             <li>CORS</li>
@@ -38,6 +40,7 @@ export const AboutPage = ({langEn}) => {
             <li>Mongoose</li>
             <li>Nodemon</li>
             <li>Firebase Admin SDK</li>
+            <></>
           </ul>
         </div>
       </div>
@@ -63,7 +66,7 @@ export const AboutPage = ({langEn}) => {
         
         <div className="about__page__techincal__info__wrapper">
           <h3>Бэкенд</h3>
-          <p>Бэкенд проекта был создан в  <b>Express JS</b> с использование <b>MONGO DB</b> в качестве базы данных.</p>
+          <p>Бэкенд проекта был создан в  <b>Express JS</b> с использование <b>MONGO DB</b> в качестве базы данных для музыки и текстов и PostgreSQL для картинок</p>
           <ul>Были использованы следующие дополнительные пакеты:
             <li>Body-parser</li>
             <li>CORS</li>

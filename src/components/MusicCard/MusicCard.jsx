@@ -18,12 +18,17 @@ import { useNavigate } from "react-router-dom";
 import { Spinner } from "../Spinner/Spinner";
 import { getMusicList } from "../../utils/api_music";
 import defaultPicture from '../../pictures/def_thumb.png'
+import { useDispatch } from 'react-redux';
+// import { setTrackList } from "../../redux/slices/music_slice";
+import { fetchMusic, searchAndFetchMusic } from '../../redux/slices/music_slice'
 
-
-export const MusicCard = ({track_name, track, pageMusicQuery, langEn, setTrackList, 
+export const MusicCard = ({track_name, track, pageMusicQuery, langEn,
   currentUser, track_image, track_source, user_id, setShowPagination, pagesMusicNumber , setPageMusicQuery,  checkPlaying, checkTrackPlaying}) => {
   
-  //-------------СТЕЙТЫ-----------
+
+  const dispatch = useDispatch()
+  
+    //-------------СТЕЙТЫ-----------
     // для лайков
   const [musicIsLiked, setMusicIsLiked] = useState(false);
   // для попапа о том, что нужно авторизоваться
@@ -138,7 +143,7 @@ const downloadOnClick = (track_source) => {
 
 
 
-  const getItem = localStorage.getItem('playingTrack');
+
 
   const [play, { pause, duration, stop,  sound}] = useSound(track_source, { format: 'mp3', interrupt: false, onend : () => setIsPlaying(false)});
 
@@ -261,7 +266,10 @@ useEffect(()=> {
     try {
       await deleteTrackByID(track_id, track_source).then((newTracks)=>{
         const newTracklength = newTracks.length - 1;
-        setTrackList(()=>([...newTracks]))
+        
+        dispatch(fetchMusic(pageMusicQuery))
+        
+        
         setShowModalDelete(false);
         if (newTracklength === 4 * (pagesMusicNumber - 1)) {
           setPageMusicQuery(st => st - 1);

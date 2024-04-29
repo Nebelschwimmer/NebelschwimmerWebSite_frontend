@@ -5,14 +5,15 @@ import { addNewText } from '../../utils/api_texts';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Backbutton } from '../BackButton/BackButton';
+import { useSelector } from 'react-redux';
 
-export const AddTextPage = ({langEn, pagesNumber, pageQuery, setPageQuery, currentUser, texts, setTexts}) => {
+export const AddTextPage = ({currentUser, texts, setTexts}) => {
 const navigate = useNavigate()
 const [printAdded, setPrintAdded] = useState(false)
 const [checked, setChecked] = useState(false);
 const [showSecondTextarea, setShowSecondTextarea] = useState(true);
 
-
+const langEn = useSelector((state) => state.langEn);
 
 
 const {

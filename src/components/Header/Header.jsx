@@ -15,45 +15,45 @@ import rus_flag from '../../pictures/rus_flag.png';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoIcon from '@mui/icons-material/Info';
 import cn from "classnames";
-import { ModalWindow } from '../ModalWindow/ModalWindow.jsx';
+import { setLangEn } from '../../redux/slices/language_slice.js';
+import { useDispatch, useSelector } from 'react-redux';
 
-export const Header = ({langEn, setLangEn, currentUser, onSignOut, showModal, setShowModal}) => {
 
-  // Стейт для отображения аватара
+
+export const Header = ({currentUser, onSignOut}) => {
+
+
+  const langEn = useSelector((state) => state.langEn);
+  const dispatch = useDispatch();
+
+
+
   const [avatarURL, setAvatarURL] = useState('');
-  // Стейт для отображения имени
-  const [name, setName] = useState('')
-  // Стейт для поповера
   const [showPopOver, setShowPopover] = useState(false)
-
   const [showLangPopOver, setShowLangPopOver] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
-const [showModalSignout, setShowModalSignout] = useState(false)
+
   
-  
-  // Указываем Реакту, чтобы не показывал поповер, когда пользователь регистрируется либо входит в аккаунт
+
   useEffect(()=>{
     if (currentUser !== null) setShowPopover(false)
   }, [currentUser])
 
-// Если объект с пользователем не пришел, возвращаем undefined  
   useEffect(()=>{
     if (currentUser === null) return
   }, [currentUser])
 
-// Записываем в переменные аватар, имя и email из объекта пользователя
+
   const photoURL = currentUser.photoURL;
   const userName = currentUser.displayName;
   const userEmail = currentUser.email;
 
-  // Если пользователь не указал имя, отображаем его email
-  useEffect(()=>{
-    if (userName !== null) setName(userName) 
-    else setName(userEmail)
-  }, [userName, currentUser])
 
-  // Если пользователь авторизован, URL его аватара приходит из объекта. Если пользователь не вошел или вошел, но не выбрал ввел ссылку на автар, 
-// отображается картинка по умолчанию
+  // useEffect(()=>{
+  //   if (userName !== null) setName(userName) 
+  //   else setName(userEmail)
+  // }, [userName, currentUser])
+
   useEffect(()=>{
     if (photoURL !== null) {
       setAvatarURL(photoURL)
@@ -61,20 +61,20 @@ const [showModalSignout, setShowModalSignout] = useState(false)
     else setAvatarURL('https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg')
   }, [photoURL, currentUser])
 
-// Для навигации
+
 const navigate = useNavigate()
 
-// Функция для изменения языка.
+
   const onEnLangChange = () => {
-    if (langEn) setLangEn(true)
-    else setLangEn(true);
+    if (langEn) dispatch(setLangEn(true));
+    else dispatch(setLangEn(true));
     scrollToTop();
     setShowLangPopOver(false);
   }
 
   const onRuLangChange = () => {
-    if (!langEn) setLangEn(false)
-    else setLangEn(false);
+    if (!langEn) dispatch(setLangEn(false));
+    else dispatch(setLangEn(false));
     scrollToTop();
     setShowLangPopOver(false);
   }
@@ -139,8 +139,8 @@ const navigate = useNavigate()
           </nav>
           <nav>
             <span className='menu__section'>{langEn ? 'Language / Язык' : 'Язык / Language'}</span>
-            <span onClick={()=>{setLangEn(true)}} className='menu__item'><img src={uk_flag}/> English / Английский </span>
-            <span onClick={()=>{setLangEn(false)}} className='menu__item'><img src={rus_flag}/>Русский / Russian </span>
+            <span onClick={()=>{dispatch(setLangEn(true));}} className='menu__item'><img src={uk_flag}/> English / Английский </span>
+            <span onClick={()=>{dispatch(setLangEn(false));}} className='menu__item'><img src={rus_flag}/>Русский / Russian </span>
           </nav>
           <nav>
             <span className='menu__item' onClick={()=>{navigate('/about')}}><InfoIcon/>{langEn ? 'About project' : 'О проекте'}</span>
@@ -157,7 +157,7 @@ const navigate = useNavigate()
           {currentUser  ? (
           <div className='header_aut_nav_wrapper'>
             <div title={langEn ? 'View Profile' : 'Личный кабинет'} onClick={()=>{navigate('/user-settings')}} className='header_aut_name_img_wrapper'>
-              <span>{userName}</span>
+              <span>{userName || userEmail}</span>
               <img className='header_aut_nav_img' src={avatarURL}/>
             </div>
         
@@ -200,9 +200,11 @@ const navigate = useNavigate()
         <nav className='header_controls_block'>
           <div className='header_aut_nav'>
           {currentUser ? (
-          <div className='header_aut_nav_wrapper' onClick={()=>{navigate('/user-settings')}}>
-            <img  className='header_aut_nav_img' src={avatarURL}/>
-            <span>{userName}</span>
+          <div className='header_aut_nav_wrapper'>
+          <div title={langEn ? 'View Profile' : 'Личный кабинет'} onClick={()=>{navigate('/user-settings')}} className='header_aut_name_img_wrapper'>
+              <span>{userName || userEmail}</span>
+              <img className='header_aut_nav_img' src={avatarURL}/>
+            </div>
             <button className='header_controls_block_single_btn_signin' title='Выйти' onClick={()=>{setShowPopover(true)}}> <LogoutIcon fontSize='small'/></button>
             {!!showPopOver &&
           <div className='header_popover'>
@@ -240,8 +242,8 @@ const navigate = useNavigate()
       }
       <div className='header_controls_block_languages' >
           
-          <div className='header_controls_languages_wrapper' onClick={()=>{setShowLangPopOver(true)}} title={langEn? "Switch languages" : "Переключить язык"}>
-          {langEn? "Language" : "Язык"}
+          <div className='header_controls_languages_wrapper' onClick={()=>{setShowLangPopOver(true)}} title={langEn? "Переключить язык" : "Switch to English"}>
+          {langEn? "Язык" : "Language"}
               <img className='header_lang_img' src={langEn? uk_flag : rus_flag} alt='flag'/>
           </div>
           {showLangPopOver &&

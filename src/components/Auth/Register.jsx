@@ -6,13 +6,16 @@ import { useEffect, useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useForm, } from "react-hook-form";
 import { Spinner } from '../Spinner/Spinner';
+import { useSelector } from 'react-redux';
 
 
-export const Register = ({currentUser, langEn, setCurrentUser, signInWithGoogle}) => {
+
+export const Register = ({setCurrentUser, signInWithGoogle}) => {
+  
   const navigate = useNavigate()
 // Стейт для надписи об ошибке
   const [emailExists, setEmailExists] = useState('')
-
+  const langEn = useSelector((state) => state.langEn);
     // Стейт для спиннера
     const [showSpinner, setShowSpinner] = useState(false);
 

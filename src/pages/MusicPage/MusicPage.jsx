@@ -1,7 +1,6 @@
 import {MusicList} from '../../components/MusicList/MusicList'
 import './musicPage.scss'
 import { useState, useEffect } from 'react';
-import { getMusicList, searchMusic } from '../../utils/api_music';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 import { PaginationMusicBoard } from './PaginatioMusicBoard';
@@ -9,57 +8,51 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import cn from 'classnames'
 import { Spinner } from '../../components/Spinner/Spinner';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchMusic, searchAndFetchMusic } from '../../redux/slices/music_slice'
 
 
-export const MusicPage = ({langEn, stopPlaying, trackList, pageMusicQuery, isPlaying, setIsPlaying, setPageMusicQuery, pagesMusicNumber, setPagesMusicNumber, setTrackList, showModal, setShowModal, currentUser}) => {
+
+export const MusicPage = ({ pageMusicQuery, setPageMusicQuery, pagesMusicNumber, setPagesMusicNumber, setTrackList, currentUser}) => {
 
   const [searchMusicQuery, setSearchMusicQuery] = useState('')
   const [pages, setPages] = useState([]);
-
   const [showPagination, setShowPagination] = useState(false)
-
   const [disButton, setDisButton] = useState(false)
-
   const [searchRes, setSearchRes] = useState(false)
-
+  
+  
+  
+  const trackList = useSelector((state) => state.music.trackList);
+  
+  
+  const totalPages = useSelector((state) => state.music.totalPages);
+  const langEn = useSelector((state) => state.langEn);
+  
+  const dispatch = useDispatch();
   const navigate = useNavigate()
-
-
-  // useEffect(() => {
-  //   // Stop playback when component unmounts or user navigates away from the music page
-  //   return () => {
-  //     setIsPlaying(false);
-  //   };
-  // }, []);
-
-
-
   
   useEffect(()=>{ 
     if (searchMusicQuery === "") {
       
-      getMusicList(pageMusicQuery).then((res) => {
-      setTrackList(()=>([...res.tracks]));
-      setPagesMusicNumber(res.totalPages);
+      dispatch(fetchMusic(pageMusicQuery));
+      setPagesMusicNumber(totalPages);
       setSearchRes(false); 
       navigate(`/music?page=${pageMusicQuery}`)
-      })
+      
     }
     else { 
       
-      searchMusic(searchMusicQuery).then((res)=>{
-        setTrackList(()=>([...res]));
+        dispatch(searchAndFetchMusic(searchMusicQuery))
         if (res.length === 0) { 
         setSearchRes(true);
         setShowPagination(false);
         }
         setShowPagination(false);
       
-        })
-        
-    }
-    
-      }, [searchMusicQuery, pageMusicQuery])
+        }
+
+      }, [searchMusicQuery, totalPages, pageMusicQuery])
   
   
   const handleSearchMusicInputChange = (event) => { 
@@ -122,7 +115,6 @@ export const MusicPage = ({langEn, stopPlaying, trackList, pageMusicQuery, isPla
   }, [searchMusicQuery, pagesMusicNumber])
 
 
-  
   const user_id = currentUser.uid
 
 

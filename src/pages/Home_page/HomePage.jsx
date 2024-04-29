@@ -1,11 +1,9 @@
 import './home_page.scss';
-;
-import { useNavigate } from 'react-router-dom';
-import { scrollToTop } from '../../utils/utils';
 import { Link } from 'react-router-dom';
-import { Spinner } from '../../components/Spinner/Spinner';
+import { useSelector } from 'react-redux';
 
-export const HomePage = ({langEn, currentUser}) => {
+export const HomePage = ({}) => {
+  const langEn = useSelector((state) => state.langEn);
   return (
   <div className='home__page'>
    
@@ -14,8 +12,7 @@ export const HomePage = ({langEn, currentUser}) => {
       {langEn ?
       <div>
         <p>This website is dedicated to exchanging music and texts related to surrealism.</p>
-      
-        <div>
+              <div>
           <p>In order to be able to publish your own art, leave comments and add to favorites, please, </p>
             <p>
               <Link className='home__page__about__link' to="/register"> sign up </Link>
@@ -28,7 +25,6 @@ export const HomePage = ({langEn, currentUser}) => {
       :
       <div>
         <p>Сайт посвящен обмену творчеством, связанным с сюрреализмом.</p>
-
         <div>
           <p>Чтобы публиковать свое творчество, оставлять комментарии и ставить лайки, пожалуйста,</p>
             <p>
@@ -37,22 +33,13 @@ export const HomePage = ({langEn, currentUser}) => {
               <Link className='home__page__about__link' to="/sign-in"> войдите в аккаунт.</Link>
             </p>
         </div>
-
       </div>
-
       }
     </section>
-
-    <section className='home__page__links'>
-      
+    <section className='home__page__links'>    
         <Link className='home__page__links__container music' to={'/music'}>{langEn ? 'Music' : 'Музыка'}</Link>
-    
-      
         <Link className='home__page__links__container texts' to={'/texts'}>{langEn ? 'Texts' : 'Тексты'}</Link>
-      
-      
         <Link className='home__page__links__container pictures' to={'/pictures'}>{langEn ? 'Pictures' : 'Картинки'}</Link>
-    
     </section>
   </div>  
   )

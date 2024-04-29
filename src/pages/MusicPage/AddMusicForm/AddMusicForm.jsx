@@ -2,14 +2,12 @@ import { useForm } from "react-hook-form";
 import './addMusic.scss'
 import { addNewTrack } from "../../../utils/api_music";
 import { useState, useEffect } from "react";
-import { useId } from 'react';
 import cn from "classnames";
-import { Spinner } from "../../../components/Spinner/Spinner";
 import { useNavigate } from "react-router-dom";
+import { useSelector} from 'react-redux';
 
 
-
-export const AddMusicForm = ({langEn, setShowModal, pagesMusicNumber, setPageMusicQuery, setPagesMusicNumber, setShowPagination, pageMusicQuery, currentUser, trackList, setTrackList}) => {
+export const AddMusicForm = ({ setPageMusicQuery, currentUser, setTrackList}) => {
 
 const navigate = useNavigate()
 // Стейты для показа информации о файле
@@ -20,6 +18,9 @@ const [disableBtn, setDisableButton] = useState(false);
 const [checkedPic, setCheckedPic] = useState(false);
 const [preview, setPreview] = useState(undefined);
 const [showSpinner, setShowSpinner] = useState(false);
+
+const langEn = useSelector((state) => state.langEn);
+
 // Для формы
 
 const {
@@ -74,7 +75,7 @@ const onSubmitData = async (data) => {
 
   try {
     await addNewTrack(formData).then((newTrackList)=> {
-      setTrackList(()=>([...newTrackList]));
+      // setTrackList(()=>([...newTrackList]));
       setShowSpinner(true);
       setPageMusicQuery(1)
     })
@@ -106,15 +107,9 @@ const audioFileRegister = register("file__audio", {
   return (
     <div className="add__music__container">
       <h1>{langEn ? 'Add New Track' : 'Добавить музыку'}</h1>
-          {/*Cекция для добавления музыки из файла  */}
         <form onSubmit={handleSubmit(onSubmitData)}>
           <section className="add__music__file__input__container">
                 <div className="add__music__file__input__top">
-                  {/* <span>
-                    {langEn ? 'Choose audio file ' : 'Выберите аудио файл'}<span className='auth_req'> *</span></span>
-                  <span>{langEn ? 'Your file must be in .mp3 extension, must not exceed 20 MB and violate copyright.' 
-                  : 'Ваш файл должен быть в формате mp3, не превышать размером 20 Мб и не нарушать авторские права.'}</span>
-                  <span>{langEn ? '' : ''}</span> */}
                   {langEn ?
                   <div>
                     <b>Choose audio file<span className='auth_req'> *</span></b>
@@ -183,26 +178,9 @@ const audioFileRegister = register("file__audio", {
                     <small>{langEn ? "Track successfully published" : 'Трек успешно опубликован'}</small>
                     }
                   </div>
-                
                 </div>
-            
             </section>
           </form>
-        {/* Для добавления имени, описания и пр. */}
-
-          {/* <section className="add__music__inputs__container">
-              
-            <div className="add__music__inputs__top">
-              <div className='add__music__input__wrapper'>
-                <label className=''>{langEn ? 'Name :' : 'Название :'}<span className='auth_req'> *</span></label> 
-                  <input 
-                    {...register("track_name")}
-                    type='text'
-                    maxLength={23}
-                    className="add__music__input"
-                  />
-              </div> */}
-     
     </div>
   )
 }

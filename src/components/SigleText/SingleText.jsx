@@ -19,11 +19,16 @@ import { Link } from 'react-router-dom';
 import { updateTextNameEn } from '../../utils/api_texts';
 import { updateTextNameRu } from '../../utils/api_texts';
 import { getPublisherInfoByID } from '../../utils/api_texts';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLangEn } from '../../redux/slices/language_slice';
 
-export const SingleText = ({singleText, langEn, setTexts, pagesNumber, pageQuery, setSingleText, 
-  showModal, setLangEn, setShowModal, setPageQuery, currentUser, handleTextLike}) => {
+
+export const SingleText = ({singleText, pagesNumber, pageQuery, setSingleText, 
+  showModal, setShowModal, setPageQuery, currentUser, handleTextLike}) => {
 
 const navigate = useNavigate(); 
+const langEn = useSelector((state) => state.langEn);
+const dispatch = useDispatch();
 
 const [noContent, setNoContent] = useState(false);
 const [contentEn, setContentEn] = useState('');
@@ -96,23 +101,19 @@ useEffect(()=>{
   
 
 
-
   const onTextDelete = async (textID) => {
-    try {
-      await deleteTextFromItsPage(textID).then((newTexts)=>{
-        
-        const newTextslength = newTexts.length - 1;
-        setTexts(()=>([...newTexts]));
-        setShowModal(false);
-        
-        if (newTextslength === 4 * (pagesNumber - 1)) {
-        
-          setPageQuery(st => st - 1);
-          navigate(`/texts?page=${pageQuery}`)
-        }
-        else navigate(`/texts?page=${pageQuery}`)
-        
-  });
+  try {
+    await deleteTextFromItsPage(textID).then((newTexts)=>{
+      
+      const newTextslength = newTexts.length - 1;
+      setShowModal(false);
+      if (newTextslength === 4 * (pagesNumber - 1)) {
+        setPageQuery(st => st - 1);
+        navigate(`/texts?page=${pageQuery}`)
+      }
+      else navigate(`/texts?page=${pageQuery}`)
+      
+    });
   }
   catch(err) {
     console.log(err)
@@ -401,7 +402,8 @@ useEffect(()=>{
         <div className='single__text__top__lower__timestamps'>
           <span>{langEn ? "Published" : "Опубликовал"} </span>
           <div>
-            <span>{ publisheInfo.publisher_name} </span>
+          
+            <Link style={{textDecoration: 'none', color: 'white'}} to={`/user/${publisher_id}`}>{publisheInfo.publisher_name}</Link>
             <img src={publisheInfo.publisher_avatar} width='20px' height='20px'/>
           </div>
           <span>{createdAtDate}</span>
@@ -463,12 +465,12 @@ useEffect(()=>{
             {langEn ? 
             <div className='single__text__notAvailable__container'>
               <span>Unfortunately, there is no Enlgish version of this text</span>
-              <span id='change_lang' onClick={()=>{setLangEn(false)}}> See Russian version</span>
+              <span id='change_lang' onClick={()=>{dispatch(setLangEn(false))}}> See Russian version</span>
             </div> 
             : 
             <div>
               <span className='single__text__notAvailable__container'>К сожалению, версии на русском языке этого текста нет</span>
-              <span id='change_lang' onClick={()=>{setLangEn(true)}}>Посмотреть английскую версию</span>
+              <span id='change_lang' onClick={()=>{dispatch(setLangEn(true))}}>Посмотреть английскую версию</span>
             </div>}
           </div>}
         </div>

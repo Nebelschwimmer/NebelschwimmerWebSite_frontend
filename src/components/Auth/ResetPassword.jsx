@@ -4,14 +4,13 @@ import { Backbutton } from '../BackButton/BackButton';
 import { getAuth} from 'firebase/auth';
 import { useForm, } from "react-hook-form";
 import {sendPasswordResetEmail } from 'firebase/auth'
+import { useSelector } from 'react-redux';
 
 
-
-export const ResetPassword = ({langEn}) => {
+export const ResetPassword = () => {
   const navigate = useNavigate()
-
+  const langEn = useSelector((state) => state.langEn);
   const {register, handleSubmit, formState: { errors }} = useForm({ mode: "onSubmit" });
-
   const auth = getAuth()
   auth.languageCode = 'en';
 
@@ -82,9 +81,9 @@ export const ResetPassword = ({langEn}) => {
                     { errors?.email  &&
                       <small className='auth_small'>{errors.email?.message}</small>
                     }
-                <div style={{textAlign: 'center'}}>
+                <div style={{width: '100%', textAlign: 'center'}}>
                   <p style={{fontSize:'12px'}}>{langEn ? 'A reset link will be sent to your e-mail box.' : 'Письмо для сброса пароля будет отправлено на указанный электронный ящик. ' }</p>
-                  <p style={{fontSize:'12px'}}>{langEn ? 'Check it, then sign in with the new password' : 'Проверьте его, затем войдите с новым паролем' }</p>
+                  <p style={{fontSize:'12px'}}>{langEn ? 'Check it, then sign in with the new password.' : 'Проверьте его, затем войдите с новым паролем' }</p>
                   
                 </div>
                 

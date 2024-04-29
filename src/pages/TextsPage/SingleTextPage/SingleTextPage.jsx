@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { SingleText } from '../../../components/SigleText/SingleText';
 import {  useParams } from 'react-router-dom';
@@ -6,14 +5,15 @@ import { getTextByID } from '../../../utils/api_texts';
 import { addTextToFavourites } from '../../../utils/api_texts';
 import { removeTextFromFavourites } from '../../../utils/api_texts';
 import { Spinner } from '../../../components/Spinner/Spinner';
+import { useSelector } from 'react-redux';
 
-export const SingleTextPage = ({langEn, texts, pagesNumber, setTexts, setPageQuery, pageQuery, setLangEn, showModal, setShowModal, currentUser}) => {
+export const SingleTextPage = ({ pagesNumber, setTexts, setPageQuery, pageQuery, setLangEn, showModal, setShowModal, currentUser}) => {
 
 const [singleText, setSingleText] = useState(undefined) 
 const id = useParams()
 const textID = id?.textID
-
-
+const langEn = useSelector((state) => state.langEn);
+const texts = useSelector((state) => state.texts.texts);
 
 // Getting text by ID
 useEffect(()=>  { 

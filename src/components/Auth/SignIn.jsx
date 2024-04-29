@@ -7,53 +7,52 @@ import { getAuth } from 'firebase/auth';
 import { useForm } from "react-hook-form";
 import {signInWithEmailAndPassword } from 'firebase/auth'
 import { Spinner } from '../Spinner/Spinner';
+import { useSelector } from 'react-redux';
 
 
 
+export const SignIn = ({signInWithGoogle}) => {
 
-export const SignIn = ({signInWithGoogle, langEn}) => {
+  const langEn = useSelector((state) => state.langEn);
 
-  // Для навигации
   const navigate = useNavigate()
-  // Для формы
+
   const {register, handleSubmit, formState: { errors }} = useForm({ mode: "onSubmit" });
 
-  // Для отображении ошибки при входе
+
   const [loginErr, setLoginErr] = useState(false)
 
-  // Стейт для спиннера
+
   const [showSpinner, setShowSpinner] = useState(false);
 
-  // Если ошибка при входе, не показывать спиннер
+
   useEffect(()=>{
     if (loginErr)
     setShowSpinner(false)
   },[loginErr])
   
-  // Достаем данные пользователя
+
   const auth = getAuth();
 
 
-  // При входе через аккаунт гугл
+
   const onSignInWithGoogle = () => {
     signInWithGoogle();
     navigate('/')
   }
-  // Функция для вход по почте и паролю
+
   const SingInWithEmailAndPassword = async (email, password) => {
     await signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
     }).then(()=>{navigate('/')})
     .catch((error) => {
-      
       const errorCode = error.code;
-      console.log(error.code)
       if (errorCode === 'auth/invalid-login-credentials' || 'auth/invalid-credential' ) setLoginErr(true) 
     });
   }
 
-// Таймаут для отображения ошибки
+
   useEffect(()=>{
     setTimeout(()=>{
       if (loginErr )
@@ -78,7 +77,7 @@ const emailRegisterRu = register("email", {
     value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
   }
 });
-// Поле формы для пароля
+
 const passwordRegisterEn = register("password", {
   required: "Password required"
   })
@@ -88,7 +87,7 @@ const passwordRegisterEn = register("password", {
     })
 
 
-// Фунция для отправки данных
+
 const sendSignInData = async (data) => {
   try {
     setShowSpinner(true);
@@ -103,14 +102,14 @@ const sendSignInData = async (data) => {
   return (
     <div>
       <div className='auth_main'>
-        {/* Шапка  */}
+        
         <div className="auth_container">
           <div onClick={()=>navigate(-1)} className="auth_backbtn"><Backbutton/></div>
             <div className='auth_top'>
               <h1>{langEn ? 'SIGN IN' : "ВХОД"}</h1>
               <span className='sign-in-label'>{langEn ? 'New user?' : 'Новый пользователь?'} <Link style={{color: 'violet'}} to='/register'>{langEn ? 'SIGN UP!' : "ЗАРЕГИСТРИРУЙТЕСЬ!"}</Link></span>
             </div>
-          {/* Форма */}
+        
             <form onSubmit={handleSubmit(sendSignInData)}>
               <div className='auth_form'>
                     <div className='inputs__container'>
@@ -121,66 +120,61 @@ const sendSignInData = async (data) => {
                               className='input'
                               type='text'
                               {...emailRegisterEn}
-                            >
-                            </input>
+                            />
                             :
                             <input
                             className='input'
                             type='text'
                             {...emailRegisterRu}
-                          >
-                          </input>
-                          }
-                        </div>
+                            />
+                            }
+                          </div>
                       
-                        <div className='single__input__wrapper'>
-                          <label>{langEn ? 'Password' : 'Пароль'}</label>
-                          {langEn ?
-                            <input
+                          <div className='single__input__wrapper'>
+                            <label>{langEn ? 'Password' : 'Пароль'}</label>
+                            {langEn ?
+                              <input
+                                className='input'
+                                type='password'
+                                {...passwordRegisterEn}
+                              />
+                              :
+                              <input
                               className='input'
                               type='password'
-                              {...passwordRegisterEn}
-                            >
-                            </input>
-                            :
-                            <input
-                            className='input'
-                            type='password'
-                            {...passwordRegisterRu}
-                          >
-                          </input>
-                          }
-                        </div>
-                    </div>
+                              {...passwordRegisterRu}
+                              />
+                            }
+                          </div>
+                      </div>
 
-                <div className='errors__container'> 
-                { errors?.email  &&
-                  <small className='auth_small'>{errors.email?.message}</small>
-                  }
-                  { errors?.password  &&
-                  <small className='auth_small'>{errors.password?.message}</small>
-                  }
-                  {loginErr && <small style={{color: 'darkorange'}}>{langEn ? 'Login error. Check if your email address and your password are correct.' : 
-                  'Ошибка входа. Проверьте правильность введнных почты и пароля'}</small>}
+                  <div className='errors__container'> 
+                    { errors?.email  &&
+                    <small className='auth_small'>{errors.email?.message}</small>
+                    }
+                    { errors?.password  &&
+                    <small className='auth_small'>{errors.password?.message}</small>
+                    }
+                    {loginErr && <small style={{color: 'darkorange'}}>{langEn ? 'Login error. Check if your email address and your password are correct.' : 
+                    'Ошибка входа. Проверьте правильность введнных почты и пароля'}</small>}
                   </div>
                 </div>
 
 
-              {/* Кнопка отправки */}
+            
               <div className='auth_sign_btn_wrapper'>
                 <button type="submit" className='auth_sign_btn'>{langEn ? 'Sign In' : "Войти"}</button>
               </div>
             </form> 
-          {/* Кнопки "Войти с гугл" и "Сброс пароля" */}
-          <button className='auth_sign_btn' onClick={()=>{onSignInWithGoogle()}}>{langEn ? 'Continue with Google ' : "Войти с Google" } <GoogleIcon fontSize='medium'/></button>
-          <button onClick={()=>{navigate('/password-reset')}} className='auth_sign_btn'>{langEn ? 'Forgot My Password' : "Забыли пароль?" }</button>
-          <div className='spinner_container'>
-          {showSpinner &&
-                      <span><Spinner/></span>
+              {/* Кнопки "Войти с гугл" и "Сброс пароля" */}
+              <button className='auth_sign_btn' onClick={()=>{onSignInWithGoogle()}}>{langEn ? 'Continue with Google ' : "Войти с Google" } <GoogleIcon fontSize='medium'/></button>
+              <button onClick={()=>{navigate('/password-reset')}} className='auth_sign_btn'>{langEn ? 'Forgot My Password' : "Забыли пароль?" }</button>
+              <div className='spinner_container'>
+              {showSpinner &&
+                <span><Spinner/></span>
                     }
+          </div>
         </div>
-        </div>
-    
       </div>
     </div>
   )

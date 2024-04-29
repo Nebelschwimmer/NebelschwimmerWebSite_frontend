@@ -1,41 +1,36 @@
 import './auth.scss'
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { Backbutton } from '../BackButton/BackButton';
 import { useEffect, useState} from 'react';
 import { useForm, } from "react-hook-form";
-import {getAuth, signOut, deleteUser, updateProfile} from 'firebase/auth'
+import {getAuth, deleteUser, updateProfile} from 'firebase/auth'
 import { ModalWindow } from '../ModalWindow/ModalWindow';
 import CloseIcon from '@mui/icons-material/Close';
 import cn from "classnames";
 import { Spinner } from '../Spinner/Spinner';
+import { useSelector } from 'react-redux';
+import { io } from "socket.io-client";
 
 
-export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, onSignOut, setShowModal}) => {
+
+export const UserSettings = ({currentUser, setCurrentUser, showModal, onSignOut, setShowModal}) => {
   
-  // Стейт для спиннера
+
   const [showSpinner, setShowSpinner] = useState(false);
-  // Стейт для автара
   const [avatar, setAvatar] = useState('')
- // Стейт для отображения инфо пользователя
   const [showProfileInfo, setShowProfileInfo] = useState(false)
-  // Cтейт для кнопки очистки 1
-  const [showClearBtn1, setShowClearBtn1] = useState(false)
-  // Cтейт для кнопки очистки 2
-  const [showClearBtn2, setShowClearBtn2] = useState(false)
-  // Cтейт для отображения ошибки
   const [showError, setShowError] = useState(false)
-  // Стейт для надписи об измнениях данных
   const [printChanged, setPrintChanged] = useState(false)
-  // Cтейт для модального окна с подтверждением выхода из аккаунта
   const [showModalSignout, setShowModalSignout] = useState(false)
 
-  // Служебные переменные
+  
+  
   const navigate = useNavigate()
   const auth = getAuth();
   const user = auth.currentUser;
+  const langEn = useSelector((state) => state.langEn);
   
-  
-  // Таймаут для спиннера
+
     useEffect(()=>{
       setTimeout(()=>{
       if (showSpinner) setShowSpinner(false)
@@ -44,8 +39,6 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
     [currentUser])
 
   
-
-    // Таймаут для надписи с ошибкой
     useEffect(()=>{
       setTimeout(()=>{
       if (showError) setShowError(false)
@@ -53,7 +46,6 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
     }, 
     [showError])
 
-    // Таймаут для надписи об измнениях данных
     useEffect(()=>{
       setTimeout(()=>{
       if (printChanged) setPrintChanged(false)
@@ -61,12 +53,10 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
     }, 
     [printChanged])
   
-  // Отображаем инфо о пользователе только если у него есть имя
+
+
   useEffect(()=>{
-  if (currentUser.displayName !== null) setShowProfileInfo(true)},
-  [currentUser])
-  // Отображаем аватар по умолчанию, если пользователь не отправил ссылку на свой
-  useEffect(()=>{
+    if (currentUser.displayName !== null) { setShowProfileInfo(true) };
     if (currentUser.photoURL !== null) setAvatar(currentUser.photoURL)
     else setAvatar('https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg')
   },
@@ -83,24 +73,24 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
   const deleteUserAccount = async () => {
     await deleteUser(user)
     .then(() => {
-      alert('User deleted.');
+      alert('Пользователь удале. User deleted.');
       setCurrentUser('')
       navigate('/') 
   })
     .catch((error) => {
       const errorCode = error.code
       if (error.code === 'auth/requires-recent-login') {
-        alert ('Login error. Please, sign out and sign in again to be able to delete your account')
+        alert ('Ошибка входа. Пожалуйста, выйдите из аккааунта и зайдите снова, чтобы удалить аккаунт. Login error. Please, sign out and sign in again to be able to delete your account')
       }
       console.log(errorCode)
   });
   }
     
 
-// Логика для формы
+
   const {register, handleSubmit, reset, formState: { errors }} = useForm({ mode: "onSubmit" });
 
-// Функция для обновления данных пользователя
+
   async  function UpdateUserData (userName, avatarURL) {
     await updateProfile(auth.currentUser, {
       displayName: userName, photoURL: avatarURL
@@ -113,23 +103,19 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
     )
   }
 
-// Для отправки данных
+
   const sendUpdateData = async (data) => {
     try {
       await UpdateUserData(data.userName, data.avatarURL).then(() => {
-        // Ловим отредактированного пользователя
         const newUser = auth.currentUser;
-        // Сеттим с колбэком
         setCurrentUser(()=>({...newUser}));
-        // Сетим спинер
-        
       })
     }
     catch(errors) {
     console.log(errors)
     } 
   }
-// Для заполнения инпута с именем
+
   const userNameRegister = register("userName", {
     required: 'Display name required!',
     maxLength: {
@@ -141,6 +127,8 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
   );
 
 
+
+
   return (
     <div>
       <div className='auth_main'>
@@ -148,23 +136,18 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
           <div onClick={()=>navigate(-1)} className="auth_backbtn"><Backbutton/>
           <h1>{ langEn ? "PROFILE" : 'Личный кабинет'}</h1>
           </div>
-          
             <div className='auth_top'>
               
-              {/* Отображаем блок с инфо о пользователе и кнопками только если введено имя */}
               {showProfileInfo && 
               <div className='auth_user_info'>
-                
                   <img className='auth_user_avatar' src={avatar}/>
-                
                 <div className='auth_user_info_name_wrapper'>
                   <div className='auth_user_info_name_top'>
                     <span className='auth_user_info_name'>{currentUser.displayName}</span>
-                    <span>{currentUser.email}</span>
                   </div>
                   <div className='auth_user_info_edt_btns_wrapper'>
                     <button onClick={()=>{setShowModalSignout(true)}} className='auth_user_info_edt_btn'>{ langEn ? "Sign out" : 'Выйти'}</button>
-                    {/* Модальное окно с подтверднением выхода из аккаунта */}
+                  
                       {!!showModalSignout &&
                     
                         <div className={cn("modal", { ["active"]: showModalSignout })} onClick={()=>{setShowModalSignout(false)}}>
@@ -182,7 +165,7 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
                     }
                     <button onClick={()=>{setShowModal(true)}}  className='auth_user_info_edt_btn'>{ langEn ? "Delete account" : 'Удалить аккаунт'}</button>
                   </div>
-                  {/* Модальное окно с подтверждением удаления */}
+                
                   {!!showModal &&
                   <ModalWindow setShowModal={setShowModal} showModal={showModal}>
                     <div className='modal_top'>
@@ -204,9 +187,9 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
               <h2 >{langEn ? 'Edit Profile' : 'Редактировать профиль'}</h2>
               <small className={cn("auth_updated", { ["auth_updated_Active"]: printChanged })}>{ langEn ? "Profile updated!" : 'Профиль изменен'}</small>
             </div>  
-             {/* Форма */}
-             <form onSubmit={handleSubmit(sendUpdateData)}>
-                {/* Блок с инпутами. При фокусировке отображаются кнопки очистки ввода. При расфокусировке они исчезают */}
+            
+            <form onSubmit={handleSubmit(sendUpdateData)}>
+                
                 <div className='inputs__container__profile'>
                         <div className='single__input__wrapper'
                         >
@@ -216,27 +199,23 @@ export const UserSettings = ({currentUser, langEn, setCurrentUser, showModal, on
                               defaultValue={currentUser.displayName}
                               type='text'
                               {...userNameRegister}
-                            >
-                            </input>
-                          
+                            />
                             <button type='button' className="auth_clear_btn"
                             onClick={()=>{reset({userName: ''})}}> <CloseIcon fontSize='small'/> </button>
                         </div>
-                      
 
                         <div className='single__input__wrapper'
 
                         >
                           <label>{ langEn ? "Avatar URL" : 'URL аватара'}</label>
                             <input
-                            
                               style={{fontSize:'12px'}}
                               className='input'
                               defaultValue={currentUser.photoURL}
                               type='url'
                               {...register("avatarURL")}
-                            >
-                            </input>
+                            />
+                          
                           <button type='button' onClick={()=>{reset({avatarURL: ''})}}
                           className="auth_clear_btn"><CloseIcon fontSize='small'/></button>
                         </div>

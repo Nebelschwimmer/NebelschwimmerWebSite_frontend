@@ -1,19 +1,19 @@
 import './textPage.scss'
 import { useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getTextsList } from '../../utils/api_texts'
 import SearchIcon from '@mui/icons-material/Search';
-import { searchText } from '../../utils/api_texts';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { PaginationBoard } from './PaginationBoard'
 import { TextLink } from './TextLink'
 import cn from 'classnames'
 import { Spinner } from '../../components/Spinner/Spinner';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchTexts, searchAndFetchTexts } from '../../redux/slices/texts_slice'
 
 
 
-export const TextsPage = ({langEn, pageQuery, pagesNumber, setPagesNumber, setPageQuery, currentUser, texts, setTexts}) => {
+export const TextsPage = ({wsData, pageQuery, pagesNumber, setPagesNumber, setPageQuery, currentUser}) => {
 
 const [searchQuery, setSearchQuery] = useState('');
 const [pages, setPages] = useState([]);
@@ -23,30 +23,29 @@ const [searchRes, setSearchRes] = useState(false)
 
 const navigate = useNavigate();
 
-
+ const dispatch = useDispatch();
+ const texts = useSelector((state) => state.texts.texts);
+ const totalPages = useSelector((state) => state.texts.totalPages);
+ const langEn = useSelector((state) => state.langEn);
 
 useEffect(()=>{ 
   if (searchQuery === "") {
-    getTextsList(pageQuery).then((res) => {
-    setTexts(()=>([...res.texts]));
-    setPagesNumber(res.totalPages);
-    setSearchRes(false); 
+    dispatch(fetchTexts(pageQuery));
+    setSearchRes(false);
+    setPagesNumber(totalPages) 
     navigate(`/texts?page=${pageQuery}`)
-    })
-  }
+    }
+  
   else { 
-      searchText(searchQuery).then((res)=>{
-      setTexts(()=>([...res]));
+    dispatch(searchAndFetchTexts(searchQuery));
       if (res.length === 0) { 
         setSearchRes(true);
         setShowPagination(false);
         }
       setShowPagination(false);
-      })
-      
   }
   
-    }, [searchQuery, pageQuery])
+    }, [searchQuery, totalPages, pageQuery])
 
 
 const handleSearchInputChange = (event) => { 
@@ -108,10 +107,6 @@ useEffect(()=>{
 }, [searchQuery, pagesNumber])
 
 
-useEffect(()=>{
-if (texts.length < 5)
-setShowPagination(false)
-}, [texts])
 
 
   return (
@@ -151,6 +146,8 @@ setShowPagination(false)
               link={el}
               key={i}
               langEn={langEn}
+              wsData={wsData}
+              currentUser={currentUser}
               />
                   
               )

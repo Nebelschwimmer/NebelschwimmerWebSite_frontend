@@ -14,8 +14,11 @@ export const TextLink = ({link, langEn}) => {
 
 
     const [userInfo, setUserInfo] = useState({});
+    
     const publisherID = link.publisher_id
   
+
+
 
     
   useEffect(()=>{
@@ -25,6 +28,8 @@ export const TextLink = ({link, langEn}) => {
     else setUserInfo({publisher_name: 'Deleted / Удаленный', publisher_avatar: 'https://cdn-icons-png.freepik.com/512/3519/3519212.png'})
   })
   },[])
+
+
 
   return (
     <>
@@ -41,10 +46,12 @@ export const TextLink = ({link, langEn}) => {
                   </div>
                   <div className='texts__page__text__add__info'>
                     <div>
-                      <span>{langEn ? 'Published': "Опубликовал"}</span>
+                      <span >{langEn ? 'Published': "Опубликовал"}</span>
                       <span>{userInfo.publisher_name}</span>
-                      <img alt='avatar' src={userInfo.publisher_avatar}></img>
+                    
+                      <img alt='avatar' src={userInfo.publisher_avatar || 'https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg'}></img>
                       <span>{new Date (link.createdAt).toLocaleString("ru-RU", options)}</span>
+                      
                     </div>
                     <div>
                       {link.likes.length !== 0 &&

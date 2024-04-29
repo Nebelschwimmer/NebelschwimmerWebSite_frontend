@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom"
 import { Backbutton } from "../BackButton/BackButton"
 import { useNavigate } from "react-router-dom"
+import { useSelector } from 'react-redux';
 
-export const Privacy = ({langEn}) => {
+
+export const Privacy = () => {
+
+  const langEn = useSelector((state) => state.langEn);
 
   const navigate = useNavigate()
   return(
