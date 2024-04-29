@@ -18,7 +18,7 @@ export const UserPage = ({wsData}) => {
     }
   
   useEffect(()=> {
-    fetch(`http://localhost:3020/user/${userID}`)
+    fetch(`https://surland.ru:3020/user/${userID}`)
     .then((response)=>response.json())
     .then((user)=> setUser(user))
   },[])
