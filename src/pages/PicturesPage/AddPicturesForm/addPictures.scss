@@ -1,34 +1,45 @@
-// .add__pictures{
-//   &__previews__container {
-//     display: flex;
-//     gap: 1rem;
-//   }
-//   &__preview__wrapper { 
-//     background-color: rgb(0, 0, 0);
-//     border-radius: 10px;
-//     height: 120px;
-//     width: 120px;
-//     cursor: pointer;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     gap: 1rem;
-//     background-image: url('https://www.freeiconspng.com/thumbs/close-icon/close-icon-29.png');
-//     background-attachment: fixed;
-//     background-size: 50%;
-//     background-repeat: no-repeat;
-//     background-position: 50%;
-    
-//     & :hover {
-//       opacity: 0.3;
-//     }
-//     img {
-//       height: 120px;
-//       width: 120px;
-//       object-fit: cover;
-//       border-radius: 10px;
-//       opacity: 1;
-//       transition: 0.2s ease-in-out;
-//     }
-//     }
-//   }
+.add__pictures{
+  &__previews__container {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;;
+  }
+  &__preview__wrapper { 
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
+    height: 120px;
+    width: 120px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    transition: opacity 0.3s ease-in-out;
+    background-attachment: fixed;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position:50%;
+   
+    & :hover {
+      opacity: 0.1;
+    }
+    img {
+      height: 120px;
+      width: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+      opacity: 1;
+      transition: 0.2s ease-in-out;
+    }
+    }
+  }
+  // .add__pictures__preview__delete_icon {
+   
+  //   opacity: 1;
+  //   display: inline-block;
+  //   width: 60px; /* Adjust the size of the cross icon */
+  //   height: 60px; /* Adjust the size of the cross icon */
+  //   background-image: url('https://www.freeiconspng.com/thumbs/close-icon/close-icon-29.png');
+  //   background-size: cover;
+  //   cursor: pointer;
+  // }

@@ -339,7 +339,7 @@ else seThumbnail(track_image)
                       
                       <div className={cn("modal_content", { ["active"]: showModalEdit })}  onClick={(e) => e.stopPropagation()}>
                       <span className='modal__close' onClick={()=>{setShowModalEdit(false)}}><CloseIcon/></span>
-                        <MusicEditForm thumbnail={thumbnail}  pageMusicQuery={pageMusicQuery} getMusicList={getMusicList} track={track} track_id={track_id} setTrackList={setTrackList} langEn={langEn} setShowModalEdit={setShowModalEdit}/>
+                        <MusicEditForm thumbnail={thumbnail}  pageMusicQuery={pageMusicQuery} getMusicList={getMusicList} track={track} track_id={track_id}  langEn={langEn} setShowModalEdit={setShowModalEdit}/>
                       </div>
                     </div>
                   )}

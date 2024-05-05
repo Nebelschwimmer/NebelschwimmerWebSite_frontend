@@ -21,6 +21,15 @@ import { NotFound } from '../NotFound/NotFound.jsx';
 import { AddMusicForm } from '../../pages/MusicPage/AddMusicForm/AddMusicForm.jsx';
 import SockJS from 'sockjs-client';
 import { UserPage } from '../../pages/UserPage/UserPage.jsx';
+import { AddPicturesForm } from '../../pages/PicturesPage/AddPicturesForm/AddPicturesForm.jsx';
+import { Client, Provider, cacheExchange, fetchExchange } from 'urql';
+
+const client = new Client({
+  url: 'http://localhost:4000/graphql',
+  exchanges: [cacheExchange, fetchExchange],
+});
+
+
 
 function App() {
 
@@ -107,9 +116,10 @@ const [wsData, setWsData] = useState({checkOnlineStatus: "offline"});
 return (
   <>
     <Header showModal={showModal} setShowModal={setShowModal}  currentUser={currentUser} user={user} onSignOut={onSignOut} />
+      <Provider value={client}>
       <main className='main_content_container'>
-
       <Routes>
+      <Route path='/add-pictures' element={<AddPicturesForm  currentUser={currentUser} />}></Route> 
         <Route path='/' element={<HomePage  currentUser={currentUser} />}></Route> 
         {/* <Route path='/user/:userID' element={<UserPage wsData={wsData}/>}></Route>  */}
         <Route path='/texts/:textID' element={<SingleTextPage pageQuery={pageQuery} setPageQuery={setPageQuery} pagesNumber={pagesNumber}  currentUser={currentUser} 
@@ -132,6 +142,7 @@ return (
         setPageMusicQuery={setPageMusicQuery}setPagesMusicNumber={setPagesMusicNumber}/>}></Route>
       </Routes>
     </main>
+      </Provider>
     <Footer/>
   </>
   );

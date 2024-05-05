@@ -3,10 +3,11 @@ import './music_edit.scss'
 import { updateTrack} from "../../../utils/api_music";
 import { useState, useEffect } from "react";
 import { Spinner } from "../../Spinner/Spinner";
+import { fetchMusic } from "../../../redux/slices/music_slice";
+import { useDispatch } from "react-redux";
 
-
-export const MusicEditForm = ({langEn, thumbnail, track, track_id, setTrackList, pageMusicQuery, getMusicList, setShowModalEdit, trackList}) => {
-
+export const MusicEditForm = ({langEn, thumbnail, track, track_id, pageMusicQuery, getMusicList, setShowModalEdit}) => {
+  const dispatch = useDispatch();
   const [showSpinner, setShowSpinner] = useState(false)
   const [preview, setPreview] = useState('')
   const [nameValue, setNameValue] = useState(track.track_name)
@@ -35,9 +36,7 @@ const onSubmitData = async (data) => {
 try {
     await updateTrack(track_id, formData);
     
-      await getMusicList(pageMusicQuery).then((res) => 
-    setTrackList(()=>([...res.tracks]))
-    )
+      await dispatch(fetchMusic(pageMusicQuery));
     setShowModalEdit(false)
   }
   catch (err) {console.log(err)}

@@ -2,6 +2,9 @@ import './home_page.scss';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+
+
+
 export const HomePage = ({}) => {
   const langEn = useSelector((state) => state.langEn);
   return (
