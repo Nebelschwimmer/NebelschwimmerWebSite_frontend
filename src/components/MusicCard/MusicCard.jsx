@@ -75,15 +75,12 @@ export const MusicCard = ({track_name, track, pageMusicQuery, langEn,
         try {
           if (trackIsLiked) {
             await  deleteMusicLikeById(track_id, user_id );
-            await getMusicList(pageMusicQuery).then((res) => 
-            setTrackList(()=>([...res.tracks]))
-          )
+            dispatch(fetchMusic(pageMusicQuery))
         }
         else {
           await addLikeById(track_id, user_id);
-          await getMusicList(pageMusicQuery).then((res) => 
-          setTrackList(()=>([...res.tracks]))
-        )
+          dispatch(fetchMusic(pageMusicQuery))
+
       }
     }
     catch(err) {

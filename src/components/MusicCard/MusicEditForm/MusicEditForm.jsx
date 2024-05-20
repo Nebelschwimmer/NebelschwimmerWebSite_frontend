@@ -6,7 +6,7 @@ import { Spinner } from "../../Spinner/Spinner";
 import { fetchMusic } from "../../../redux/slices/music_slice";
 import { useDispatch } from "react-redux";
 
-export const MusicEditForm = ({langEn, thumbnail, track, track_id, pageMusicQuery, getMusicList, setShowModalEdit}) => {
+export const MusicEditForm = ({langEn, thumbnail, track, track_id, pageMusicQuery, setShowModalEdit}) => {
   const dispatch = useDispatch();
   const [showSpinner, setShowSpinner] = useState(false)
   const [preview, setPreview] = useState('')
@@ -36,7 +36,7 @@ const onSubmitData = async (data) => {
 try {
     await updateTrack(track_id, formData);
     
-      await dispatch(fetchMusic(pageMusicQuery));
+    dispatch(fetchMusic(pageMusicQuery));
     setShowModalEdit(false)
   }
   catch (err) {console.log(err)}
